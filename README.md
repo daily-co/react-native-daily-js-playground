@@ -13,6 +13,12 @@ npm i
 
 ## Running in dev
 
+### Server
+
+Follow the steps documented in [Building and running pluot-core locally](https://www.notion.so/dailyco/Building-and-running-pluot-core-locally-006e8192a7304fc6b0545c2e527f1aad).
+
+### Client
+
 ```bash
 cd DailyPlayground
 
@@ -60,3 +66,14 @@ You'll be prompted to open the React debug menu in the app. Follow the above ins
 Open the React debug menu in the app, following the instructions above (under "Opening the debug menu"), then select "Debug". This will open a Chrome tab. Open Chrome dev tools. In the Console tab of Chrome dev tools, click the dropdown that says "top" and select "debuggerWorker".
 
 NOTE: you may have to reload the JavaScript a couple of times for the debugger to properly connect. Do this by following the instructions above (under "Reloading after a code change").
+
+## Building to device
+
+### iOS
+
+The iOS Simulator, sadly, doesn't provide a fake video stream. To build to device:
+
+- In the Xcode DailyPlayground target settings, provide a development team registered with Apple
+- Expose your `pluot-core` dev server in a way that is reachable by your iOS device, following the steps documented in [Exposing your pluot-core dev server publicly](https://www.notion.so/dailyco/Exposing-your-pluot-core-dev-server-publicly-d70f8aa0836644dabdfc017536d08415).
+
+Note that, as long as you're on the same wifi as the dev box running the React Native development server, the app should just work.
