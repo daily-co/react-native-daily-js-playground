@@ -8,7 +8,7 @@ import {
   TouchableHighlight,
   View,
 } from 'react-native';
-import DailyIframe from './daily-js/daily-iframe';
+import DailyIframe, {mediaDevices} from '@daily-co/react-native-daily-js';
 
 declare const global: {HermesInternal: null | {}};
 
