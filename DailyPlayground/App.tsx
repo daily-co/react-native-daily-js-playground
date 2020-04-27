@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useState, useMemo} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -8,28 +8,45 @@ import {
   TouchableHighlight,
   View,
 } from 'react-native';
-import DailyIframe, {mediaDevices} from '@daily-co/react-native-daily-js';
+import DailyIframe, {
+  mediaDevices,
+  RTCView,
+} from '@daily-co/react-native-daily-js';
 
 declare const global: {HermesInternal: null | {}};
 
 const App = () => {
+  const [localStream, setLocalStream] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     (global as any)['DailyIframe'] = DailyIframe;
+    (global as any)['mediaDevices'] = mediaDevices;
+    (global as any)['RTCView'] = RTCView;
   }, []);
 
-  const onPressStart = useCallback(() => {
-    console.log('start pressed!');
+  const onPressStart = useCallback(async () => {
+    setIsLoading(true);
+    setLocalStream(await mediaDevices.getUserMedia({video: true}));
+    setIsLoading(false);
   }, []);
 
   return (
     <>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView style={styles.container}>
-        <TouchableHighlight onPress={onPressStart}>
-          <View style={styles.startButton}>
-            <Text>Tap to start a call</Text>
-          </View>
-        </TouchableHighlight>
+        {localStream ? (
+          <RTCView
+            streamURL={(localStream as any).toURL()}
+            mirror={true}
+            style={styles.localVideoView}></RTCView>
+        ) : (
+          <TouchableHighlight onPress={onPressStart} disabled={isLoading}>
+            <View style={styles.startButton}>
+              <Text>Tap to start a call</Text>
+            </View>
+          </TouchableHighlight>
+        )}
       </SafeAreaView>
     </>
   );
@@ -56,6 +73,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#4a4a4a',
   },
+  localVideoView: {width: 300, height: 500, backgroundColor: 'black'},
 });
 
 export default App;
