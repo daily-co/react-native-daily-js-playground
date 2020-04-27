@@ -6,11 +6,12 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "sync-daily-js": "./daily-js/sync-daily-js.sh",
+    "sync-rn-daily-js": "./scripts/sync-rn-daily-js.sh",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
+    "@daily-co/react-native-daily-js": "file:../react-native-daily-js/daily-co-react-native-daily-js-0.0.1.tgz",
     "react": "16.11.0",
     "react-native": "0.62.2"
   },
