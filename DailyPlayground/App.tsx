@@ -1,54 +1,106 @@
-import React, {useCallback, useEffect, useState, useMemo} from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  StatusBar,
-  Button,
-  TouchableHighlight,
-  View,
-} from 'react-native';
-import DailyIframe, {
-  RTCView,
-  mediaDevices,
-  MediaStream,
-} from '@daily-co/react-native-daily-js';
+import React, {useCallback, useEffect, useState} from 'react';
+import {SafeAreaView, StyleSheet, StatusBar} from 'react-native';
+import DailyIframe from '@daily-co/react-native-daily-js';
+import CallPanel from './components/CallPanel';
+import StartButton from './components/StartButton';
+import {MeetingState, Event} from '@daily-co/daily-js';
 
 declare const global: {HermesInternal: null | {}};
 
+const ROOM_URL = 'https://paulk.ngrok.io/hello?cdmn=paulk';
+
+enum AppState {
+  Idle,
+  Creating,
+  Joining,
+  Joined,
+  Leaving,
+  Error,
+}
+
+function logDailyEvent(e: any) {
+  console.log('[daily.co event]', e.action);
+}
+
 const App = () => {
-  const [localStream, setLocalStream] = useState<MediaStream | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [appState, setAppState] = useState(AppState.Idle);
+  const [callObject, setCallObject] = useState<DailyIframe | null>(null);
+
+  // Debugging globals
+  useEffect(() => {
+    const g = global as any;
+    g.DailyIframe = DailyIframe;
+    g.callObject = callObject;
+  }, [callObject]);
+
+  const startJoiningCall = useCallback(() => {
+    const newCallObject = DailyIframe.createCallObject();
+    setCallObject(newCallObject);
+    setAppState(AppState.Joining);
+    newCallObject.join({url: ROOM_URL});
+  }, []);
 
   useEffect(() => {
-    (global as any)['DailyIframe'] = DailyIframe;
-    (global as any)['mediaDevices'] = mediaDevices;
-    (global as any)['RTCView'] = RTCView;
-  }, []);
+    if (!callObject) {
+      return;
+    }
 
-  const onPressStart = useCallback(async () => {
-    setIsLoading(true);
-    setLocalStream(
-      (await mediaDevices.getUserMedia({video: true})) as MediaStream,
-    );
-    setIsLoading(false);
-  }, []);
+    const events = [Event.JoinedMeeting, Event.LeftMeeting, Event.Error];
+
+    function handleNewMeetingState(event?: any) {
+      event && logDailyEvent(event);
+      switch (callObject?.meetingState()) {
+        case MeetingState.Joined:
+          setAppState(AppState.Joined);
+          break;
+        case MeetingState.Left:
+          callObject?.destroy().then(() => {
+            setCallObject(null);
+            setAppState(AppState.Idle);
+          });
+          break;
+        case MeetingState.Error:
+          setAppState(AppState.Error);
+          break;
+        default:
+          break;
+      }
+    }
+
+    // Use initial state
+    handleNewMeetingState();
+
+    // Listen for changes in state
+    for (const event of events) {
+      callObject.on(event, handleNewMeetingState);
+    }
+
+    // Stop listening for changes in state
+    return function cleanup() {
+      for (const event of events) {
+        callObject.off(event, handleNewMeetingState);
+      }
+    };
+  }, [callObject]);
+
+  const showCallPanel = [
+    AppState.Joining,
+    AppState.Joined,
+    AppState.Error,
+  ].includes(appState);
+  const enableStartButton = appState === AppState.Idle;
 
   return (
     <>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView style={styles.container}>
-        {localStream ? (
-          <RTCView
-            streamURL={localStream.toURL()}
-            mirror={true}
-            style={styles.localVideoView}></RTCView>
+        {showCallPanel ? (
+          <CallPanel roomUrl={ROOM_URL} />
         ) : (
-          <TouchableHighlight onPress={onPressStart} disabled={isLoading}>
-            <View style={styles.startButton}>
-              <Text>Tap to start a call</Text>
-            </View>
-          </TouchableHighlight>
+          <StartButton
+            onPress={startJoiningCall}
+            disabled={!enableStartButton}
+          />
         )}
       </SafeAreaView>
     </>
@@ -64,19 +116,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: '100%',
   },
-  startButton: {
-    paddingHorizontal: 30,
-    paddingVertical: 20,
-    backgroundColor: '#ffffff',
-    fontFamily: 'Helvetica Neue',
-    fontStyle: 'normal',
-    fontWeight: 'normal',
-    fontSize: 14,
-    lineHeight: 17,
-    textAlign: 'center',
-    color: '#4a4a4a',
-  },
-  localVideoView: {width: 300, height: 500, backgroundColor: 'black'},
 });
 
 export default App;
