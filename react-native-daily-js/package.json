@@ -2,14 +2,23 @@
   "name": "@daily-co/react-native-daily-js",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "prepare": "npm run build"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@daily-co/daily-js": "file:~/src/pluot-core/daily-js/daily-co-daily-js-0.9.987.tgz",
+    "@types/react-native-webrtc": "^1.75.1",
     "react-native-webrtc": "^1.75.3"
+  },
+  "devDependencies": {
+    "typescript": "^3.8.3"
   }
 }
