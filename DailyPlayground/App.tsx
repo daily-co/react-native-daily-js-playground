@@ -9,14 +9,15 @@ import {
   View,
 } from 'react-native';
 import DailyIframe, {
-  mediaDevices,
   RTCView,
+  mediaDevices,
+  MediaStream,
 } from '@daily-co/react-native-daily-js';
 
 declare const global: {HermesInternal: null | {}};
 
 const App = () => {
-  const [localStream, setLocalStream] = useState(null);
+  const [localStream, setLocalStream] = useState<MediaStream | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -27,7 +28,9 @@ const App = () => {
 
   const onPressStart = useCallback(async () => {
     setIsLoading(true);
-    setLocalStream(await mediaDevices.getUserMedia({video: true}));
+    setLocalStream(
+      (await mediaDevices.getUserMedia({video: true})) as MediaStream,
+    );
     setIsLoading(false);
   }, []);
 
@@ -37,7 +40,7 @@ const App = () => {
       <SafeAreaView style={styles.container}>
         {localStream ? (
           <RTCView
-            streamURL={(localStream as any).toURL()}
+            streamURL={localStream.toURL()}
             mirror={true}
             style={styles.localVideoView}></RTCView>
         ) : (
