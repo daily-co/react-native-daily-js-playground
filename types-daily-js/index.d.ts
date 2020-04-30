@@ -26,44 +26,42 @@ declare namespace DailyIframe {
   type FrameProps = object; // TODO: flesh out
   type Participant = object; // TODO: flesh out
 
-  enum MeetingState {
-    New = "new",
-    Loading = "loading",
-    Loaded = "loaded",
-    Joining = "joining-meeting",
-    Joined = "joined-meeting",
-    Left = "left-meeting",
-    Error = "error",
-  }
+  type MeetingState =
+    | "new"
+    | "loading"
+    | "loaded"
+    | "joining-meeting"
+    | "joined-meeting"
+    | "left-meeting"
+    | "error";
 
-  enum Event {
-    Loading = "loading",
-    Loaded = "loaded",
-    StartedCamera = "started-camera",
-    CameraError = "camera-error",
-    JoiningMeeting = "joining-meeting",
-    JoinedMeeting = "joined-meeting",
-    LeftMeeting = "left-meeting",
-    ParticipantJoined = "participant-joined",
-    ParticipantUpdated = "participant-updated",
-    ParticipantLeft = "participant-left",
-    TrackStarted = "track-started",
-    TrackStopped = "track-stopped",
-    RecordingStarted = "recording-started",
-    RecordingStopped = "recording-stopped",
-    RecordingStats = "recording-stats",
-    RecordingError = "recording-error",
-    UploadCompleted = "recording-upload-completed",
-    AppMessage = "app-message",
-    InputEvent = "input-event",
-    LocalScreenShareStarted = "local-screen-share-started",
-    LocalScreenShareStopped = "local-screen-share-stopped",
-    ActiveSpeakerChanged = "active-speaker-change",
-    ActiveSpeakerModeChanged = "active-speaker-mode-change",
-    NetworkQualityChanged = "network-quality-change",
-    NetworkConnection = "network-connection",
-    Fullscreen = "fullscreen",
-    ExitedFullscreen = "exited-fullscreen",
-    Error = "error",
-  }
+  type Event =
+    | "loading"
+    | "loaded"
+    | "started-camera"
+    | "camera-error"
+    | "joining-meeting"
+    | "joined-meeting"
+    | "left-meeting"
+    | "participant-joined"
+    | "participant-updated"
+    | "participant-left"
+    | "track-started"
+    | "track-stopped"
+    | "recording-started"
+    | "recording-stopped"
+    | "recording-stats"
+    | "recording-error"
+    | "recording-upload-completed"
+    | "app-message"
+    | "input-event"
+    | "local-screen-share-started"
+    | "local-screen-share-stopped"
+    | "active-speaker-change"
+    | "active-speaker-mode-change"
+    | "network-quality-change"
+    | "network-connection"
+    | "fullscreen"
+    | "exited-fullscreen"
+    | "error";
 }
