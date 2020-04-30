@@ -3,7 +3,7 @@ import {SafeAreaView, StyleSheet, StatusBar} from 'react-native';
 import DailyIframe from '@daily-co/react-native-daily-js';
 import CallPanel from './components/CallPanel';
 import StartButton from './components/StartButton';
-import {MeetingState, Event} from '@daily-co/daily-js';
+import { Event } from '@daily-co/daily-js';
 
 declare const global: {HermesInternal: null | {}};
 
@@ -45,21 +45,21 @@ const App = () => {
       return;
     }
 
-    const events = [Event.JoinedMeeting, Event.LeftMeeting, Event.Error];
+    const events: Event[] = ["joined-meeting", "left-meeting", "error"];
 
     function handleNewMeetingState(event?: any) {
       event && logDailyEvent(event);
       switch (callObject?.meetingState()) {
-        case MeetingState.Joined:
+        case "joined-meeting":
           setAppState(AppState.Joined);
           break;
-        case MeetingState.Left:
+        case "left-meeting":
           callObject?.destroy().then(() => {
             setCallObject(null);
             setAppState(AppState.Idle);
           });
           break;
-        case MeetingState.Error:
+        case "error":
           setAppState(AppState.Error);
           break;
         default:
