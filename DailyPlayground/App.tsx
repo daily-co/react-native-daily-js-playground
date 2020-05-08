@@ -3,9 +3,12 @@ import {SafeAreaView, StyleSheet, StatusBar} from 'react-native';
 import DailyIframe from '@daily-co/react-native-daily-js';
 import CallPanel from './components/CallPanel';
 import StartButton from './components/StartButton';
-import { Event } from '@daily-co/daily-js';
+import {Event} from '@daily-co/daily-js';
 
 declare const global: {HermesInternal: null | {}};
+
+console.log('DISABLING EXCEPTIONS!!');
+(console as any).reportErrorsAsExceptions = false;
 
 const ROOM_URL = 'https://paulk.ngrok.io/hello?cdmn=paulk';
 
@@ -33,6 +36,22 @@ const App = () => {
     g.callObject = callObject;
   }, [callObject]);
 
+  // Debugging events
+  useEffect(() => {
+    if (!callObject) {
+      return;
+    }
+    const events: Event[] = ['loading', 'loaded'];
+    for (const event of events) {
+      callObject.on(event, logDailyEvent);
+    }
+    return () => {
+      for (const event of events) {
+        callObject.off(event, logDailyEvent);
+      }
+    };
+  }, [callObject]);
+
   const startJoiningCall = useCallback(() => {
     const newCallObject = DailyIframe.createCallObject();
     setCallObject(newCallObject);
@@ -45,21 +64,21 @@ const App = () => {
       return;
     }
 
-    const events: Event[] = ["joined-meeting", "left-meeting", "error"];
+    const events: Event[] = ['joined-meeting', 'left-meeting', 'error'];
 
     function handleNewMeetingState(event?: any) {
       event && logDailyEvent(event);
       switch (callObject?.meetingState()) {
-        case "joined-meeting":
+        case 'joined-meeting':
           setAppState(AppState.Joined);
           break;
-        case "left-meeting":
+        case 'left-meeting':
           callObject?.destroy().then(() => {
             setCallObject(null);
             setAppState(AppState.Idle);
           });
           break;
-        case "error":
+        case 'error':
           setAppState(AppState.Error);
           break;
         default:
