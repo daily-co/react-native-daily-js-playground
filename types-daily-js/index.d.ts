@@ -17,6 +17,7 @@ declare class DailyIframe {
   leave(): Promise<void>;
   destroy(): Promise<void>;
   meetingState(): DailyIframe.MeetingState;
+  startCamera(properties?: DailyIframe.FrameProps): Promise<any>; // TODO: flesh out return type
   on(event: DailyIframe.Event, handler: (event?: any) => void): DailyIframe; // TODO: flesh out handler
   off(event: DailyIframe.Event, handler: (event?: any) => void): DailyIframe; // TODO: flesh out handler
 }
