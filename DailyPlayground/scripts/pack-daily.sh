@@ -7,11 +7,13 @@ RN_DAILY_JS_DIR=~/src/rn-daily-js-playground/react-native-daily-js
 
 # `npm pack` @daily-co/daily-js
 pushd $DAILY_JS_DIR
+rm daily-co-daily-js-*.tgz
 npm run build-main-dev # needed because dist/ not built on pack alone
 npm pack
 popd
 
 # `npm pack` @daily-co/react-native-daily-js
 pushd $RN_DAILY_JS_DIR
+rm daily-co-react-native-daily-js-*.tgz
 npm pack
 popd
