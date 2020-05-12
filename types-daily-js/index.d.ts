@@ -17,6 +17,7 @@ declare class DailyIframe {
   leave(): Promise<void>;
   destroy(): Promise<void>;
   meetingState(): DailyIframe.MeetingState;
+  participants(): { [id: string]: DailyIframe.Participant };
   startCamera(properties?: DailyIframe.FrameProps): Promise<any>; // TODO: flesh out return type
   on(event: DailyIframe.Event, handler: (event?: any) => void): DailyIframe; // TODO: flesh out handler
   off(event: DailyIframe.Event, handler: (event?: any) => void): DailyIframe; // TODO: flesh out handler
@@ -25,7 +26,14 @@ declare class DailyIframe {
 // Declares supporting types under the `DailyIframe` namespace.
 declare namespace DailyIframe {
   type FrameProps = object; // TODO: flesh out
-  type Participant = object; // TODO: flesh out
+  type Participant = {
+    audio: boolean;
+    audioTrack?: any; // TODO: is there a way to use MediaStreamTrack here without depending on RN?
+    video: boolean;
+    videoTrack?: any;
+    screen: boolean;
+    screenVideoTrack?: any;
+  }; // TODO: flesh out
 
   type MeetingState =
     | "new"
