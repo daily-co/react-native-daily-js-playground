@@ -1,16 +1,15 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {SafeAreaView, StyleSheet, StatusBar} from 'react-native';
 import DailyIframe from '@daily-co/react-native-daily-js';
-import CallPanel from './components/CallPanel';
-import StartButton from './components/StartButton';
+import CallPanel from '../CallPanel/CallPanel';
+import StartButton from '../StartButton/StartButton';
 import {Event} from '@daily-co/daily-js';
+import {logDailyEvent, ROOM_URL} from '../../utils';
 
 declare const global: {HermesInternal: null | {}};
 
-console.log('DISABLING EXCEPTIONS!!');
+console.log('DISABLING EXCEPTIONS!!'); // TODO: eventually remove
 (console as any).reportErrorsAsExceptions = false;
-
-const ROOM_URL = 'https://paulk.ngrok.io/hello?cdmn=paulk';
 
 enum AppState {
   Idle,
@@ -19,10 +18,6 @@ enum AppState {
   Joined,
   Leaving,
   Error,
-}
-
-function logDailyEvent(e: any) {
-  console.log('[daily.co event]', e.action);
 }
 
 const App = () => {
@@ -114,7 +109,7 @@ const App = () => {
       <StatusBar barStyle="dark-content" />
       <SafeAreaView style={styles.container}>
         {showCallPanel ? (
-          <CallPanel roomUrl={ROOM_URL} />
+          <CallPanel roomUrl={ROOM_URL} callObject={callObject} />
         ) : (
           <StartButton
             onPress={startJoiningCall}

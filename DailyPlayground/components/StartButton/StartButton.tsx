@@ -9,18 +9,20 @@ type Props = {
 const StartButton = (props: Props) => {
   return (
     <TouchableHighlight onPress={props.onPress} disabled={props.disabled}>
-      <View style={styles.startButton}>
-        <Text>Tap to start a call</Text>
+      <View style={styles.button}>
+        <Text style={styles.text}>Tap to start a call</Text>
       </View>
     </TouchableHighlight>
   );
 };
 
 const styles = StyleSheet.create({
-  startButton: {
+  button: {
     paddingHorizontal: 30,
     paddingVertical: 20,
     backgroundColor: '#ffffff',
+  },
+  text: {
     fontFamily: 'Helvetica Neue',
     fontStyle: 'normal',
     fontWeight: 'normal',
