@@ -1,5 +1,5 @@
 import React, {useEffect, useReducer, useMemo} from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {logDailyEvent} from '../../utils';
 import {Event} from '@daily-co/daily-js';
 import {
@@ -28,7 +28,9 @@ const CallPanel = (props: Props) => {
    * Start listening for participant changes, when the callObject is set.
    */
   useEffect(() => {
-    if (!props.callObject) return;
+    if (!props.callObject) {
+      return;
+    }
     const callObject = props.callObject;
 
     const events: Event[] = [
@@ -65,7 +67,9 @@ const CallPanel = (props: Props) => {
    * Start listening for call errors, when the callObject is set.
    */
   useEffect(() => {
-    if (!props.callObject) return;
+    if (!props.callObject) {
+      return;
+    }
     const callObject = props.callObject;
 
     function handleCameraErrorEvent(event?: any) {
@@ -91,7 +95,9 @@ const CallPanel = (props: Props) => {
    * Start listening for fatal errors, when the callObject is set.
    */
   useEffect(() => {
-    if (!props.callObject) return;
+    if (!props.callObject) {
+      return;
+    }
     const callObject = props.callObject;
 
     function handleErrorEvent(event?: any) {
