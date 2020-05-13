@@ -17,7 +17,6 @@ type Props = {
 export default function Tile(props: Props) {
   const stream = useMemo(() => {
     const tracks = [props.videoTrack, props.audioTrack].filter((t) => t);
-    console.log('[Tile] tracks', tracks);
     return tracks.length > 0 ? new MediaStream(tracks) : null;
   }, [props.videoTrack, props.audioTrack]);
 
@@ -29,7 +28,7 @@ export default function Tile(props: Props) {
         style={styles.media}
       />
     ) : null;
-  }, [stream]);
+  }, [stream, props.isLocalPerson]);
 
   const loadingComponent = useMemo(() => {
     return props.isLoading ? <Text>Loading...</Text> : null;
