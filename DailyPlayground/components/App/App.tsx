@@ -24,22 +24,29 @@ const App = () => {
   const [appState, setAppState] = useState(AppState.Idle);
   const [callObject, setCallObject] = useState<DailyIframe | null>(null);
 
-  // Debugging globals
+  /**
+   * Assign debugging globals.
+   */
   useEffect(() => {
     const g = global as any;
     g.DailyIframe = DailyIframe;
     g.callObject = callObject;
   }, [callObject]);
 
-  // Debugging events
+  /**
+   * Attach debugging events handlers.
+   */
   useEffect(() => {
     if (!callObject) {
       return;
     }
+
     const events: Event[] = ['loading', 'loaded'];
+
     for (const event of events) {
       callObject.on(event, logDailyEvent);
     }
+
     return () => {
       for (const event of events) {
         callObject.off(event, logDailyEvent);
@@ -47,13 +54,9 @@ const App = () => {
     };
   }, [callObject]);
 
-  const startJoiningCall = useCallback(() => {
-    const newCallObject = DailyIframe.createCallObject();
-    setCallObject(newCallObject);
-    setAppState(AppState.Joining);
-    newCallObject.join({url: ROOM_URL});
-  }, []);
-
+  /**
+   * Attach lifecycle event handlers.
+   */
   useEffect(() => {
     if (!callObject) {
       return;
@@ -97,6 +100,23 @@ const App = () => {
     };
   }, [callObject]);
 
+  /**
+   * Join a call as soon as a callObject is created.
+   * This must happen *after* the event handlers are attached, above.
+   */
+  useEffect(() => {
+    if (!callObject) {
+      return;
+    }
+    callObject.join({url: ROOM_URL});
+    setAppState(AppState.Joining);
+  }, [callObject]);
+
+  const startCall = useCallback(() => {
+    const newCallObject = DailyIframe.createCallObject();
+    setCallObject(newCallObject);
+  }, []);
+
   const showCallPanel = [
     AppState.Joining,
     AppState.Joined,
@@ -111,10 +131,7 @@ const App = () => {
         {showCallPanel ? (
           <CallPanel roomUrl={ROOM_URL} callObject={callObject} />
         ) : (
-          <StartButton
-            onPress={startJoiningCall}
-            disabled={!enableStartButton}
-          />
+          <StartButton onPress={startCall} disabled={!enableStartButton} />
         )}
       </SafeAreaView>
     </>
