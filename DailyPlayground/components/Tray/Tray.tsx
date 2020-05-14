@@ -11,7 +11,8 @@ export default function Tray(props: Props) {
     <View style={styles.container}>
       <TouchableHighlight
         onPress={props.onClickLeaveCall}
-        style={styles.touchable}>
+        style={styles.touchable}
+        disabled={props.disabled}>
         <View style={styles.leaveButton}>
           <Text style={styles.leaveButtonText}>x</Text>
         </View>
