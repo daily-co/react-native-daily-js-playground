@@ -149,7 +149,7 @@ const CallPanel = (props: Props) => {
   }, [callState]);
 
   return (
-    <View style={styles.container}>
+    <>
       <View
         style={[
           styles.mainContainer,
@@ -166,15 +166,11 @@ const CallPanel = (props: Props) => {
         )}
       </View>
       <View style={styles.thumbnailContainer}>{smallTiles}</View>
-    </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    width: '100%',
-  },
   mainContainer: {
     position: 'absolute',
     width: '100%',

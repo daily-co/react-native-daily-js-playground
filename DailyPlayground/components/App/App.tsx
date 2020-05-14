@@ -1,10 +1,11 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {SafeAreaView, StyleSheet, StatusBar} from 'react-native';
+import {SafeAreaView, StyleSheet, StatusBar, View} from 'react-native';
 import DailyIframe from '@daily-co/react-native-daily-js';
 import CallPanel from '../CallPanel/CallPanel';
 import StartButton from '../StartButton/StartButton';
 import {Event} from '@daily-co/daily-js';
 import {logDailyEvent, ROOM_URL} from '../../utils';
+import Tray from '../Tray/Tray';
 
 declare const global: {HermesInternal: null | {}};
 
@@ -127,21 +128,30 @@ const App = () => {
   return (
     <>
       <StatusBar barStyle="light-content" />
-      <SafeAreaView style={styles.container}>
-        {showCallPanel ? (
-          <CallPanel roomUrl={ROOM_URL} callObject={callObject} />
-        ) : (
-          <StartButton onPress={startCall} disabled={!enableStartButton} />
-        )}
+      <SafeAreaView style={styles.safeArea}>
+        <View style={styles.container}>
+          {showCallPanel ? (
+            <>
+              <CallPanel roomUrl={ROOM_URL} callObject={callObject} />
+              <Tray onClickLeaveCall={() => {}} disabled={false}></Tray>
+            </>
+          ) : (
+            <StartButton onPress={startCall} disabled={!enableStartButton} />
+          )}
+        </View>
       </SafeAreaView>
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
     backgroundColor: '#4a4a4a',
+  },
+  container: {
+    flex: 1,
+    width: '100%',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
