@@ -48,7 +48,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#000000',
     aspectRatio: 9 / 16,
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    borderRadius: 10,
+    overflow: 'hidden',
+    marginLeft: 10
   },
   media: {width: '100%', height: '100%', position: 'absolute'},
   loading: {color: '#ffffff', justifyContent: 'center', alignItems: 'stretch'},
