@@ -9,8 +9,9 @@ import Tray from '../Tray/Tray';
 
 declare const global: {HermesInternal: null | {}};
 
-console.log('DISABLING EXCEPTIONS!!'); // TODO: eventually remove
-(console as any).reportErrorsAsExceptions = false;
+// Uncomment during development to temporarily intentionally ignore errors
+// and keep going
+// (console as any).reportErrorsAsExceptions = false;
 
 enum AppState {
   Idle,
