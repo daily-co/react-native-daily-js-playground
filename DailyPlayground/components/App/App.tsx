@@ -118,11 +118,22 @@ const App = () => {
     setCallObject(newCallObject);
   }, []);
 
+  const leaveCall = useCallback(() => {
+    if (!callObject) {
+      return;
+    }
+    setAppState(AppState.Leaving);
+    callObject.leave();
+  }, [callObject]);
+
   const showCallPanel = [
     AppState.Joining,
     AppState.Joined,
     AppState.Error,
   ].includes(appState);
+  const enableCallButtons = [AppState.Joined, AppState.Error].includes(
+    appState,
+  );
   const enableStartButton = appState === AppState.Idle;
 
   return (
@@ -133,7 +144,9 @@ const App = () => {
           {showCallPanel ? (
             <>
               <CallPanel roomUrl={ROOM_URL} callObject={callObject} />
-              <Tray onClickLeaveCall={() => {}} disabled={false}></Tray>
+              <Tray
+                onClickLeaveCall={leaveCall}
+                disabled={!enableCallButtons}></Tray>
             </>
           ) : (
             <StartButton onPress={startCall} disabled={!enableStartButton} />
