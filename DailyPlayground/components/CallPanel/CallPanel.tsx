@@ -152,7 +152,7 @@ const CallPanel = (props: Props) => {
     <View style={styles.container}>
       <View
         style={[
-          styles.topSection,
+          styles.mainContainer,
           message ? styles.messageContainer : styles.largeTilesContainer,
         ]}>
         {message ? (
@@ -165,28 +165,30 @@ const CallPanel = (props: Props) => {
           largeTiles.length > 0 && largeTiles[0]
         )}
       </View>
-      <View style={[styles.bottomSection, styles.smallTilesContainer]}>
-        {smallTiles}
-      </View>
+      <View style={styles.thumbnailContainer}>{smallTiles}</View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    width: '100%',
+  },
+  mainContainer: {
+    position: 'absolute',
     width: '100%',
     height: '100%',
+  },
+  thumbnailContainer: {
     position: 'absolute',
+    width: '100%',
+    height: '25%',
+    top: 0,
+    left: 0,
     display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'stretch',
-    justifyContent: 'center',
-  },
-  topSection: {
-    flex: 4,
-  },
-  bottomSection: {
-    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
   },
   messageContainer: {
     display: 'flex',
@@ -198,11 +200,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-  },
-  smallTilesContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
   },
 });
 

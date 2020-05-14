@@ -126,7 +126,7 @@ const App = () => {
 
   return (
     <>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar barStyle="light-content" />
       <SafeAreaView style={styles.container}>
         {showCallPanel ? (
           <CallPanel roomUrl={ROOM_URL} callObject={callObject} />
@@ -140,12 +140,12 @@ const App = () => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: '#4a4a4a',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '100%',
   },
 });
 
