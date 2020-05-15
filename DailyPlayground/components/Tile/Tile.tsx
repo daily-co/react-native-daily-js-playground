@@ -31,11 +31,17 @@ export default function Tile(props: Props) {
   }, [stream, props.isLocalPerson]);
 
   const loadingComponent = useMemo(() => {
-    return props.isLoading ? <Text>Loading...</Text> : null;
+    return props.isLoading ? (
+      <Text style={styles.loading}>Loading...</Text>
+    ) : null;
   }, [props.isLoading]);
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        props.isLoading ? styles.containerLoading : null,
+      ]}>
       {mediaComponent}
       {loadingComponent}
     </View>
@@ -45,14 +51,26 @@ export default function Tile(props: Props) {
 // TODO: support more than 1-on-1 styling, and not just portrait
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#000000',
     aspectRatio: 9 / 16,
     display: 'flex',
     flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 10,
     overflow: 'hidden',
     marginLeft: 10,
   },
-  media: {width: '100%', height: '100%', position: 'absolute'},
-  loading: {color: '#ffffff', justifyContent: 'center', alignItems: 'stretch'},
+  containerLoading: {
+    backgroundColor: '#000000',
+  },
+  media: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+  },
+  loading: {
+    color: '#ffffff',
+    justifyContent: 'center',
+    alignItems: 'stretch',
+  },
 });
