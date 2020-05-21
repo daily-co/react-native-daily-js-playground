@@ -14,7 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@daily-co/daily-js": "file:~/src/pluot-core/daily-js/daily-co-daily-js-0.9.992-beta.1.tgz",
+    "@daily-co/daily-js": "file:~/src/pluot-core/daily-js/daily-co-daily-js-0.9.992-beta.3.tgz",
     "@types/daily-co__daily-js": "file:~/src/rn-daily-js-playground/types-daily-js",
     "@types/react-native-webrtc": "^1.75.1",
     "react-native-url-polyfill": "^1.1.2",

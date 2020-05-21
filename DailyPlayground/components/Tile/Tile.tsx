@@ -5,7 +5,7 @@ import {
 } from '@daily-co/react-native-daily-js';
 import React, {useMemo} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
-import DailyMediaView from './DailyMediaView';
+import {DailyMediaView} from '@daily-co/react-native-daily-js';
 
 type Props = {
   videoTrack: MediaStreamTrack | null;
