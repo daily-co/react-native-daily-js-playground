@@ -18,6 +18,7 @@ cd DailyPlayground
 nvm i
 
 # Updates relevant package.json files to point to local versions of `react-native-daily-js`, `daily-js`, and `types-daily-js`.
+# Do not commit the resulting changes.
 npm run dev-setup
 
 npm i
