@@ -5,6 +5,7 @@
     "declaration": true,
     "outDir": "./dist",
     "lib": ["es6"],
-    "strict": true
+    "strict": true,
+    "jsx": "react-native"
   }
 }
