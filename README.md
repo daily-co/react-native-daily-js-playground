@@ -4,10 +4,22 @@ A playground for developing and testing `daily-js` running in React Native.
 
 ## Dev environment setup
 
-First, follow [these instructions](https://reactnative.dev/docs/environment-setup), selecting "React Native CLI Quickstart" and your platform (skipping the part about creating a new application).
+### General React Native setup
+
+Follow [these instructions](https://reactnative.dev/docs/environment-setup), selecting "React Native CLI Quickstart" and your platform (skipping the part about creating a new application).
+
+### DailyPlayground machine-specific setup
+
+Edit `DailyPlayground/scripts/variables.sh` to point to the right locations in your file system, and to the versions of each dependency that you have checked out. This will be necessary for building and iterating on `react-native-daily-js`, `daily-js`, and `types-daily-js` all at once.
 
 ```bash
+cd DailyPlayground
+
 nvm i
+
+# Updates relevant package.json files to point to local versions of `react-native-daily-js`, `daily-js`, and `types-daily-js`.
+npm run dev-setup
+
 npm i
 ```
 
@@ -15,7 +27,8 @@ npm i
 
 ### Server
 
-Follow the steps documented in [Building and running pluot-core locally](https://www.notion.so/dailyco/Building-and-running-pluot-core-locally-006e8192a7304fc6b0545c2e527f1aad).
+1. Follow the steps documented in [Building and running pluot-core locally](https://www.notion.so/dailyco/Building-and-running-pluot-core-locally-006e8192a7304fc6b0545c2e527f1aad).
+2. Follow the steps documented in [Making calls in SFU mode in your local dev environment](https://www.notion.so/dailyco/Making-calls-in-SFU-mode-in-your-local-dev-environment-66300270ce4f40a4aa0c72b58a7d11ea).
 
 ### Client
 
@@ -30,8 +43,19 @@ npm run start
 npm run ios
 
 # In a separate terminal
-# Build Android app and launch Android Emulator
+# Build Android app and launch Android Virtual Device (or real device, if one is plugged in and configured for debugging)
 npm run android
+```
+
+## Syncing changes to `react-native-daily-js`, `daily-js`, or `types-daily-js`
+
+When you make a change to either `react-native-daily-js`, `daily-js`, or `types-daily-js`, you'll have to "sync" those changes in a special way in order for the React Native bundler to pick them up. If you're curious, you can read about why in `pack-daily.sh`.
+
+```bash
+# After your change...
+cd DailyPlayground
+
+npm run sync-daily
 ```
 
 ## Debugging
