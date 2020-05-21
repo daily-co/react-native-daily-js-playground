@@ -1,5 +1,6 @@
-DAILY_JS_DIR=~/src/pluot-core/daily-js
-RN_DAILY_JS_DIR=~/src/rn-daily-js-playground/react-native-daily-js
+# Note that the current script is meant to be run as an `npm` command under 
+# DailyPlayground, hence the path relative to that directory
+. ./scripts/variables.sh
 
 # Metro bundler can't follow symlinks so we can't rely on npm's normal support
 # for local packages. That's why we need to consume @daily-co/daily-js and

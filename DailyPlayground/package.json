@@ -12,7 +12,7 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
-    "@daily-co/react-native-daily-js": "file:../react-native-daily-js/daily-co-react-native-daily-js-0.0.1.tgz",
+    "@daily-co/react-native-daily-js": "0.0.1",
     "react": "16.11.0",
     "react-native": "0.62.2"
   },
