@@ -22,6 +22,7 @@ export default function Tile(props: Props) {
         videoTrack={props.videoTrack}
         audioTrack={props.audioTrack}
         mirror={props.isLocalPerson}
+        zOrder={props.isLocalPerson ? 1 : 0}
         style={styles.media}
       />
     );
