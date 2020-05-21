@@ -5,6 +5,7 @@ import {
 } from '@daily-co/react-native-daily-js';
 import React, {useMemo} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
+import DailyMediaView from './DailyMediaView';
 
 type Props = {
   videoTrack: MediaStreamTrack | null;
@@ -15,20 +16,16 @@ type Props = {
 };
 
 export default function Tile(props: Props) {
-  const stream = useMemo(() => {
-    const tracks = [props.videoTrack, props.audioTrack].filter((t) => t);
-    return tracks.length > 0 ? new MediaStream(tracks) : null;
-  }, [props.videoTrack, props.audioTrack]);
-
   const mediaComponent = useMemo(() => {
-    return stream ? (
-      <RTCView
-        streamURL={stream.toURL()}
+    return (
+      <DailyMediaView
+        videoTrack={props.videoTrack}
+        audioTrack={props.audioTrack}
         mirror={props.isLocalPerson}
         style={styles.media}
       />
-    ) : null;
-  }, [stream, props.isLocalPerson]);
+    );
+  }, [props.videoTrack, props.audioTrack, props.isLocalPerson]);
 
   const loadingComponent = useMemo(() => {
     return props.isLoading ? (
