@@ -63,7 +63,8 @@ cd DailyPlayground
 npm run sync-daily
 ```
 
-**NOTE: remember to update `DailyPlayground/scripts/variables.sh` if either `react-native-daily-js`, `daily-js`, or `types-daily-js` has moved in your file system.**
+**NOTE #1: if you've changed any external dependencies in `react-native-daily-js`, `daily-js`, or `types-daily-js`, `npm run sync-daily` won't `npm i` in those packages for you (in order to shorten the iteration cycle). You'll have to either do that manually or just do a fresh `npm run install-dev`.**
+**NOTE #2: remember to update `DailyPlayground/scripts/variables.sh` if either `react-native-daily-js`, `daily-js`, or `types-daily-js` has moved in your file system, or else `npm run sync-daily` won't work.**
 
 ## Debugging
 

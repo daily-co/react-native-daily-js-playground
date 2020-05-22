@@ -9,6 +9,7 @@
 # `npm pack` @daily-co/daily-js
 pushd $DAILY_JS_DIR
 rm daily-co-daily-js-*.tgz
+$INSTALL_BEFORE_PACK && npm i
 npm run build-main-dev # needed because dist/ not built on pack alone
 npm pack
 popd
@@ -16,5 +17,6 @@ popd
 # `npm pack` @daily-co/react-native-daily-js
 pushd $RN_DAILY_JS_DIR
 rm daily-co-react-native-daily-js-*.tgz
+$INSTALL_BEFORE_PACK && npm i
 npm pack
 popd
