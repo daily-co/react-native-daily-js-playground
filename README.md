@@ -41,7 +41,7 @@ npm run install-dev
 cd DailyPlayground
 
 # Bundle JS, start JS file server, and start watching for file changes in order to re-bundle
-npm run start
+npm start -- --reset-cache
 
 # In a separate terminal
 # Build iOS app and launch iOS Simulator
