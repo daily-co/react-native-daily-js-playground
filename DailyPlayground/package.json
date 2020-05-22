@@ -6,8 +6,8 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "install-dev": "./scripts/dev-setup.sh && ./scripts/pack-daily.sh && npm i",
-    "sync-daily": "./scripts/dev-setup.sh && ./scripts/pack-daily.sh && npm i @daily-co/react-native-daily-js --force",
+    "install-dev": "./scripts/dev-setup.sh && INSTALL_BEFORE_PACK=true ./scripts/pack-daily.sh && npm i",
+    "sync-daily": "./scripts/dev-setup.sh && INSTALL_BEFORE_PACK=false ./scripts/pack-daily.sh && npm i @daily-co/react-native-daily-js --force",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
