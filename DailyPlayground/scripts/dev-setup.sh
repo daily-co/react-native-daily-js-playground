@@ -11,5 +11,4 @@ popd
 
 pushd $RN_DAILY_JS_DIR
 sed -E -i.bak 's|"@daily-co/daily-js":.*$|"@daily-co/daily-js": "file:'$DAILY_JS_DIR'/daily-co-daily-js-'$DAILY_JS_VERSION'.tgz",|' package.json && rm *.bak
-sed -E -i.bak 's|"@types/daily-co__daily-js":.*$|"@types/daily-co__daily-js": "file:'$DAILY_TYPES_DIR'",|' package.json && rm *.bak
 popd
