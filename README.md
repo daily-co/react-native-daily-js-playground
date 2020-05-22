@@ -10,18 +10,22 @@ Follow [these instructions](https://reactnative.dev/docs/environment-setup), sel
 
 ### DailyPlayground machine-specific setup
 
-Edit `DailyPlayground/scripts/variables.sh` to point to the right locations in your file system, and to the versions of each dependency that you have checked out. This will be necessary for building and iterating on `react-native-daily-js`, `daily-js`, and `types-daily-js` all at once.
+Edit `DailyPlayground/scripts/variables.sh` to point to the right locations in your file system. This will be necessary for building and iterating on `react-native-daily-js`, `daily-js`, and `types-daily-js` all at once.
 
 ```bash
 cd DailyPlayground
 
 nvm i
 
-# Updates relevant package.json files to point to local versions of `react-native-daily-js`, `daily-js`, and `types-daily-js`.
-# Do not commit the resulting changes.
-npm run dev-setup
-
-npm i
+# Special install that first updates package.json files to point to local 
+# versions of `react-native-daily-js`, `daily-js`, and `types-daily-js`,
+# then packages those dependencies for consumption by React Native bundler.
+#
+# Do not commit the resulting package.json changes.
+#
+# Note a regular `npm install` won't subsequently work until those changes are
+# discarded.
+npm run install-dev
 ```
 
 ## Running in dev
@@ -59,7 +63,7 @@ cd DailyPlayground
 npm run sync-daily
 ```
 
-**NOTE: if you've needed to update `DailyPlayground/scripts/variables.sh` for any reason (including a package version update), then you'll need to run `npm run dev-setup` again before `npm run sync-daily` will succeed.**
+**NOTE: remember to update `DailyPlayground/scripts/variables.sh` if either `react-native-daily-js`, `daily-js`, or `types-daily-js` has moved in your file system.**
 
 ## Debugging
 
