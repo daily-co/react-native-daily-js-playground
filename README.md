@@ -59,6 +59,8 @@ cd DailyPlayground
 npm run sync-daily
 ```
 
+**NOTE: if you've needed to update `DailyPlayground/scripts/variables.sh` for any reason (including a package version update), then you'll need to run `npm run dev-setup` again before `npm run sync-daily` will succeed.**
+
 ## Debugging
 
 ### Opening the debug menu
