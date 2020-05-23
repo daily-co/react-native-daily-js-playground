@@ -1,8 +1,4 @@
-import {
-  MediaStreamTrack,
-  RTCView,
-  MediaStream,
-} from '@daily-co/react-native-daily-js';
+import {MediaStreamTrack} from '@daily-co/react-native-daily-js';
 import React, {useMemo} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import {DailyMediaView} from '@daily-co/react-native-daily-js';
@@ -38,7 +34,9 @@ export default function Tile(props: Props) {
     <View
       style={[
         styles.container,
-        props.isLoading ? styles.containerLoading : null,
+        props.isLoading || !props.videoTrack
+          ? styles.containerLoadingOrNotShowingVideo
+          : null,
       ]}>
       {mediaComponent}
       {loadingComponent}
@@ -58,7 +56,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     marginLeft: 10,
   },
-  containerLoading: {
+  containerLoadingOrNotShowingVideo: {
     backgroundColor: '#000000',
   },
   media: {
