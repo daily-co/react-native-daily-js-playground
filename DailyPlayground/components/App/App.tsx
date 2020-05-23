@@ -147,7 +147,9 @@ const App = () => {
               <CallPanel roomUrl={ROOM_URL} callObject={callObject} />
               <Tray
                 onClickLeaveCall={leaveCall}
-                disabled={!enableCallButtons}></Tray>
+                disabled={!enableCallButtons}
+                callObject={callObject}
+              />
             </>
           ) : (
             <StartButton onPress={startCall} disabled={!enableStartButton} />
