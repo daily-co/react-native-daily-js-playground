@@ -1,11 +1,10 @@
 import {MediaStreamTrack} from '@daily-co/react-native-daily-js';
 import {Participant} from '@daily-co/daily-js';
-import {ROOM_URL} from '../../utils';
 
 /**
  * Call state is comprised of:
  * - "Call items" (inputs to the call, i.e. participants or shared screens)
- * - UI state that depends on call items (for now, just whether to show "click allow" message)
+ * - Error state
  */
 type CallState = {
   callItems: {[id: string]: CallItem};
@@ -142,7 +141,7 @@ function containsScreenShare(callItems: {[id: string]: CallItem}) {
   return Object.keys(callItems).some((id) => isScreenShare(id));
 }
 
-function getMessage(callState: CallState) {
+function getMessage(callState: CallState, roomUrl: string) {
   let header = null;
   let detail = null;
   let isError = false;
@@ -156,7 +155,7 @@ function getMessage(callState: CallState) {
     isError = true;
   } else if (Object.keys(callState.callItems).length === 1) {
     header = 'Copy and share this URL to invite others';
-    detail = ROOM_URL;
+    detail = roomUrl;
   }
   return header ? {header, detail, isError} : null;
 }

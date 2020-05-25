@@ -6,6 +6,7 @@ import StartButton from '../StartButton/StartButton';
 import {Event} from '@daily-co/daily-js';
 import {logDailyEvent, ROOM_URL} from '../../utils';
 import Tray from '../Tray/Tray';
+import CallObjectContext from '../../CallObjectContext';
 
 declare const global: {HermesInternal: null | {}};
 
@@ -138,17 +139,16 @@ const App = () => {
   const enableStartButton = appState === AppState.Idle;
 
   return (
-    <>
+    <CallObjectContext.Provider value={callObject}>
       <StatusBar barStyle="light-content" />
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.container}>
           {showCallPanel ? (
             <>
-              <CallPanel roomUrl={ROOM_URL} callObject={callObject} />
+              <CallPanel roomUrl={ROOM_URL} />
               <Tray
                 onClickLeaveCall={leaveCall}
                 disabled={!enableCallButtons}
-                callObject={callObject}
               />
             </>
           ) : (
@@ -156,7 +156,7 @@ const App = () => {
           )}
         </View>
       </SafeAreaView>
-    </>
+    </CallObjectContext.Provider>
   );
 };
 

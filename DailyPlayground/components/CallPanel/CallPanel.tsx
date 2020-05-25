@@ -1,4 +1,4 @@
-import React, {useEffect, useReducer, useMemo} from 'react';
+import React, {useEffect, useReducer, useMemo, useContext} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {logDailyEvent} from '../../utils';
 import {Event} from '@daily-co/daily-js';
@@ -15,23 +15,23 @@ import {
 } from './callState';
 import Tile from '../Tile/Tile';
 import CallMessage from '../CallMessage/CallMessage';
+import CallObjectContext from '../../CallObjectContext';
 
 type Props = {
   roomUrl: string;
-  callObject: DailyIframe | null;
 };
 
 const CallPanel = (props: Props) => {
+  const callObject = useContext(CallObjectContext);
   const [callState, dispatch] = useReducer(callReducer, initialCallState);
 
   /**
    * Start listening for participant changes, when the callObject is set.
    */
   useEffect(() => {
-    if (!props.callObject) {
+    if (!callObject) {
       return;
     }
-    const callObject = props.callObject;
 
     const events: Event[] = [
       'participant-joined',
@@ -39,13 +39,13 @@ const CallPanel = (props: Props) => {
       'participant-left',
     ];
 
-    function handleNewParticipantsState(event?: any) {
+    const handleNewParticipantsState = (event?: any) => {
       event && logDailyEvent(event);
       dispatch({
         type: PARTICIPANTS_CHANGE,
         participants: callObject.participants(),
       });
-    }
+    };
 
     // Use initial state
     handleNewParticipantsState();
@@ -61,16 +61,15 @@ const CallPanel = (props: Props) => {
         callObject.off(event, handleNewParticipantsState);
       }
     };
-  }, [props.callObject]);
+  }, [callObject]);
 
   /**
    * Start listening for call errors, when the callObject is set.
    */
   useEffect(() => {
-    if (!props.callObject) {
+    if (!callObject) {
       return;
     }
-    const callObject = props.callObject;
 
     function handleCameraErrorEvent(event?: any) {
       logDailyEvent(event);
@@ -89,16 +88,15 @@ const CallPanel = (props: Props) => {
     return function cleanup() {
       callObject.off('camera-error', handleCameraErrorEvent);
     };
-  }, [props.callObject]);
+  }, [callObject]);
 
   /**
    * Start listening for fatal errors, when the callObject is set.
    */
   useEffect(() => {
-    if (!props.callObject) {
+    if (!callObject) {
       return;
     }
-    const callObject = props.callObject;
 
     function handleErrorEvent(event?: any) {
       logDailyEvent(event);
@@ -116,7 +114,7 @@ const CallPanel = (props: Props) => {
     return function cleanup() {
       callObject.off('error', handleErrorEvent);
     };
-  }, [props.callObject]);
+  }, [callObject]);
 
   const [largeTiles, smallTiles] = useMemo(() => {
     let largeTiles: JSX.Element[] = [];
@@ -131,7 +129,6 @@ const CallPanel = (props: Props) => {
           videoTrack={callItem.videoTrack}
           audioTrack={callItem.audioTrack}
           isLocalPerson={isLocal(id)}
-          isLarge={isLarge}
           isLoading={callItem.isLoading}
         />
       );
@@ -144,9 +141,7 @@ const CallPanel = (props: Props) => {
     return [largeTiles, smallTiles];
   }, [callState.callItems]);
 
-  const message = useMemo(() => {
-    return getMessage(callState);
-  }, [callState]);
+  const message = getMessage(callState, props.roomUrl);
 
   return (
     <>
