@@ -1,6 +1,7 @@
-import React, {useState, useCallback, useEffect} from 'react';
+import React, {useState, useCallback, useEffect, useContext} from 'react';
 import {StyleSheet, View, TouchableHighlight, Text} from 'react-native';
 import {logDailyEvent} from '../../utils';
+import CallObjectContext from '../../CallObjectContext';
 
 /**
  * Gets [isCameraMuted, isMicMuted].
@@ -25,37 +26,36 @@ function getStreamStates(callObject: DailyIframe) {
 type Props = {
   onClickLeaveCall: () => void;
   disabled: boolean;
-  callObject: DailyIframe | null;
 };
 
 export default function Tray(props: Props) {
+  const callObject = useContext(CallObjectContext);
   const [isCameraMuted, setCameraMuted] = useState(false);
   const [isMicMuted, setMicMuted] = useState(false);
 
   const toggleCamera = useCallback(() => {
-    props.callObject?.setLocalVideo(isCameraMuted);
-  }, [props.callObject, isCameraMuted]);
+    callObject?.setLocalVideo(isCameraMuted);
+  }, [callObject, isCameraMuted]);
 
   const toggleMic = useCallback(() => {
-    props.callObject?.setLocalAudio(isMicMuted);
-  }, [props.callObject, isMicMuted]);
+    callObject?.setLocalAudio(isMicMuted);
+  }, [callObject, isMicMuted]);
 
   /**
    * Start listening for participant changes when callObject is set (i.e. when the component mounts).
    * This event will capture any changes to your audio/video mute state.
    */
   useEffect(() => {
-    if (!props.callObject) {
+    if (!callObject) {
       return;
     }
-    const callObject = props.callObject;
 
-    function handleNewParticipantsState(event?: any) {
+    const handleNewParticipantsState = (event?: any) => {
       event && logDailyEvent(event);
       const [isCameraMuted, isMicMuted] = getStreamStates(callObject);
       setCameraMuted(isCameraMuted);
       setMicMuted(isMicMuted);
-    }
+    };
 
     // Use initial state
     handleNewParticipantsState();
@@ -67,7 +67,7 @@ export default function Tray(props: Props) {
     return function cleanup() {
       callObject.off('participant-updated', handleNewParticipantsState);
     };
-  }, [props.callObject]);
+  }, [callObject]);
 
   return (
     <View style={styles.container}>

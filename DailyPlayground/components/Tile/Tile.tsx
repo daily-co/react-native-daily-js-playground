@@ -7,7 +7,6 @@ type Props = {
   videoTrack: MediaStreamTrack | null;
   audioTrack: MediaStreamTrack | null;
   isLocalPerson: boolean;
-  isLarge: boolean;
   isLoading: boolean;
 };
 
