@@ -10,7 +10,15 @@ Follow [these instructions](https://reactnative.dev/docs/environment-setup), sel
 
 ### DailyPlayground machine-specific setup
 
-Edit `DailyPlayground/scripts/variables.sh` to point to the right locations in your file system. This will be necessary for building and iterating on `react-native-daily-js`, `daily-js`, and `types-daily-js` all at once.
+Edit `DailyPlayground/scripts/variables.sh` to point to the right locations in your file system. This will be necessary for building and iterating on `react-native-daily-js` and `daily-js` simultaneously.
+
+Then go to your `daily-js` repo and add the following property in `package.json`:
+
+```
+"types": "wip-index.d.ts",
+```
+
+Finally:
 
 ```bash
 cd DailyPlayground
