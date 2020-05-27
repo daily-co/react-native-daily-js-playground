@@ -1,8 +1,7 @@
 import {MediaStreamTrack} from '@daily-co/react-native-daily-js';
-import React, {useMemo, useContext, useCallback} from 'react';
-import {Text, View, StyleSheet, TouchableHighlight} from 'react-native';
+import React, {useMemo} from 'react';
+import {Text, View, StyleSheet} from 'react-native';
 import {DailyMediaView} from '@daily-co/react-native-daily-js';
-import CallObjectContext from '../../CallObjectContext';
 
 type Props = {
   videoTrack: MediaStreamTrack | null;
@@ -12,28 +11,15 @@ type Props = {
 };
 
 export default function Tile(props: Props) {
-  const callObject = useContext(CallObjectContext);
-
-  const cycleCamera = useCallback(() => {
-    if (!callObject) {
-      return;
-    }
-    props.isLocalPerson && callObject.cycleCamera();
-  }, [callObject, props.isLocalPerson]);
-
   const mediaComponent = useMemo(() => {
     return (
-      <TouchableHighlight
-        onPress={cycleCamera}
-        style={styles.mediaOrTouchableWrapper}>
-        <DailyMediaView
-          videoTrack={props.videoTrack}
-          audioTrack={props.audioTrack}
-          mirror={props.isLocalPerson}
-          zOrder={props.isLocalPerson ? 1 : 0}
-          style={styles.mediaOrTouchableWrapper}
-        />
-      </TouchableHighlight>
+      <DailyMediaView
+        videoTrack={props.videoTrack}
+        audioTrack={props.audioTrack}
+        mirror={props.isLocalPerson}
+        zOrder={props.isLocalPerson ? 1 : 0}
+        style={styles.media}
+      />
     );
   }, [props.videoTrack, props.audioTrack, props.isLocalPerson]);
 
@@ -72,7 +58,7 @@ const styles = StyleSheet.create({
   containerLoadingOrNotShowingVideo: {
     backgroundColor: '#000000',
   },
-  mediaOrTouchableWrapper: {
+  media: {
     width: '100%',
     height: '100%',
     position: 'absolute',
