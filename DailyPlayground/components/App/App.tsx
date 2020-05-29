@@ -1,9 +1,13 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {SafeAreaView, StyleSheet, StatusBar, View} from 'react-native';
-import DailyIframe from '@daily-co/react-native-daily-js';
+import DailyIframe, {
+  Event,
+  DailyCall,
+  MediaStreamTrack,
+  EventObject,
+} from '@daily-co/react-native-daily-js';
 import CallPanel from '../CallPanel/CallPanel';
 import StartButton from '../StartButton/StartButton';
-import {Event} from '@daily-co/daily-js';
 import {logDailyEvent, ROOM_URL} from '../../utils';
 import Tray from '../Tray/Tray';
 import CallObjectContext from '../../CallObjectContext';
@@ -25,7 +29,7 @@ enum AppState {
 
 const App = () => {
   const [appState, setAppState] = useState(AppState.Idle);
-  const [callObject, setCallObject] = useState<DailyIframe | null>(null);
+  const [callObject, setCallObject] = useState<DailyCall | null>(null);
 
   /**
    * Assign debugging globals.
@@ -67,8 +71,8 @@ const App = () => {
 
     const events: Event[] = ['joined-meeting', 'left-meeting', 'error'];
 
-    function handleNewMeetingState(event?: any) {
-      event && logDailyEvent(event);
+    function handleNewMeetingState(event?: EventObject) {
+      logDailyEvent(event);
       switch (callObject?.meetingState()) {
         case 'joined-meeting':
           setAppState(AppState.Joined);
