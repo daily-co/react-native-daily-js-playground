@@ -1,5 +1,7 @@
-export function logDailyEvent(e: any) {
-  console.log('[daily.co event]', e.action);
+import {EventObject} from '@daily-co/react-native-daily-js';
+
+export function logDailyEvent(event?: EventObject) {
+  event && console.log('[daily.co event]', event.action);
 }
 
 export const ROOM_URL = 'https://paulk.ngrok.io/hello?cdmn=paulk';
