@@ -1,10 +1,9 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {SafeAreaView, StyleSheet, StatusBar, View} from 'react-native';
 import DailyIframe, {
-  Event,
+  DailyEvent,
   DailyCall,
-  MediaStreamTrack,
-  EventObject,
+  DailyEventObject,
 } from '@daily-co/react-native-daily-js';
 import CallPanel from '../CallPanel/CallPanel';
 import StartButton from '../StartButton/StartButton';
@@ -48,7 +47,7 @@ const App = () => {
       return;
     }
 
-    const events: Event[] = ['loading', 'loaded'];
+    const events: DailyEvent[] = ['loading', 'loaded'];
 
     for (const event of events) {
       callObject.on(event, logDailyEvent);
@@ -69,9 +68,9 @@ const App = () => {
       return;
     }
 
-    const events: Event[] = ['joined-meeting', 'left-meeting', 'error'];
+    const events: DailyEvent[] = ['joined-meeting', 'left-meeting', 'error'];
 
-    function handleNewMeetingState(event?: EventObject) {
+    function handleNewMeetingState(event?: DailyEventObject) {
       logDailyEvent(event);
       switch (callObject?.meetingState()) {
         case 'joined-meeting':
