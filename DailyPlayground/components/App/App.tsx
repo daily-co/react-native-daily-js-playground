@@ -127,13 +127,9 @@ const App = () => {
     if (!callObject) {
       return;
     }
-    if (appState === AppState.Error) {
-      setAppState(AppState.Idle);
-    } else {
-      setAppState(AppState.Leaving);
-      callObject.leave();
-    }
-  }, [appState, callObject]);
+    setAppState(AppState.Leaving);
+    callObject.leave();
+  }, [callObject]);
 
   const showCallPanel = [
     AppState.Joining,
