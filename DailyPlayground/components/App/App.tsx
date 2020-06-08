@@ -47,7 +47,7 @@ const App = () => {
       return;
     }
 
-    const events: DailyEvent[] = ['loading', 'loaded'];
+    const events: DailyEvent[] = ['loading', 'load-attempt-failed', 'loaded'];
 
     for (const event of events) {
       callObject.on(event, logDailyEvent);
