@@ -13,8 +13,10 @@
   },
   "dependencies": {
     "@daily-co/react-native-daily-js": "0.0.1",
+    "@react-native-community/async-storage": "^1.11.0",
     "react": "16.11.0",
-    "react-native": "0.62.2"
+    "react-native": "0.62.2",
+    "react-native-webrtc": "^1.75.3"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
