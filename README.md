@@ -25,11 +25,13 @@ cd DailyPlayground
 
 nvm i
 
-# Special install that first updates package.json files to point to local 
-# versions of `react-native-daily-js`, `daily-js`, and `types-daily-js`,
-# then packages those dependencies for consumption by React Native bundler.
+# Special install command that first updates relevant package.json files to
+# point to local versions of `react-native-daily-js` and `daily-js`, then
+# packages those dependencies for consumption by the React Native bundler.
 #
-# Do not commit the resulting package.json changes.
+# Do not commit the resulting package.json or package-lock.json changes (which
+# will happen for both `rn-daily-js-playground` as well as
+# `react-native-daily-js`.
 #
 # Note a regular `npm install` won't subsequently work until those changes are
 # discarded.
@@ -48,32 +50,37 @@ npm run install-dev
 ```bash
 cd DailyPlayground
 
-# Bundle JS, start JS file server, and start watching for file changes in order to re-bundle
+# Bundle JS, start JS file server, and start watching for file changes in order
+# to re-bundle
 npm start -- --reset-cache
 
-# In a separate terminal
-# Build iOS app and launch iOS Simulator
-npm run ios
+# Open up a new terminal window
 
-# In a separate terminal
-# Build Android app and launch Android Virtual Device (or real device, if one is plugged in and configured for debugging)
+# After plugging in an Android device configured for debugging...
 npm run android
+
+# After plugging in an iOS device configured for debugging...
+# (see "Building to iOS device" for additional one-time setup)
+open ios/DailyPlayground.xcworkspace
 ```
 
-## Syncing changes to `react-native-daily-js`, `daily-js`, or `types-daily-js`
+## Syncing changes to `react-native-daily-js` or `daily-js`
 
-When you make a change to either `react-native-daily-js`, `daily-js`, or `types-daily-js`, you'll have to "sync" those changes in a special way in order for the React Native bundler to pick them up. If you're curious, you can read about why in `pack-daily.sh`.
+When you make a change to either `react-native-daily-js` or `daily-js`, you'll have to "sync" those changes in a special way in order for the React Native bundler to pick them up. If you're curious, you can read about why in `pack-daily.sh`.
 
 ```bash
-# After your change...
+# After you've made your change...
 cd DailyPlayground
 
 npm run sync-daily
+
+# If there's been a change to native iOS code in `react-native-daily-js`...
+npx pod-install
 ```
 
-**NOTE #1** If you've changed any external dependencies in `react-native-daily-js`, `daily-js`, or `types-daily-js`, `npm run sync-daily` won't `npm i` in those packages for you (in order to shorten the iteration cycle). You'll have to either do that manually or just do a fresh `npm run install-dev`.
+**NOTE #1** If you've changed any transitive dependencies of `react-native-daily-js` or `daily-js`, `npm run sync-daily` won't `npm i` in those packages for you (this choice was made in order to shorten the iteration cycle). You'll have to run `npm i` on those packages manually or just do a fresh `npm run install-dev`.
 
-**NOTE #2** Remember to update `DailyPlayground/scripts/variables.sh` if either `react-native-daily-js`, `daily-js`, or `types-daily-js` has moved in your file system, or else `npm run sync-daily` won't work.
+**NOTE #2** Remember to update `DailyPlayground/scripts/variables.sh` if either `react-native-daily-js` or `daily-js` has moved in your file system, or else `npm run sync-daily` won't work.
 
 ## Debugging
 
@@ -108,9 +115,7 @@ Open the React debug menu in the app, following the instructions above (under "O
 
 NOTE: you may have to reload the JavaScript a couple of times for the debugger to properly connect. Do this by following the instructions above (under "Reloading after a code change").
 
-## Building to device
-
-### iOS
+## Building to iOS device
 
 The iOS Simulator, sadly, doesn't provide a fake video stream. To build to device:
 
@@ -118,3 +123,21 @@ The iOS Simulator, sadly, doesn't provide a fake video stream. To build to devic
 - Expose your `pluot-core` dev server in a way that is reachable by your iOS device, following the steps documented in [Exposing your pluot-core dev server publicly](https://www.notion.so/dailyco/Exposing-your-pluot-core-dev-server-publicly-d70f8aa0836644dabdfc017536d08415).
 
 Note that, as long as you're on the same wifi as the dev box running the React Native development server, the app should just work.
+
+## Iterating on native code in `react-native-daily-js`
+
+`react-native-daily-js` contains some native iOS and Android code in Objective-C and Java, respectively. You can use `DailyPlayground` to iterate on that code more easily than editing the files in `react-native-daily-js` and then syncing them following the instructions in "Syncing changes to `react-native-daily-js` or `daily-js`".
+
+### iOS
+
+Assuming you're in a state where you can successfully build and run on iOS, uncomment (and appropriately update) the following line in the `Podfile`:
+
+```ruby
+# Uncomment (and point to the right place) during development to enable
+# editing react-native-daily-js's native iOS files directly in
+# DailyPlayground without having to reinstall the npm package and run another
+# pod install
+# pod 'react-native-daily-js', :path => '~/src/pluot-core/react-native-daily-js'
+```
+
+Then an `npx pod-install` will update the Xcode workspace to point directly at your files in `react-native-daily-js`, letting you iterate on them in Xcode in the context of this playground app.
