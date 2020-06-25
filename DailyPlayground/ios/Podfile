@@ -77,6 +77,12 @@ target 'DailyPlayground' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
+  # Uncomment (and point to the right place) during development to enable 
+  # editing react-native-daily-js's native iOS files directly in 
+  # DailyPlayground without having to reinstall the npm package and run another
+  # pod install
+  # pod 'react-native-daily-js', :path => '~/src/pluot-core/react-native-daily-js'
+
   target 'DailyPlaygroundTests' do
     inherit! :complete
     # Pods for testing
