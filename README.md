@@ -140,4 +140,20 @@ Assuming you're in a state where you can successfully build and run on iOS, unco
 # pod 'react-native-daily-js', :path => '~/src/pluot-core/react-native-daily-js'
 ```
 
-Then an `npx pod-install` will update the Xcode workspace to point directly at your files in `react-native-daily-js`, letting you iterate on them in Xcode in the context of this playground app.
+Then an `npx pod-install` will update the `DailyPlayground` Xcode workspace to point directly at your files in `react-native-daily-js`, letting you iterate on them in Xcode in the context of this playground app.
+
+### Android
+
+Follow the instructions in the following section of `react-native-daily-js`'s `react-native.config.js` file:
+
+```js
+// Uncomment the below (and point to the right place, and comment the
+// above) during development to enable editing react-native-daily-js's
+// native Android files directly in DailyPlayground without having to
+// reinstall the npm package. Unfortunately the path must be relative.
+// android: {
+//   sourceDir: '../../../../../pluot-core/react-native-daily-js/android/',
+// },
+```
+
+Then on the next `npm sync-daily` or `npm install-dev`, the `DailyPlayground` Android project will point directly at your files in `react-native-daily-js`, letting you iterate on them in Android Studio in the context of this playground app.
