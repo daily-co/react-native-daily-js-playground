@@ -1,7 +1,7 @@
-import React, {useEffect, useReducer, useMemo, useContext} from 'react';
-import {View, StyleSheet} from 'react-native';
-import {logDailyEvent} from '../../utils';
-import {Event} from '@daily-co/daily-js';
+import React, { useEffect, useReducer, useMemo, useContext } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { logDailyEvent } from '../../utils';
+import { Event } from '@daily-co/daily-js';
 import {
   callReducer,
   initialCallState,
@@ -149,7 +149,8 @@ const CallPanel = (props: Props) => {
         style={[
           styles.mainContainer,
           message ? styles.messageContainer : styles.largeTilesContainer,
-        ]}>
+        ]}
+      >
         {message ? (
           <CallMessage
             header={message.header}

@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 
 type Props = {
   header: string;
@@ -10,13 +10,15 @@ type Props = {
 export default function CallMessage(props: Props) {
   return (
     <View
-      style={[styles.container, props.isError ? styles.errorContainer : {}]}>
+      style={[styles.container, props.isError ? styles.errorContainer : {}]}
+    >
       <Text
         style={[
           styles.text,
           styles.headerText,
           props.isError ? styles.errorText : {},
-        ]}>
+        ]}
+      >
         {props.header}
       </Text>
       {props.detail && <Text style={styles.text}>{props.detail}</Text>}

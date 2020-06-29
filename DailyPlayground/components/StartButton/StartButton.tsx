@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableHighlight, View, StyleSheet, Text} from 'react-native';
+import { TouchableHighlight, View, StyleSheet, Text } from 'react-native';
 
 type Props = {
   onPress: () => void;

@@ -1,6 +1,6 @@
-import React, {useState, useCallback, useEffect, useContext} from 'react';
-import {StyleSheet, View, TouchableHighlight, Text} from 'react-native';
-import {logDailyEvent} from '../../utils';
+import React, { useState, useCallback, useEffect, useContext } from 'react';
+import { StyleSheet, View, TouchableHighlight, Text } from 'react-native';
+import { logDailyEvent } from '../../utils';
 import CallObjectContext from '../../CallObjectContext';
 
 /**
@@ -74,41 +74,47 @@ export default function Tray(props: Props) {
       <TouchableHighlight
         onPress={toggleMic}
         style={[styles.touchable, styles.muteTouchable]}
-        disabled={props.disabled}>
+        disabled={props.disabled}
+      >
         <View
           style={[
             styles.button,
             styles.muteButton,
             isMicMuted ? styles.muteButtonMuted : styles.muteButtonUnmuted,
             props.disabled ? styles.buttonDisabled : null,
-          ]}>
+          ]}
+        >
           <Text>mic</Text>
         </View>
       </TouchableHighlight>
       <TouchableHighlight
         onPress={props.onClickLeaveCall}
         style={[styles.touchable, styles.leaveTouchable]}
-        disabled={props.disabled}>
+        disabled={props.disabled}
+      >
         <View
           style={[
             styles.button,
             styles.leaveButton,
             props.disabled ? styles.buttonDisabled : null,
-          ]}>
+          ]}
+        >
           <Text style={styles.leaveButtonText}>x</Text>
         </View>
       </TouchableHighlight>
       <TouchableHighlight
         onPress={toggleCamera}
         style={[styles.touchable, styles.muteTouchable]}
-        disabled={props.disabled}>
+        disabled={props.disabled}
+      >
         <View
           style={[
             styles.button,
             styles.muteButton,
             isCameraMuted ? styles.muteButtonMuted : styles.muteButtonUnmuted,
             props.disabled ? styles.buttonDisabled : null,
-          ]}>
+          ]}
+        >
           <Text>cam</Text>
         </View>
       </TouchableHighlight>

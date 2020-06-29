@@ -1,5 +1,5 @@
-import {MediaStreamTrack} from '@daily-co/react-native-daily-js';
-import {Participant} from '@daily-co/daily-js';
+import { MediaStreamTrack } from '@daily-co/react-native-daily-js';
+import { Participant } from '@daily-co/daily-js';
 
 /**
  * Call state is comprised of:
@@ -7,7 +7,7 @@ import {Participant} from '@daily-co/daily-js';
  * - Error state
  */
 type CallState = {
-  callItems: {[id: string]: CallItem};
+  callItems: { [id: string]: CallItem };
   camOrMicError: string | null;
   fatalError: string | null;
 };
@@ -47,7 +47,7 @@ const PARTICIPANTS_CHANGE = 'PARTICIPANTS_CHANGE';
 
 type ParticipantsChangeAction = {
   type: typeof PARTICIPANTS_CHANGE;
-  participants: {[id: string]: Participant};
+  participants: { [id: string]: Participant };
 };
 
 /**
@@ -90,19 +90,19 @@ function callReducer(callState: CallState, action: CallStateAction) {
         callItems,
       };
     case CAM_OR_MIC_ERROR:
-      return {...callState, camOrMicError: action.message};
+      return { ...callState, camOrMicError: action.message };
     case FATAL_ERROR:
-      return {...callState, fatalError: action.message};
+      return { ...callState, fatalError: action.message };
     default:
       throw new Error();
   }
 }
 
 function getCallItems(
-  participants: {[id: string]: Participant},
-  prevCallItems: {[id: string]: CallItem},
+  participants: { [id: string]: Participant },
+  prevCallItems: { [id: string]: CallItem }
 ) {
-  let callItems = {...initialCallState.callItems}; // Ensure we *always* have a local participant
+  let callItems = { ...initialCallState.callItems }; // Ensure we *always* have a local participant
   for (const [id, participant] of Object.entries(participants)) {
     // Here we assume that a participant will join with audio/video enabled.
     // This assumption lets us show a "loading" state before we receive audio/video tracks.
@@ -137,7 +137,7 @@ function isScreenShare(id: string) {
   return id.endsWith('-screen');
 }
 
-function containsScreenShare(callItems: {[id: string]: CallItem}) {
+function containsScreenShare(callItems: { [id: string]: CallItem }) {
   return Object.keys(callItems).some((id) => isScreenShare(id));
 }
 
@@ -157,7 +157,7 @@ function getMessage(callState: CallState, roomUrl: string) {
     header = 'Copy and share this URL to invite others';
     detail = roomUrl;
   }
-  return header ? {header, detail, isError} : null;
+  return header ? { header, detail, isError } : null;
 }
 
 export {
