@@ -1,5 +1,5 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {SafeAreaView, StyleSheet, StatusBar, View} from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { SafeAreaView, StyleSheet, StatusBar, View } from 'react-native';
 import DailyIframe, {
   DailyEvent,
   DailyCall,
@@ -7,11 +7,11 @@ import DailyIframe, {
 } from '@daily-co/react-native-daily-js';
 import CallPanel from '../CallPanel/CallPanel';
 import StartButton from '../StartButton/StartButton';
-import {logDailyEvent, ROOM_URL} from '../../utils';
+import { logDailyEvent, ROOM_URL } from '../../utils';
 import Tray from '../Tray/Tray';
 import CallObjectContext from '../../CallObjectContext';
 
-declare const global: {HermesInternal: null | {}};
+declare const global: { HermesInternal: null | {} };
 
 // Uncomment during development to temporarily intentionally ignore errors
 // and keep going
@@ -114,7 +114,7 @@ const App = () => {
     if (!callObject) {
       return;
     }
-    callObject.join({url: ROOM_URL});
+    callObject.join({ url: ROOM_URL });
     setAppState(AppState.Joining);
   }, [callObject]);
 
@@ -137,7 +137,7 @@ const App = () => {
     AppState.Error,
   ].includes(appState);
   const enableCallButtons = [AppState.Joined, AppState.Error].includes(
-    appState,
+    appState
   );
   const enableStartButton = appState === AppState.Idle;
 
