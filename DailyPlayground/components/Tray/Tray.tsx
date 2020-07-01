@@ -2,13 +2,14 @@ import React, { useState, useCallback, useEffect, useContext } from 'react';
 import { StyleSheet, View, TouchableHighlight, Text } from 'react-native';
 import { logDailyEvent } from '../../utils';
 import CallObjectContext from '../../CallObjectContext';
+import { DailyCall } from '@daily-co/react-native-daily-js';
 
 /**
  * Gets [isCameraMuted, isMicMuted].
  * This function is declared outside Tray() so it's not recreated every render
  * (which would require us to declare it as a useEffect dependency).
  */
-function getStreamStates(callObject: DailyIframe) {
+function getStreamStates(callObject: DailyCall) {
   let isCameraMuted = false,
     isMicMuted = false;
   if (
