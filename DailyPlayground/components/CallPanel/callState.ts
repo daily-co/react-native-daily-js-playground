@@ -1,5 +1,5 @@
 import { MediaStreamTrack } from '@daily-co/react-native-daily-js';
-import { Participant } from '@daily-co/daily-js';
+import { DailyParticipant } from '@daily-co/react-native-daily-js';
 
 /**
  * Call state is comprised of:
@@ -47,7 +47,7 @@ const PARTICIPANTS_CHANGE = 'PARTICIPANTS_CHANGE';
 
 type ParticipantsChangeAction = {
   type: typeof PARTICIPANTS_CHANGE;
-  participants: { [id: string]: Participant };
+  participants: { [id: string]: DailyParticipant };
 };
 
 /**
@@ -99,7 +99,7 @@ function callReducer(callState: CallState, action: CallStateAction) {
 }
 
 function getCallItems(
-  participants: { [id: string]: Participant },
+  participants: { [id: string]: DailyParticipant },
   prevCallItems: { [id: string]: CallItem }
 ) {
   let callItems = { ...initialCallState.callItems }; // Ensure we *always* have a local participant

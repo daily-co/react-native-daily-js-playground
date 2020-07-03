@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer, useMemo, useContext } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { logDailyEvent } from '../../utils';
-import { Event } from '@daily-co/daily-js';
+import { DailyEvent } from '@daily-co/react-native-daily-js';
 import {
   callReducer,
   initialCallState,
@@ -33,7 +33,7 @@ const CallPanel = (props: Props) => {
       return;
     }
 
-    const events: Event[] = [
+    const events: DailyEvent[] = [
       'participant-joined',
       'participant-updated',
       'participant-left',
