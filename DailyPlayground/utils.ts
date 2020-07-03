@@ -4,4 +4,4 @@ export function logDailyEvent(event?: DailyEventObject) {
   event && console.log('[daily.co event]', event.action);
 }
 
-export const ROOM_URL = 'https://paulk.ngrok.io/hello?cdmn=paulk';
+export const ROOM_URL = 'https://your-team.daily.co/hello';
