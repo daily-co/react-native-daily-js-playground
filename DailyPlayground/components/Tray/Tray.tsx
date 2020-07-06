@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useContext } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { StyleSheet, View, TouchableHighlight, Text } from 'react-native';
 import { logDailyEvent } from '../../utils';
 import { DailyCall } from '@daily-co/react-native-daily-js';

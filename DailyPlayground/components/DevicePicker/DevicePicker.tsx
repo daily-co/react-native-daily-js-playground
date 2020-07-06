@@ -1,65 +1,55 @@
-import React, { useState } from 'react';
-import { StyleSheet, Button, View, Modal, Text } from 'react-native';
+import React, { useEffect, useState, useCallback } from 'react';
+import { Text, StyleSheet, View } from 'react-native';
+import { useCallObject } from '../../useCallObject';
+import { MediaDeviceInfo } from '@daily-co/react-native-daily-js';
 
 export default function DevicePicker() {
-  const [isPickerOpen, setPickerOpen] = useState(false);
+  const callObject = useCallObject();
+  const [mics, setMics] = useState<string[]>([]);
+  const [cameras, setCameras] = useState<string[]>([]);
+  const [speakers, setSpeakers] = useState<string[]>([]);
+
+  const setDevices = useCallback((mediaDeviceInfos: MediaDeviceInfo[]) => {
+    const micInfos = mediaDeviceInfos.filter(
+      (mdi) => mdi.kind === 'audioinput'
+    );
+    const cameraInfos = mediaDeviceInfos.filter(
+      (mdi) => mdi.kind === 'videoinput'
+    );
+    const speakerInfos = mediaDeviceInfos.filter(
+      (mdi) => mdi.kind === 'audiooutput'
+    );
+    setMics(micInfos.map((micInfo) => micInfo.label));
+    setCameras(cameraInfos.map((cameraInfo) => cameraInfo.label));
+    setSpeakers(speakerInfos.map((speakerInfo) => speakerInfo.label));
+  }, []);
+
+  useEffect(() => {
+    if (!callObject) {
+      return;
+    }
+    callObject.enumerateDevices().then((devices) => {
+      setDevices(devices.devices);
+    });
+  }, [callObject, setDevices]);
 
   return (
     <View style={styles.container}>
-      <Modal animationType="slide" transparent={true} visible={isPickerOpen}>
-        <View style={styles.modalWrapper}>
-          <View style={styles.modalContent}>
-            <View style={styles.closeButton}>
-              <Button
-                title="Close"
-                color="#000"
-                onPress={() => {
-                  setPickerOpen(false);
-                }}
-              ></Button>
-            </View>
-          </View>
-        </View>
-      </Modal>
-      <View style={styles.openButton}>
-        <Button
-          title="Devices"
-          color="#fff"
-          onPress={() => {
-            setPickerOpen(true);
-          }}
-        ></Button>
-      </View>
+      <Text>Mics:</Text>
+      <Text>{mics.join(',')}</Text>
+      <Text>{'\n'}</Text>
+
+      <Text>Cameras:</Text>
+      <Text>{cameras.join(',')}</Text>
+      <Text>{'\n'}</Text>
+
+      <Text>Speakers:</Text>
+      <Text>{speakers.join(',')}</Text>
+      <Text>{'\n'}</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    height: '100%',
-  },
-  openButton: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-  },
-  modalWrapper: {
-    paddingHorizontal: 20,
-    width: '100%',
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'stretch',
-  },
-  modalContent: {
-    height: 200,
-    backgroundColor: '#fff',
-  },
-  closeButton: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-  },
+  container: {},
 });
