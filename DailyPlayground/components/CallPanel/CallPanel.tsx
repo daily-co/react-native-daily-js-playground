@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useMemo, useContext } from 'react';
+import React, { useEffect, useReducer, useMemo } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { logDailyEvent } from '../../utils';
 import { DailyEvent } from '@daily-co/react-native-daily-js';

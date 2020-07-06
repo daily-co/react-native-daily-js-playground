@@ -10,7 +10,7 @@ import StartButton from '../StartButton/StartButton';
 import { logDailyEvent, ROOM_URL } from '../../utils';
 import Tray from '../Tray/Tray';
 import CallObjectContext from '../../CallObjectContext';
-import DevicePicker from '../DevicePicker/DevicePicker';
+import DevicePickerModal from '../DevicePicker/DevicePickerModal';
 
 declare const global: { HermesInternal: null | {} };
 
@@ -150,7 +150,7 @@ const App = () => {
           {showCallPanel ? (
             <>
               <CallPanel roomUrl={ROOM_URL} />
-              <DevicePicker />
+              <DevicePickerModal />
               <Tray
                 onClickLeaveCall={leaveCall}
                 disabled={!enableCallButtons}
