@@ -15,14 +15,14 @@ import {
 } from './callState';
 import Tile from '../Tile/Tile';
 import CallMessage from '../CallMessage/CallMessage';
-import CallObjectContext from '../../CallObjectContext';
+import { useCallObject } from '../../useCallObject';
 
 type Props = {
   roomUrl: string;
 };
 
 const CallPanel = (props: Props) => {
-  const callObject = useContext(CallObjectContext);
+  const callObject = useCallObject();
   const [callState, dispatch] = useReducer(callReducer, initialCallState);
 
   /**
