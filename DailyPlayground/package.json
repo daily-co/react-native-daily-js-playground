@@ -12,11 +12,11 @@
     "lint": "tsc && eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
-    "@daily-co/react-native-daily-js": "0.0.1",
+    "@daily-co/react-native-daily-js": "0.0.1-alpha.3",
     "@react-native-community/async-storage": "^1.11.0",
     "react": "16.11.0",
     "react-native": "0.62.2",
-    "react-native-webrtc": "^1.75.3"
+    "react-native-webrtc": "https://github.com/daily-co/react-native-webrtc"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
