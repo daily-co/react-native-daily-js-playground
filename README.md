@@ -95,39 +95,43 @@ Note that if any native code has changed in `react-native-daily-js`, you'll have
 
 **NOTE #2** Remember to update `DailyPlayground/scripts/variables.sh` if either `react-native-daily-js` or `daily-js` has moved in your file system, or else `npm run sync-daily` won't work.
 
-## Fast path for syncing native code changes in `react-native-daily-js`
+## Syncing changes in `react-native-webrtc`
 
-`react-native-daily-js` contains some native iOS and Android code in Objective-C and Java, respectively. You can use `DailyPlayground` to iterate on that code even more quickly than following the steps above.
+When you make a change to `react-native-webrtc` or `daily-js`, you'll have to "sync" those changes in a special way in order for the React Native bundler to pick them up. If you're curious, you can read about why in `pack-daily.sh`.
+
+```bash
+# After you've made your change...
+
+cd DailyPlayground
+
+npm run sync-webrtc
+
+# If there's been a change to native iOS code in `react-native-webrtc`...
+npx pod-install
+```
+
+## Fast path for syncing native code changes in `react-native-daily-js` and/or `react-native-webrtc`
+
+`react-native-daily-js` and `react-native-webrtc` contains some native iOS and Android code in Objective-C and Java, respectively. You can use `DailyPlayground` to iterate on that code even more quickly than following the steps above.
 
 ### iOS
 
-Assuming you're in a state where you can successfully build and run on iOS, uncomment (and appropriately update) the following line in the `Podfile`:
+Assuming you're in a state where you can successfully build and run on iOS, uncomment (and appropriately update) either or both of the following lines in the `Podfile`:
 
 ```ruby
 # Uncomment (and point to the right place) during development to enable
-# editing react-native-daily-js's native iOS files directly in
-# DailyPlayground without having to reinstall the npm package and run another
-# pod install
+# editing react-native-daily-js's and react-native-webrtc's native iOS files
+# directly in DailyPlayground without having to reinstall npm packages and
+# run another pod install
 # pod 'react-native-daily-js', :path => '~/src/pluot-core/react-native-daily-js'
+# pod 'react-native-webrtc', :path => '~/src/react-native-webrtc'
 ```
 
-Then the next `npx pod-install` will update `ios/DailyPlayground.xcworkspace` to point directly at your files in `react-native-daily-js`, letting you iterate on them in Xcode in the context of this playground app.
+Then the next `npx pod-install` will update `ios/DailyPlayground.xcworkspace` to point directly at the files in your local `react-native-daily-js` and/or `react-native-webrtc` repos, letting you iterate on them in Xcode in the context of this playground app.
 
 ### Android
 
-Follow the instructions in the following section of `react-native-daily-js`'s `react-native.config.js` file:
-
-```js
-// Uncomment the below (and point to the right place, and comment the
-// above) during development to enable editing react-native-daily-js's
-// native Android files directly in DailyPlayground without having to
-// reinstall the npm package. Unfortunately the path must be relative.
-// android: {
-//   sourceDir: '../../../../../pluot-core/react-native-daily-js/android/',
-// },
-```
-
-Then on the next `npm sync-daily` or `npm install-dev`, the `DailyPlayground` Android project will point directly at your files in `react-native-daily-js`, letting you iterate on them in Android Studio in the context of this playground app.
+As part of `npm run install-dev`, the `android` folders within `node_modules/@daily-co/react-native-daily-js` and `node_modules/react-native-webrtc` will automatically be symlinked to the appropriate local repos, specified in `scripts/variables.sh`. This allows you to iterate on them in Android Studio in the context of this playground app.
 
 ## Debugging
 
