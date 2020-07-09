@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'stretch',
     borderRadius: 10,
-    padding: 10,
+    paddingHorizontal: 10,
   },
   closeButton: {
     alignSelf: 'flex-end',
