@@ -69,7 +69,7 @@ export default function DevicePicker() {
       return;
     }
     return deviceButtons(mics, (id) => {
-      console.log(`callObject?.setInputDevices({ audioDeviceId: ${id} })`);
+      console.log(`COMING SOON: setInputDevices({ audioDeviceId: ${id} })`);
       // callObject?.setInputDevices({ audioDeviceId: id });
     });
   }, [mics, callObject]);
@@ -79,7 +79,7 @@ export default function DevicePicker() {
       return;
     }
     return deviceButtons(cameras, (id) => {
-      console.log(`callObject?.setInputDevices({ videoDeviceId: ${id} })`);
+      console.log(`COMING SOON: setInputDevices({ videoDeviceId: ${id} })`);
       // callObject?.setInputDevices({ videoDeviceId: id });
     });
   }, [cameras, callObject]);
@@ -89,7 +89,7 @@ export default function DevicePicker() {
       return;
     }
     return deviceButtons(speakers, (id) => {
-      console.log(`callObject?.setOutputDevice({ id: ${id} })`);
+      console.log(`COMING SOON: setOutputDevice({ id: ${id} })`);
       // callObject?.setOutputDevice({ id });
     });
   }, [speakers, callObject]);
