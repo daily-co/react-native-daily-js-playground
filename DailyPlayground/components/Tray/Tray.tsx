@@ -1,8 +1,8 @@
-import React, { useState, useCallback, useEffect, useContext } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { StyleSheet, View, TouchableHighlight, Text } from 'react-native';
 import { logDailyEvent } from '../../utils';
-import CallObjectContext from '../../CallObjectContext';
 import { DailyCall } from '@daily-co/react-native-daily-js';
+import { useCallObject } from '../../useCallObject';
 
 /**
  * Gets [isCameraMuted, isMicMuted].
@@ -30,7 +30,7 @@ type Props = {
 };
 
 export default function Tray(props: Props) {
-  const callObject = useContext(CallObjectContext);
+  const callObject = useCallObject();
   const [isCameraMuted, setCameraMuted] = useState(false);
   const [isMicMuted, setMicMuted] = useState(false);
 

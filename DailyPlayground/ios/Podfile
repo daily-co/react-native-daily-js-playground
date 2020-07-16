@@ -78,10 +78,11 @@ target 'DailyPlayground' do
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
   # Uncomment (and point to the right place) during development to enable 
-  # editing react-native-daily-js's native iOS files directly in 
-  # DailyPlayground without having to reinstall the npm package and run another
-  # pod install
+  # editing react-native-daily-js's and react-native-webrtc's native iOS files
+  # directly in DailyPlayground without having to reinstall npm packages and
+  # run another pod install
   # pod 'react-native-daily-js', :path => '~/src/pluot-core/react-native-daily-js'
+  # pod 'react-native-webrtc', :path => '~/src/react-native-webrtc'
 
   target 'DailyPlaygroundTests' do
     inherit! :complete
