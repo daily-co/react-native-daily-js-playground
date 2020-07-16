@@ -442,7 +442,7 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-DailyPlayground-DailyPlaygroundTests/Pods-DailyPlayground-DailyPlaygroundTests-frameworks.sh",
-				"${PODS_ROOT}/../../node_modules/react-native-webrtc/ios/WebRTC.framework",
+				"${PODS_ROOT}/../../node_modules/@daily-co/react-native-webrtc/ios/WebRTC.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -460,7 +460,7 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-DailyPlayground/Pods-DailyPlayground-frameworks.sh",
-				"${PODS_ROOT}/../../node_modules/react-native-webrtc/ios/WebRTC.framework",
+				"${PODS_ROOT}/../../node_modules/@daily-co/react-native-webrtc/ios/WebRTC.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
