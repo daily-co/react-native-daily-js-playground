@@ -76,7 +76,7 @@ Note that, as long as you're on the same wifi as the dev box running the React N
 
 ## Syncing changes in `react-native-daily-js` or `daily-js`
 
-When you make a change to either `react-native-daily-js` or `daily-js`, you'll have to "sync" those changes in a special way in order for the React Native bundler to pick them up. If you're curious, you can read about why in `pack-daily.sh`.
+When you make a change in either your `react-native-daily-js` or `daily-js` local repo, you'll have to "sync" those changes in a special way in order for the React Native bundler to pick them up. If you're curious, you can read about why in `pack-daily.sh`.
 
 ```bash
 # After you've made your change...
@@ -97,7 +97,7 @@ Note that if any native code has changed in `react-native-daily-js`, you'll have
 
 ## Syncing changes in `react-native-webrtc`
 
-When you make a change to `react-native-webrtc` or `daily-js`, you'll have to "sync" those changes in a special way in order for the React Native bundler to pick them up. If you're curious, you can read about why in `pack-daily.sh`.
+When you make a change in your `react-native-webrtc` local repo, you'll have to "sync" those changes in a special way in order for the React Native bundler to pick them up. If you're curious, you can read about why in `pack-daily.sh`.
 
 ```bash
 # After you've made your change...
