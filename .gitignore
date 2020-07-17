@@ -1,2 +1,5 @@
 # Artifacts from `npm pack`
 *.tgz
+
+# OSX
+*.DS_Store
