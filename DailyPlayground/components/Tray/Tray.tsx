@@ -128,7 +128,6 @@ const styles = StyleSheet.create({
     width: '100%',
     position: 'absolute',
     bottom: 0,
-    display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -145,7 +144,6 @@ const styles = StyleSheet.create({
   },
   // button view styles
   button: {
-    display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
   },

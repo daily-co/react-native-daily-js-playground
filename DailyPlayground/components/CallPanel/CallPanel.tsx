@@ -148,7 +148,7 @@ const CallPanel = (props: Props) => {
       <View
         style={[
           styles.mainContainer,
-          message ? styles.messageContainer : styles.largeTilesContainer,
+          message ? styles.messageContainer : styles.largeTilesContainerOuter,
         ]}
       >
         {message ? (
@@ -158,7 +158,7 @@ const CallPanel = (props: Props) => {
             isError={message.isError}
           />
         ) : (
-          largeTiles.length > 0 && largeTiles[0]
+          <View style={styles.largeTilesContainerInner}>{largeTiles}</View>
         )}
       </View>
       <View style={styles.thumbnailContainer}>{smallTiles}</View>
@@ -173,25 +173,28 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   thumbnailContainer: {
+    paddingLeft: 10,
     position: 'absolute',
     width: '100%',
     height: '25%',
     top: 0,
     left: 0,
-    display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-start',
   },
   messageContainer: {
-    display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  largeTilesContainer: {
-    display: 'flex',
+  largeTilesContainerOuter: {
+    justifyContent: 'center',
+  },
+  largeTilesContainerInner: {
     flexDirection: 'row',
     justifyContent: 'center',
+    alignItems: 'center',
+    flexWrap: 'wrap',
   },
 });
 

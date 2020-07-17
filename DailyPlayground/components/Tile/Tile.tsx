@@ -19,6 +19,7 @@ export default function Tile(props: Props) {
         mirror={props.isLocalPerson}
         zOrder={props.isLocalPerson ? 1 : 0}
         style={styles.media}
+        objectFit="cover"
       />
     );
   }, [props.videoTrack, props.audioTrack, props.isLocalPerson]);
@@ -36,6 +37,7 @@ export default function Tile(props: Props) {
         props.isLoading || !props.videoTrack
           ? styles.containerLoadingOrNotShowingVideo
           : null,
+        props.isLocalPerson ? styles.containerLocal : styles.containerRemote,
       ]}
     >
       {mediaComponent}
@@ -44,17 +46,20 @@ export default function Tile(props: Props) {
   );
 }
 
-// TODO: support more than 1-on-1 styling, and not just portrait
 const styles = StyleSheet.create({
   container: {
-    aspectRatio: 9 / 16,
-    display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
     overflow: 'hidden',
-    marginLeft: 10,
+  },
+  containerLocal: {
+    aspectRatio: 9 / 16,
+  },
+  containerRemote: {
+    width: '50%',
+    aspectRatio: 1,
   },
   containerLoadingOrNotShowingVideo: {
     backgroundColor: '#000000',
