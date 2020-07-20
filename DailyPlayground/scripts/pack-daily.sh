@@ -14,6 +14,14 @@ npm run build-main-dev # needed because dist/ not built on pack alone
 npm pack
 popd
 
+# `npm pack` @daily-co/react-native-webrtc
+# (type declarations may have changed in there, which would affect @daily-co/react-native-daily-js compilation)
+pushd $RN_WEBRTC_DIR
+rm daily-co-react-native-webrtc-*.tgz
+$INSTALL_BEFORE_PACK && npm i
+npm pack
+popd
+
 # `npm pack` @daily-co/react-native-daily-js
 pushd $RN_DAILY_JS_DIR
 rm daily-co-react-native-daily-js-*.tgz
