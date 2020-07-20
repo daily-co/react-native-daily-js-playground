@@ -4,6 +4,6 @@
 
 # `npm pack` react-native-webrtc
 pushd $RN_WEBRTC_DIR
-rm react-native-webrtc-*.tgz
+rm daily-co-react-native-webrtc-*.tgz
 npm pack
 popd
