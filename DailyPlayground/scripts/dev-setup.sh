@@ -8,7 +8,7 @@ RN_WEBRTC_VERSION=$(node -e "console.log($(cat $RN_WEBRTC_DIR/package.json).vers
 
 pushd $PLAYGROUND_DIR
 sed -E -i.bak 's|"@daily-co/react-native-daily-js":.*$|"@daily-co/react-native-daily-js": "file:'$RN_DAILY_JS_DIR'/daily-co-react-native-daily-js-'$RN_DAILY_JS_VERSION'.tgz",|' package.json && rm *.bak
-sed -E -i.bak 's|"@daily-co/react-native-webrtc":.*$|"@daily-co/react-native-webrtc": "file:'$RN_WEBRTC_DIR'/daily-co-react-native-webrtc-'$RN_WEBRTC_VERSION'.tgz"|' package.json && rm *.bak
+sed -E -i.bak 's|"@daily-co/react-native-webrtc":.*$|"@daily-co/react-native-webrtc": "file:'$RN_WEBRTC_DIR'/daily-co-react-native-webrtc-'$RN_WEBRTC_VERSION'.tgz",|' package.json && rm *.bak
 popd
 
 pushd $RN_DAILY_JS_DIR
