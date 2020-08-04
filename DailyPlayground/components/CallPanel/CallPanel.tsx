@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useMemo } from 'react';
+import React, { useEffect, useReducer, useMemo, useCallback } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { logDailyEvent } from '../../utils';
 import { DailyEvent } from '@daily-co/react-native-daily-js';
@@ -116,6 +116,10 @@ const CallPanel = (props: Props) => {
     };
   }, [callObject]);
 
+  const flipCamera = useCallback(() => {
+    callObject && callObject.cycleCamera();
+  }, [callObject]);
+
   const [largeTiles, smallTiles] = useMemo(() => {
     let largeTiles: JSX.Element[] = [];
     let smallTiles: JSX.Element[] = [];
@@ -130,6 +134,7 @@ const CallPanel = (props: Props) => {
           audioTrack={callItem.audioTrack}
           isLocalPerson={isLocal(id)}
           isLoading={callItem.isLoading}
+          onPress={isLocal(id) ? flipCamera : undefined}
         />
       );
       if (isLarge) {
@@ -139,7 +144,7 @@ const CallPanel = (props: Props) => {
       }
     });
     return [largeTiles, smallTiles];
-  }, [callState.callItems]);
+  }, [callState.callItems, flipCamera]);
 
   const message = getMessage(callState, props.roomUrl);
 

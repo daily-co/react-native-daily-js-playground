@@ -6,7 +6,7 @@ export default function DevicePickerModal() {
   const [isPickerOpen, setPickerOpen] = useState(false);
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} pointerEvents="box-none">
       <Modal animationType="slide" transparent={true} visible={isPickerOpen}>
         <View style={styles.modalWrapper}>
           <View style={styles.modalContent}>
