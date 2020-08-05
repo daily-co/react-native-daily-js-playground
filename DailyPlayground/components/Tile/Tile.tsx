@@ -1,6 +1,6 @@
 import { MediaStreamTrack } from '@daily-co/react-native-daily-js';
 import React, { useMemo } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, TouchableHighlight } from 'react-native';
 import { DailyMediaView } from '@daily-co/react-native-daily-js';
 
 type Props = {
@@ -8,6 +8,7 @@ type Props = {
   audioTrack: MediaStreamTrack | null;
   isLocalPerson: boolean;
   isLoading: boolean;
+  onPress?: () => void;
 };
 
 export default function Tile(props: Props) {
@@ -23,6 +24,18 @@ export default function Tile(props: Props) {
       />
     );
   }, [props.videoTrack, props.audioTrack, props.isLocalPerson]);
+
+  const touchableMediaComponent = useMemo(() => {
+    return (
+      <TouchableHighlight
+        onPress={props.onPress}
+        disabled={!props.onPress}
+        style={styles.media}
+      >
+        {mediaComponent}
+      </TouchableHighlight>
+    );
+  }, [props.onPress, mediaComponent]);
 
   const loadingComponent = useMemo(() => {
     return props.isLoading ? (
@@ -40,7 +53,7 @@ export default function Tile(props: Props) {
         props.isLocalPerson ? styles.containerLocal : styles.containerRemote,
       ]}
     >
-      {mediaComponent}
+      {touchableMediaComponent}
       {loadingComponent}
     </View>
   );
