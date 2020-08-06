@@ -116,9 +116,23 @@ const CallPanel = (props: Props) => {
     };
   }, [callObject]);
 
+  /**
+   * Toggle between front and rear cameras.
+   */
   const flipCamera = useCallback(() => {
     callObject && callObject.cycleCamera();
   }, [callObject]);
+
+  /**
+   * Send an app message to the remote participant whose tile was clicked on.
+   */
+  const sendHello = useCallback(
+    (participantId: string) => {
+      callObject &&
+        callObject.sendAppMessage({ hello: 'world' }, participantId);
+    },
+    [callObject]
+  );
 
   const [largeTiles, smallTiles] = useMemo(() => {
     let largeTiles: JSX.Element[] = [];
@@ -134,7 +148,13 @@ const CallPanel = (props: Props) => {
           audioTrack={callItem.audioTrack}
           isLocalPerson={isLocal(id)}
           isLoading={callItem.isLoading}
-          onPress={isLocal(id) ? flipCamera : undefined}
+          onPress={
+            isLocal(id)
+              ? flipCamera
+              : () => {
+                  sendHello(id);
+                }
+          }
         />
       );
       if (isLarge) {
@@ -144,7 +164,7 @@ const CallPanel = (props: Props) => {
       }
     });
     return [largeTiles, smallTiles];
-  }, [callState.callItems, flipCamera]);
+  }, [callState.callItems, flipCamera, sendHello]);
 
   const message = getMessage(callState, props.roomUrl);
 
