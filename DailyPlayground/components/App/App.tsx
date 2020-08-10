@@ -4,6 +4,7 @@ import DailyIframe, {
   DailyEvent,
   DailyCall,
   DailyEventObject,
+  DailyEventObjectAppMessage,
 } from '@daily-co/react-native-daily-js';
 import CallPanel from '../CallPanel/CallPanel';
 import StartButton from '../StartButton/StartButton';
@@ -104,6 +105,28 @@ const App = () => {
       for (const event of events) {
         callObject.off(event, handleNewMeetingState);
       }
+    };
+  }, [callObject]);
+
+  /**
+   * Listen for app messages from other call participants.
+   */
+  useEffect(() => {
+    if (!callObject) {
+      return;
+    }
+
+    function handleAppMessage(event?: DailyEventObjectAppMessage) {
+      if (event) {
+        logDailyEvent(event);
+        console.log(`received app message from ${event.fromId}: `, event.data);
+      }
+    }
+
+    callObject.on('app-message', handleAppMessage);
+
+    return function cleanup() {
+      callObject.off('app-message', handleAppMessage);
     };
   }, [callObject]);
 
