@@ -35,7 +35,7 @@
         </intent-filter>
       </activity>
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
-      <service android:name="com.reactlibrary.DailyOngoingMeetingForegroundService"/>
+      <service android:name="com.daily.reactlibrary.DailyOngoingMeetingForegroundService"/>
     </application>
 
 </manifest>
