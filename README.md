@@ -10,7 +10,7 @@ Follow [these instructions](https://reactnative.dev/docs/environment-setup), sel
 
 ### DailyPlayground machine-specific setup
 
-Edit `DailyPlayground/scripts/variables.sh` to point to the right locations in your file system. This will be necessary for using this playground app to iterate on `react-native-daily-js` and `daily-js`.
+Edit `DailyPlayground/dev_scripts/variables.sh` to point to the right locations in your file system. This will be necessary for using this playground app to iterate on `react-native-daily-js` and `daily-js`.
 
 Then, run the following:
 
@@ -93,7 +93,7 @@ Note that if any native code has changed in `react-native-daily-js`, you'll have
 
 **NOTE #1** If you've changed any transitive dependencies of `react-native-daily-js` or `daily-js`, `npm run sync-daily` won't `npm i` in those packages for you (this choice was made in order to shorten the iteration cycle). You'll have to run `npm i` on those packages manually or just do a fresh `npm run install-dev`.
 
-**NOTE #2** Remember to update `DailyPlayground/scripts/variables.sh` if either `react-native-daily-js` or `daily-js` has moved in your file system, or else `npm run sync-daily` won't work.
+**NOTE #2** Remember to update `DailyPlayground/dev_scripts/variables.sh` if either `react-native-daily-js` or `daily-js` has moved in your file system, or else `npm run sync-daily` won't work.
 
 ## Syncing changes in `react-native-webrtc`
 
@@ -131,7 +131,7 @@ Then the next `npx pod-install` will update `ios/DailyPlayground.xcworkspace` to
 
 ### Android
 
-As part of `npm run install-dev`, the `android` folders within `node_modules/@daily-co/react-native-daily-js` and `node_modules/react-native-webrtc` will automatically be symlinked to the appropriate local repos, specified in `scripts/variables.sh`. This allows you to iterate on them in Android Studio in the context of this playground app.
+As part of `npm run install-dev`, the `android` folders within `node_modules/@daily-co/react-native-daily-js` and `node_modules/react-native-webrtc` will automatically be symlinked to the appropriate local repos, specified in `dev_scripts/variables.sh`. This allows you to iterate on them in Android Studio in the context of this playground app.
 
 ## Debugging
 
