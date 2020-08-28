@@ -6,9 +6,6 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "install-dev": "./dev_scripts/dev-setup.sh && INSTALL_BEFORE_PACK=true ./dev_scripts/pack-daily.sh && ./dev_scripts/pack-webrtc.sh && npm i && ./dev_scripts/symlink-android-code.sh",
-    "sync-daily": "./dev_scripts/dev-setup.sh && INSTALL_BEFORE_PACK=false ./dev_scripts/pack-daily.sh && npm i @daily-co/react-native-daily-js --force",
-    "sync-webrtc": "./dev_scripts/dev-setup.sh && ./dev_scripts/pack-webrtc.sh && npm i react-native-webrtc --force",
     "test": "jest",
     "lint": "tsc && eslint . --ext .js,.jsx,.ts,.tsx"
   },

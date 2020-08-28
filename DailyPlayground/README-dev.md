@@ -14,6 +14,7 @@ Now your environment should be ready for local development! From then on:
 
 - To edit **native code**, simply make the changes you want from within Android Studio or Xcode.
 - To edit **JS code**, first make the change in your local copy of the appropriate repo, then “sync” it using `npm run dev-sync-js` so the React Native bundler picks it up.
+  - Note that, for speed of iteration, `dev-sync-js` does not run `npm i` in each repo, so if you've added any new dependencies to `react-native-daily-js`, `daily-js`, or `@daily-co/react-native-webrtc`, you'll want to do this yourself.
 
 If at any point you find that your dev environment is in a wonky state, revert local changes (across all repos) and re-run `npm run dev-install`.
 
