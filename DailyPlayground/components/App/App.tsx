@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, StatusBar, View } from 'react-native';
-import DailyIframe, {
+import Daily, {
   DailyEvent,
   DailyCall,
   DailyEventObject,
@@ -36,7 +36,7 @@ const App = () => {
    */
   useEffect(() => {
     const g = global as any;
-    g.DailyIframe = DailyIframe;
+    g.Daily = Daily;
     g.callObject = callObject;
   }, [callObject]);
 
@@ -142,7 +142,7 @@ const App = () => {
   }, [callObject]);
 
   const startCall = useCallback(() => {
-    const newCallObject = DailyIframe.createCallObject();
+    const newCallObject = Daily.createCallObject();
     setCallObject(newCallObject);
   }, []);
 
