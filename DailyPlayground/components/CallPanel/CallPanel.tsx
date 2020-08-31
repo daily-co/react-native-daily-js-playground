@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer, useMemo, useCallback } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { logDailyEvent } from '../../utils';
 import { DailyEvent } from '@daily-co/react-native-daily-js';
 import {
@@ -16,10 +16,13 @@ import {
 import Tile from '../Tile/Tile';
 import CallMessage from '../CallMessage/CallMessage';
 import { useCallObject } from '../../useCallObject';
+import { TRAY_HEIGHT } from '../Tray/Tray';
 
 type Props = {
   roomUrl: string;
 };
+
+const THUMBNAIL_HEIGHT = 150;
 
 const CallPanel = (props: Props) => {
   const callObject = useCallObject();
@@ -183,7 +186,9 @@ const CallPanel = (props: Props) => {
             isError={message.isError}
           />
         ) : (
-          <View style={styles.largeTilesContainerInner}>{largeTiles}</View>
+          <ScrollView>
+            <View style={styles.largeTilesContainerInner}>{largeTiles}</View>
+          </ScrollView>
         )}
       </View>
       <View style={styles.thumbnailContainer}>{smallTiles}</View>
@@ -201,7 +206,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     position: 'absolute',
     width: '100%',
-    height: '25%',
+    height: THUMBNAIL_HEIGHT,
     top: 0,
     left: 0,
     flexDirection: 'row',
@@ -220,6 +225,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexWrap: 'wrap',
+    marginTop: THUMBNAIL_HEIGHT,
+    marginBottom: TRAY_HEIGHT,
   },
 });
 

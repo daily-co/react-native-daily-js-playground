@@ -29,6 +29,8 @@ type Props = {
   disabled: boolean;
 };
 
+export const TRAY_HEIGHT = 80;
+
 export default function Tray(props: Props) {
   const callObject = useCallObject();
   const [isCameraMuted, setCameraMuted] = useState(false);
@@ -137,7 +139,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   leaveTouchable: {
-    borderRadius: 40,
+    borderRadius: TRAY_HEIGHT / 2,
   },
   muteTouchable: {
     borderRadius: 25,
@@ -152,9 +154,9 @@ const styles = StyleSheet.create({
   },
   leaveButton: {
     backgroundColor: '#d81a1a',
-    width: 80,
-    height: 80,
-    borderRadius: 40,
+    width: TRAY_HEIGHT,
+    height: TRAY_HEIGHT,
+    borderRadius: TRAY_HEIGHT / 2,
   },
   muteButton: {
     width: 50,
