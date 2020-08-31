@@ -13,7 +13,7 @@ import {
   containsScreenShare,
   getMessage,
 } from './callState';
-import Tile from '../Tile/Tile';
+import Tile, { TileType } from '../Tile/Tile';
 import CallMessage from '../CallMessage/CallMessage';
 import { useCallObject } from '../../useCallObject';
 import { TRAY_HEIGHT } from '../Tray/Tray';
@@ -22,7 +22,7 @@ type Props = {
   roomUrl: string;
 };
 
-const THUMBNAIL_HEIGHT = 150;
+const THUMBNAIL_HEIGHT = 100;
 
 const CallPanel = (props: Props) => {
   const callObject = useCallObject();
@@ -137,19 +137,27 @@ const CallPanel = (props: Props) => {
     [callObject]
   );
 
-  const [largeTiles, smallTiles] = useMemo(() => {
+  const [largeTiles, thumbnailTiles] = useMemo(() => {
     let largeTiles: JSX.Element[] = [];
-    let smallTiles: JSX.Element[] = [];
+    let thumbnailTiles: JSX.Element[] = [];
     Object.entries(callState.callItems).forEach(([id, callItem]) => {
-      const isLarge =
-        isScreenShare(id) ||
-        (!isLocal(id) && !containsScreenShare(callState.callItems));
+      let tileType: TileType;
+      if (isScreenShare(id)) {
+        tileType = TileType.FullWidth;
+      } else if (isLocal(id) || containsScreenShare(callState.callItems)) {
+        tileType = TileType.Thumbnail;
+      } else if (Object.keys(callState.callItems).length <= 3) {
+        tileType = TileType.FullWidth;
+      } else {
+        tileType = TileType.HalfWidth;
+      }
       const tile = (
         <Tile
           key={id}
           videoTrack={callItem.videoTrack}
           audioTrack={callItem.audioTrack}
-          isLocalPerson={isLocal(id)}
+          mirror={isLocal(id)}
+          type={tileType}
           isLoading={callItem.isLoading}
           onPress={
             isLocal(id)
@@ -160,13 +168,13 @@ const CallPanel = (props: Props) => {
           }
         />
       );
-      if (isLarge) {
-        largeTiles.push(tile);
+      if (tileType === TileType.Thumbnail) {
+        thumbnailTiles.push(tile);
       } else {
-        smallTiles.push(tile);
+        largeTiles.push(tile);
       }
     });
-    return [largeTiles, smallTiles];
+    return [largeTiles, thumbnailTiles];
   }, [callState.callItems, flipCamera, sendHello]);
 
   const message = getMessage(callState, props.roomUrl);
@@ -186,12 +194,16 @@ const CallPanel = (props: Props) => {
             isError={message.isError}
           />
         ) : (
-          <ScrollView>
+          <ScrollView alwaysBounceVertical={false}>
             <View style={styles.largeTilesContainerInner}>{largeTiles}</View>
           </ScrollView>
         )}
       </View>
-      <View style={styles.thumbnailContainer}>{smallTiles}</View>
+      <View style={styles.thumbnailContainerOuter}>
+        <ScrollView horizontal={true} alwaysBounceHorizontal={false}>
+          <View style={styles.thumbnailContainerInner}>{thumbnailTiles}</View>
+        </ScrollView>
+      </View>
     </>
   );
 };
@@ -202,13 +214,15 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  thumbnailContainer: {
-    paddingLeft: 10,
+  thumbnailContainerOuter: {
     position: 'absolute',
     width: '100%',
     height: THUMBNAIL_HEIGHT,
     top: 0,
     left: 0,
+  },
+  thumbnailContainerInner: {
+    marginLeft: 10,
     flexDirection: 'row',
     justifyContent: 'flex-start',
   },
