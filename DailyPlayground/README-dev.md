@@ -4,7 +4,15 @@ There are two ways you can use `rn-daily-js-playground`: in “dev mode” or no
 
 `rn-daily-js-playground` can be a useful development app for `react-native-daily-js` and its dependencies `daily-js` and `@daily-co/react-native-webrtc`.
 
-To use `rn-daily-js-playground` for development (i.e. to enter “dev mode”), first edit `dev_scripts/variables.sh` to point to the appropriate local copies of your repos. Then, simply run:
+To use `rn-daily-js-playground` for development (i.e. to enter “dev mode”):
+
+```
+cp dev_scripts/variables_template.sh dev_scripts/variables.sh
+```
+
+edit `dev_scripts/variables.sh` to point to the appropriate local copies of your repos. 
+
+Then, simply run:
 
 ```
 npm run dev-install
