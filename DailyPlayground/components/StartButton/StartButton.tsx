@@ -4,13 +4,16 @@ import { TouchableHighlight, View, StyleSheet, Text } from 'react-native';
 type Props = {
   onPress: () => void;
   disabled: boolean;
+  starting: boolean;
 };
 
 const StartButton = (props: Props) => {
   return (
     <TouchableHighlight onPress={props.onPress} disabled={props.disabled}>
       <View style={styles.button}>
-        <Text style={styles.text}>Tap to start a call</Text>
+        <Text style={styles.text}>
+          {props.starting ? 'Starting...' : 'Tap to start a call'}
+        </Text>
       </View>
     </TouchableHighlight>
   );

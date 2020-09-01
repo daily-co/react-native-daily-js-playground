@@ -184,7 +184,6 @@ const App = () => {
   const enableCallButtons = [AppState.Joined, AppState.Error].includes(
     appState
   );
-  const enableStartButton = appState === AppState.Idle;
 
   return (
     <CallObjectContext.Provider value={callObject}>
@@ -200,7 +199,11 @@ const App = () => {
               />
             </>
           ) : (
-            <StartButton onPress={createRoom} disabled={!enableStartButton} />
+            <StartButton
+              onPress={createRoom}
+              disabled={appState !== AppState.Idle}
+              starting={appState === AppState.Creating}
+            />
           )}
         </View>
       </SafeAreaView>
