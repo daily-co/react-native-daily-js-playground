@@ -1,5 +1,13 @@
 import React, { useEffect, useReducer, useMemo, useCallback } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  Button,
+  TouchableHighlight,
+  Text,
+} from 'react-native';
+import Clipboard from '@react-native-community/clipboard';
 import { logDailyEvent } from '../../utils';
 import { DailyEvent } from '@daily-co/react-native-daily-js';
 import {
@@ -11,12 +19,14 @@ import {
   isScreenShare,
   isLocal,
   containsScreenShare,
+  participantCount,
   getMessage,
 } from './callState';
 import Tile, { TileType } from '../Tile/Tile';
 import CallMessage from '../CallMessage/CallMessage';
 import { useCallObject } from '../../useCallObject';
 import { TRAY_HEIGHT } from '../Tray/Tray';
+import CopyLinkButton from '../CopyLinkButton/CopyLinkButton';
 
 type Props = {
   roomUrl: string;
@@ -146,7 +156,7 @@ const CallPanel = (props: Props) => {
         tileType = TileType.FullWidth;
       } else if (isLocal(id) || containsScreenShare(callState.callItems)) {
         tileType = TileType.Thumbnail;
-      } else if (Object.keys(callState.callItems).length <= 3) {
+      } else if (participantCount(callState.callItems) <= 3) {
         tileType = TileType.FullWidth;
       } else {
         tileType = TileType.HalfWidth;
@@ -178,6 +188,7 @@ const CallPanel = (props: Props) => {
   }, [callState.callItems, flipCamera, sendHello]);
 
   const message = getMessage(callState, props.roomUrl);
+  const showCopyLinkButton = message && !message.isError;
 
   return (
     <>
@@ -188,11 +199,14 @@ const CallPanel = (props: Props) => {
         ]}
       >
         {message ? (
-          <CallMessage
-            header={message.header}
-            detail={message.detail}
-            isError={message.isError}
-          />
+          <>
+            <CallMessage
+              header={message.header}
+              detail={message.detail}
+              isError={message.isError}
+            />
+            {showCopyLinkButton && <CopyLinkButton roomUrl={props.roomUrl} />}
+          </>
         ) : (
           <ScrollView alwaysBounceVertical={false}>
             <View style={styles.largeTilesContainerInner}>{largeTiles}</View>

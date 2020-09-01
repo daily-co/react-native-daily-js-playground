@@ -13,6 +13,7 @@
     "@daily-co/react-native-daily-js": "0.0.1-alpha.7",
     "@daily-co/react-native-webrtc": "1.75.5",
     "@react-native-community/async-storage": "^1.11.0",
+    "@react-native-community/clipboard": "^1.2.3",
     "react": "16.11.0",
     "react-native": "0.62.2",
     "react-native-background-timer": "^2.3.1"
