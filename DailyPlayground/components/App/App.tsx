@@ -173,9 +173,18 @@ const App = () => {
     if (!callObject) {
       return;
     }
-    setAppState(AppState.Leaving);
-    callObject.leave();
-  }, [callObject]);
+    // If we're in the error state, we've already "left", so just clean up
+    if (appState === AppState.Error) {
+      callObject.destroy().then(() => {
+        setRoomUrl(null);
+        setCallObject(null);
+        setAppState(AppState.Idle);
+      });
+    } else {
+      setAppState(AppState.Leaving);
+      callObject.leave();
+    }
+  }, [callObject, appState]);
 
   const showCallPanel = [
     AppState.Joining,
