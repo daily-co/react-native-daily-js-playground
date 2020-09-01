@@ -81,6 +81,7 @@ const App = () => {
           break;
         case 'left-meeting':
           callObject?.destroy().then(() => {
+            setRoomUrl(null);
             setCallObject(null);
             setAppState(AppState.Idle);
           });
