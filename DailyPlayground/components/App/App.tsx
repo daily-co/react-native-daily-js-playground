@@ -8,7 +8,8 @@ import Daily, {
 } from '@daily-co/react-native-daily-js';
 import CallPanel from '../CallPanel/CallPanel';
 import StartButton from '../StartButton/StartButton';
-import { logDailyEvent, ROOM_URL } from '../../utils';
+import { logDailyEvent } from '../../utils';
+import api from '../../api';
 import Tray from '../Tray/Tray';
 import CallObjectContext from '../../CallObjectContext';
 
@@ -29,6 +30,7 @@ enum AppState {
 
 const App = () => {
   const [appState, setAppState] = useState(AppState.Idle);
+  const [roomUrl, setRoomUrl] = useState<string | null>(null);
   const [callObject, setCallObject] = useState<DailyCall | null>(null);
 
   /**
@@ -134,16 +136,36 @@ const App = () => {
    * This must happen *after* the event handlers are attached, above.
    */
   useEffect(() => {
-    if (!callObject) {
+    if (!callObject || !roomUrl) {
       return;
     }
-    callObject.join({ url: ROOM_URL });
+    callObject.join({ url: roomUrl });
     setAppState(AppState.Joining);
-  }, [callObject]);
+  }, [callObject, roomUrl]);
 
-  const startCall = useCallback(() => {
+  /**
+   * Create the callObject as soon as we have a roomUrl.
+   * This will trigger the call starting.
+   */
+  useEffect(() => {
+    if (!roomUrl) {
+      return;
+    }
     const newCallObject = Daily.createCallObject();
     setCallObject(newCallObject);
+  }, [roomUrl]);
+
+  const createRoom = useCallback(() => {
+    setAppState(AppState.Creating);
+    return api
+      .createRoom()
+      .then((room) => {
+        setRoomUrl(room.url);
+      })
+      .catch(() => {
+        setRoomUrl(null);
+        setAppState(AppState.Idle);
+      });
   }, []);
 
   const leaveCall = useCallback(() => {
@@ -171,14 +193,14 @@ const App = () => {
         <View style={styles.container}>
           {showCallPanel ? (
             <>
-              <CallPanel roomUrl={ROOM_URL} />
+              <CallPanel roomUrl={roomUrl || ''} />
               <Tray
                 onClickLeaveCall={leaveCall}
                 disabled={!enableCallButtons}
               />
             </>
           ) : (
-            <StartButton onPress={startCall} disabled={!enableStartButton} />
+            <StartButton onPress={createRoom} disabled={!enableStartButton} />
           )}
         </View>
       </SafeAreaView>
