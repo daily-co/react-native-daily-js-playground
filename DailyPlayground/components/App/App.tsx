@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, StatusBar, View } from 'react-native';
-import DailyIframe, {
+import Daily, {
   DailyEvent,
   DailyCall,
   DailyEventObject,
@@ -8,7 +8,8 @@ import DailyIframe, {
 } from '@daily-co/react-native-daily-js';
 import CallPanel from '../CallPanel/CallPanel';
 import StartButton from '../StartButton/StartButton';
-import { logDailyEvent, ROOM_URL } from '../../utils';
+import { logDailyEvent } from '../../utils';
+import api from '../../api';
 import Tray from '../Tray/Tray';
 import CallObjectContext from '../../CallObjectContext';
 
@@ -29,16 +30,17 @@ enum AppState {
 
 const App = () => {
   const [appState, setAppState] = useState(AppState.Idle);
+  const [roomUrl, setRoomUrl] = useState<string | null>(null);
   const [callObject, setCallObject] = useState<DailyCall | null>(null);
 
   /**
-   * Assign debugging globals.
+   * Uncomment to set up debugging globals.
    */
-  useEffect(() => {
-    const g = global as any;
-    g.DailyIframe = DailyIframe;
-    g.callObject = callObject;
-  }, [callObject]);
+  // useEffect(() => {
+  //   const g = global as any;
+  //   g.Daily = Daily;
+  //   g.callObject = callObject;
+  // }, [callObject]);
 
   /**
    * Attach debugging events handlers.
@@ -79,6 +81,7 @@ const App = () => {
           break;
         case 'left-meeting':
           callObject?.destroy().then(() => {
+            setRoomUrl(null);
             setCallObject(null);
             setAppState(AppState.Idle);
           });
@@ -134,25 +137,54 @@ const App = () => {
    * This must happen *after* the event handlers are attached, above.
    */
   useEffect(() => {
-    if (!callObject) {
+    if (!callObject || !roomUrl) {
       return;
     }
-    callObject.join({ url: ROOM_URL });
+    callObject.join({ url: roomUrl });
     setAppState(AppState.Joining);
-  }, [callObject]);
+  }, [callObject, roomUrl]);
 
-  const startCall = useCallback(() => {
-    const newCallObject = DailyIframe.createCallObject();
+  /**
+   * Create the callObject as soon as we have a roomUrl.
+   * This will trigger the call starting.
+   */
+  useEffect(() => {
+    if (!roomUrl) {
+      return;
+    }
+    const newCallObject = Daily.createCallObject();
     setCallObject(newCallObject);
+  }, [roomUrl]);
+
+  const createRoom = useCallback(() => {
+    setAppState(AppState.Creating);
+    return api
+      .createRoom()
+      .then((room) => {
+        setRoomUrl(room.url);
+      })
+      .catch(() => {
+        setRoomUrl(null);
+        setAppState(AppState.Idle);
+      });
   }, []);
 
   const leaveCall = useCallback(() => {
     if (!callObject) {
       return;
     }
-    setAppState(AppState.Leaving);
-    callObject.leave();
-  }, [callObject]);
+    // If we're in the error state, we've already "left", so just clean up
+    if (appState === AppState.Error) {
+      callObject.destroy().then(() => {
+        setRoomUrl(null);
+        setCallObject(null);
+        setAppState(AppState.Idle);
+      });
+    } else {
+      setAppState(AppState.Leaving);
+      callObject.leave();
+    }
+  }, [callObject, appState]);
 
   const showCallPanel = [
     AppState.Joining,
@@ -162,7 +194,6 @@ const App = () => {
   const enableCallButtons = [AppState.Joined, AppState.Error].includes(
     appState
   );
-  const enableStartButton = appState === AppState.Idle;
 
   return (
     <CallObjectContext.Provider value={callObject}>
@@ -171,14 +202,18 @@ const App = () => {
         <View style={styles.container}>
           {showCallPanel ? (
             <>
-              <CallPanel roomUrl={ROOM_URL} />
+              <CallPanel roomUrl={roomUrl || ''} />
               <Tray
                 onClickLeaveCall={leaveCall}
                 disabled={!enableCallButtons}
               />
             </>
           ) : (
-            <StartButton onPress={startCall} disabled={!enableStartButton} />
+            <StartButton
+              onPress={createRoom}
+              disabled={appState !== AppState.Idle}
+              starting={appState === AppState.Creating}
+            />
           )}
         </View>
       </SafeAreaView>

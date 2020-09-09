@@ -141,6 +141,10 @@ function containsScreenShare(callItems: { [id: string]: CallItem }) {
   return Object.keys(callItems).some((id) => isScreenShare(id));
 }
 
+function participantCount(callItems: { [id: string]: CallItem }) {
+  return Object.keys(callItems).length;
+}
+
 function getMessage(callState: CallState, roomUrl: string) {
   let header = null;
   let detail = null;
@@ -153,7 +157,7 @@ function getMessage(callState: CallState, roomUrl: string) {
     detail =
       'See https://help.daily.co/en/articles/2528184-unblock-camera-mic-access-on-a-computer to troubleshoot.';
     isError = true;
-  } else if (Object.keys(callState.callItems).length === 1) {
+  } else if (participantCount(callState.callItems) === 1) {
     header = 'Copy and share this URL to invite others';
     detail = roomUrl;
   }
@@ -169,5 +173,6 @@ export {
   isLocal,
   isScreenShare,
   containsScreenShare,
+  participantCount,
   getMessage,
 };
