@@ -1,12 +1,25 @@
 import { MediaStreamTrack } from '@daily-co/react-native-daily-js';
 import React, { useMemo } from 'react';
-import { Text, View, StyleSheet, TouchableHighlight } from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  TouchableHighlight,
+  ViewStyle,
+} from 'react-native';
 import { DailyMediaView } from '@daily-co/react-native-daily-js';
+
+export enum TileType {
+  Thumbnail,
+  HalfWidth,
+  FullWidth,
+}
 
 type Props = {
   videoTrack: MediaStreamTrack | null;
   audioTrack: MediaStreamTrack | null;
-  isLocalPerson: boolean;
+  mirror: boolean;
+  type: TileType;
   isLoading: boolean;
   onPress?: () => void;
 };
@@ -17,13 +30,14 @@ export default function Tile(props: Props) {
       <DailyMediaView
         videoTrack={props.videoTrack}
         audioTrack={props.audioTrack}
-        mirror={props.isLocalPerson}
-        zOrder={props.isLocalPerson ? 1 : 0}
+        mirror={props.mirror}
+        // Assumption: thumbnails are on top
+        zOrder={props.type === TileType.Thumbnail ? 1 : 0}
         style={styles.media}
         objectFit="cover"
       />
     );
-  }, [props.videoTrack, props.audioTrack, props.isLocalPerson]);
+  }, [props.videoTrack, props.audioTrack, props.mirror, props.type]);
 
   const touchableMediaComponent = useMemo(() => {
     return (
@@ -43,6 +57,16 @@ export default function Tile(props: Props) {
     ) : null;
   }, [props.isLoading]);
 
+  let typeSpecificStyle: ViewStyle | null = null;
+  switch (props.type) {
+    case TileType.HalfWidth:
+      typeSpecificStyle = styles.containerHalfWidth;
+      break;
+    case TileType.FullWidth:
+      typeSpecificStyle = styles.containerFullWidth;
+      break;
+  }
+
   return (
     <View
       style={[
@@ -50,7 +74,7 @@ export default function Tile(props: Props) {
         props.isLoading || !props.videoTrack
           ? styles.containerLoadingOrNotShowingVideo
           : null,
-        props.isLocalPerson ? styles.containerLocal : styles.containerRemote,
+        typeSpecificStyle,
       ]}
     >
       {touchableMediaComponent}
@@ -66,13 +90,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 10,
     overflow: 'hidden',
-  },
-  containerLocal: {
-    aspectRatio: 9 / 16,
-  },
-  containerRemote: {
-    width: '50%',
     aspectRatio: 1,
+  },
+  containerHalfWidth: {
+    width: '50%',
+  },
+  containerFullWidth: {
+    width: '100%',
   },
   containerLoadingOrNotShowingVideo: {
     backgroundColor: '#000000',

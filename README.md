@@ -22,11 +22,7 @@ npm i
 npx pod-install
 ```
 
-### Preparing to run
-
-First, update `utils.ts` to point to the Daily.co room you wish to use for testing (by default it's set to a non-functioning placeholder URL).
-
-Then run the following:
+### Running the React Native dev server
 
 ```bash
 cd DailyPlayground
@@ -35,6 +31,8 @@ cd DailyPlayground
 # to re-bundle
 npm start -- --reset-cache
 ```
+
+Leave this terminal tab open and running.
 
 ### Running on iOS
 
