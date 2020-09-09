@@ -34,13 +34,13 @@ const App = () => {
   const [callObject, setCallObject] = useState<DailyCall | null>(null);
 
   /**
-   * Assign debugging globals.
+   * Uncomment to set up debugging globals.
    */
-  useEffect(() => {
-    const g = global as any;
-    g.Daily = Daily;
-    g.callObject = callObject;
-  }, [callObject]);
+  // useEffect(() => {
+  //   const g = global as any;
+  //   g.Daily = Daily;
+  //   g.callObject = callObject;
+  // }, [callObject]);
 
   /**
    * Attach debugging events handlers.
