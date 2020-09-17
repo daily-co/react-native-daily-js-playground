@@ -47,3 +47,24 @@ After plugging in an Android device configured for debugging, simply run:
 ```
 npm run android
 ```
+
+### Console debugging
+
+Shake your device while it's running the app. A debugging menu will pop up. Select "Debug". This will automatically open a Chrome tab. Open Chrome dev tools. In the Console tab of Chrome dev tools, click the dropdown that says "top" and select "debuggerWorker" from the list.
+
+![Image showing selecting "debuggerWorker" from the Console tab in the Chrome debugger](debuggerWorker-screenshot.png)
+
+Now you should be all set to use Chrome dev tools to view logged messages and run commands like you would on a website! (NOTE: you may have to reload the JavaScript a couple of times for the debugger to properly connect).
+
+To give yourself access to helpful globals from the console, uncomment the following block in `App.tsx`:
+
+```ts
+/**
+ * Uncomment to set up debugging globals.
+ */
+useEffect(() => {
+  const g = global as any;
+  g.Daily = Daily;
+  g.callObject = callObject;
+}, [callObject]);
+```
