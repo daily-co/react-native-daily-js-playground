@@ -12,6 +12,7 @@ import { logDailyEvent } from '../../utils';
 import api from '../../api';
 import Tray from '../Tray/Tray';
 import CallObjectContext from '../../CallObjectContext';
+import * as NativeCallSystem from '../../NativeCallSystem';
 
 declare const global: { HermesInternal: null | {} };
 
@@ -21,9 +22,11 @@ declare const global: { HermesInternal: null | {} };
 
 enum AppState {
   Idle,
-  Creating,
+  CreatingRoom,
+  AwaitingStartCallInstruction,
   Joining,
   Joined,
+  AwaitingEndCallInstruction,
   Leaving,
   Error,
 }
@@ -43,25 +46,25 @@ const App = () => {
   // }, [callObject]);
 
   /**
-   * Attach debugging events handlers.
+   * Uncomment to attach debugging event handlers.
    */
-  useEffect(() => {
-    if (!callObject) {
-      return;
-    }
+  // useEffect(() => {
+  //   if (!callObject) {
+  //     return;
+  //   }
 
-    const events: DailyEvent[] = ['loading', 'load-attempt-failed', 'loaded'];
+  //   const events: DailyEvent[] = ['loading', 'load-attempt-failed', 'loaded'];
 
-    for (const event of events) {
-      callObject.on(event, logDailyEvent);
-    }
+  //   for (const event of events) {
+  //     callObject.on(event, logDailyEvent);
+  //   }
 
-    return () => {
-      for (const event of events) {
-        callObject.off(event, logDailyEvent);
-      }
-    };
-  }, [callObject]);
+  //   return () => {
+  //     for (const event of events) {
+  //       callObject.off(event, logDailyEvent);
+  //     }
+  //   };
+  // }, [callObject]);
 
   /**
    * Attach lifecycle event handlers.
@@ -81,6 +84,7 @@ const App = () => {
           break;
         case 'left-meeting':
           callObject?.destroy().then(() => {
+            roomUrl && NativeCallSystem.reportCallEnded(roomUrl);
             setRoomUrl(null);
             setCallObject(null);
             setAppState(AppState.Idle);
@@ -108,7 +112,7 @@ const App = () => {
         callObject.off(event, handleNewMeetingState);
       }
     };
-  }, [callObject]);
+  }, [callObject, roomUrl]);
 
   /**
    * Listen for app messages from other call participants.
@@ -145,23 +149,103 @@ const App = () => {
   }, [callObject, roomUrl]);
 
   /**
-   * Create the callObject as soon as we have a roomUrl.
-   * This will trigger the call starting.
+   * When we enter a joined or error state, report it to the native call system.
    */
   useEffect(() => {
     if (!roomUrl) {
       return;
     }
-    const newCallObject = Daily.createCallObject();
-    setCallObject(newCallObject);
-  }, [roomUrl]);
+    if (appState === AppState.Joined) {
+      NativeCallSystem.reportCallStarted(roomUrl);
+    } else if (appState === AppState.Error) {
+      NativeCallSystem.reportCallFailed(roomUrl);
+    }
+  }, [appState, roomUrl]);
 
-  const createRoom = useCallback(() => {
-    setAppState(AppState.Creating);
+  useEffect(() => {});
+
+  /**
+   * Start a call when the native call system asks us to.
+   * Note that for now we're not handling starting a call with a room URL other
+   * than one set by interacting with this app (so, not from tapping an phone
+   * call history entry).
+   */
+  const onNativeCallSystemStartCall = useCallback(
+    (roomUrlToStartCall: string) => {
+      if (callObject || roomUrlToStartCall !== roomUrl) {
+        return;
+      }
+      const newCallObject = Daily.createCallObject();
+      setCallObject(newCallObject);
+    },
+    [roomUrl, callObject]
+  );
+
+  /**
+   * Abort starting a call when the native call system asks us to.
+   * Note that we only expect an abort if native call system permission is
+   * pending.
+   */
+  const onNativeCallSystemAbortStartingCall = useCallback(
+    (roomUrlToAbortCall: string) => {
+      if (
+        !(
+          roomUrlToAbortCall === roomUrl &&
+          appState === AppState.AwaitingStartCallInstruction
+        )
+      ) {
+        return;
+      }
+      setRoomUrl(null);
+      setAppState(AppState.Idle);
+    },
+    [roomUrl, appState]
+  );
+
+  /**
+   * End a call when the native call system asks us to.
+   */
+  const onNativeCallSystemEndCall = useCallback(
+    (roomUrlToEndCall: string) => {
+      if (!(callObject && roomUrlToEndCall === roomUrl)) {
+        return;
+      }
+      setAppState(AppState.Leaving);
+      callObject.leave();
+    },
+    [callObject, roomUrl]
+  );
+
+  /**
+   * Set up handlers for native call system events.
+   */
+  useEffect(() => {
+    NativeCallSystem.addStartCallListener(onNativeCallSystemStartCall);
+    NativeCallSystem.addAbortStartingCallListener(
+      onNativeCallSystemAbortStartingCall
+    );
+    NativeCallSystem.addEndCallListener(onNativeCallSystemEndCall);
+    return () => {
+      NativeCallSystem.removeStartCallListener(onNativeCallSystemStartCall);
+      NativeCallSystem.removeAbortStartingCallListener(
+        onNativeCallSystemAbortStartingCall
+      );
+      NativeCallSystem.removeEndCallListener(onNativeCallSystemEndCall);
+    };
+  }, [
+    onNativeCallSystemStartCall,
+    onNativeCallSystemAbortStartingCall,
+    onNativeCallSystemEndCall,
+  ]);
+
+  const startCall = useCallback(() => {
+    setAppState(AppState.CreatingRoom);
     return api
       .createRoom()
       .then((room) => {
         setRoomUrl(room.url);
+        setAppState(AppState.AwaitingStartCallInstruction);
+        NativeCallSystem.askToStartCall(room.url);
       })
       .catch(() => {
         setRoomUrl(null);
@@ -169,8 +253,8 @@ const App = () => {
       });
   }, []);
 
-  const leaveCall = useCallback(() => {
-    if (!callObject) {
+  const endCall = useCallback(() => {
+    if (!callObject || !roomUrl) {
       return;
     }
     // If we're in the error state, we've already "left", so just clean up
@@ -181,10 +265,10 @@ const App = () => {
         setAppState(AppState.Idle);
       });
     } else {
-      setAppState(AppState.Leaving);
-      callObject.leave();
+      setAppState(AppState.AwaitingEndCallInstruction);
+      NativeCallSystem.askToEndCall(roomUrl);
     }
-  }, [callObject, appState]);
+  }, [callObject, appState, roomUrl]);
 
   const showCallPanel = [
     AppState.Joining,
@@ -194,6 +278,11 @@ const App = () => {
   const enableCallButtons = [AppState.Joined, AppState.Error].includes(
     appState
   );
+  const enableStartButton = appState === AppState.Idle;
+  const showStartButtonStarting = [
+    AppState.AwaitingStartCallInstruction,
+    AppState.CreatingRoom,
+  ].includes(appState);
 
   return (
     <CallObjectContext.Provider value={callObject}>
@@ -203,16 +292,13 @@ const App = () => {
           {showCallPanel ? (
             <>
               <CallPanel roomUrl={roomUrl || ''} />
-              <Tray
-                onClickLeaveCall={leaveCall}
-                disabled={!enableCallButtons}
-              />
+              <Tray onClickLeaveCall={endCall} disabled={!enableCallButtons} />
             </>
           ) : (
             <StartButton
-              onPress={createRoom}
-              disabled={appState !== AppState.Idle}
-              starting={appState === AppState.Creating}
+              onPress={startCall}
+              disabled={!enableStartButton}
+              starting={showStartButtonStarting}
             />
           )}
         </View>
