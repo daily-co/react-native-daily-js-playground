@@ -1,5 +1,5 @@
 const newRoomEndpoint =
-  'https://fu6720epic.execute-api.us-west-2.amazonaws.com/default/dailyWwwApiDemoNewCall';
+  'https://f433xwze36.execute-api.us-west-2.amazonaws.com/default/dailyRnDemoNewCall';
 
 /**
  * Create a short-lived room for demo purposes.
