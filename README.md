@@ -63,13 +63,13 @@ Once your settings have been updated, select your device from the device dropdow
 
 **Note:** The app should work as long as you're on the same WiFi as your dev box running the React Native development server.
 
-**iOS Debugging Tips**
+**iOS debugging tips:**
 
-If you see the error `Change your bundle identifier to a unique string to try again.` update the "Bundle Identifier" input to make it unique. This should clear the error.
+- If you see the error `Change your bundle identifier to a unique string to try again` update the "Bundle Identifier" input in `Signing & Capabilities` to make it unique. This should clear the error.
 
-If you see an error that says `Xcode was unable to launch because it has an invalid code signature, inadequate entitlements or its profile has not been explicitly trusted by the user` you may need to update the settings on your iPhone device to enable the required permissions. Open `Settings` on your iPhone, select `General`, then `Device Management`, and click `Trust` for DailyPlayground.
+- If you see an error that says `Xcode was unable to launch because it has an invalid code signature, inadequate entitlements or its profile has not been explicitly trusted by the user` you may need to update the settings on your iPhone device to enable the required permissions. Open `Settings` on your iPhone, select `General`, then `Device Management`, and click `Trust` for DailyPlayground.
 
-You may also be prompted to enter you login keychain password. Be sure to click `Always trust` to avoid the prompt showing multiple times.
+- You may also be prompted to enter you login keychain password. Be sure to click `Always trust` to avoid the prompt showing multiple times.
 
 ### Running on Android
 
@@ -81,9 +81,9 @@ npm run android
 
 ----
 
-### Room Configuration
+### Room configuration
 
-To keep things simple, a pre-existing demo Daily.co room is used. If you would like to use one of your own rooms, update the object returned in `/DailyPlayground/api.ts`.
+To keep things simple, a pre-existing demo Daily.co room is used. To use one of your own rooms, update the object returned in `/DailyPlayground/api.ts`.
 
 ```js
 async function createRoom(): Promise<{ url: string }> {
@@ -96,8 +96,7 @@ async function createRoom(): Promise<{ url: string }> {
 }
 ```
 
-**Note:**
-Your Daily.co room must be configured in a particular way in order for a `react-native-daily-js` client to be able to connect to it: it must specify the property `signaling_impl: ws`.
+**Note:** Your Daily.co room must be configured in a particular way in order for a `react-native-daily-js` client to be able to connect to it: it must specify the property `signaling_impl: ws`.
 
 To create a room with the `signaling_impl` property set appropriately, run the following (replacing <your-api-key> with your actual API key):
 
@@ -118,7 +117,7 @@ Shake your device while it's running the app. A debugging menu will pop up. Sele
 
 ![Image showing selecting "debuggerWorker" from the Console tab in the Chrome debugger](debuggerWorker-screenshot.png)
 
-Now you should be all set to use Chrome dev tools to view logged messages and run commands like you would on a website! (NOTE: you may have to reload the JavaScript a couple of times for the debugger to properly connect).
+Now you should be all set to use Chrome dev tools to view logged messages and run commands like you would on a website! (**Note**: you may have to reload the JavaScript a couple of times for the debugger to properly connect).
 
 To give yourself access to helpful globals from the console, uncomment the following block in `App.tsx`:
 
