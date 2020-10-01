@@ -8,7 +8,7 @@ A simple app showcasing `react-native-daily-js`, the [Daily.co](https://www.dail
 
 In [the React Native development environment setup page](https://reactnative.dev/docs/environment-setup), select "React Native CLI Quickstart" and follow the instructions under the heading "Installing dependencies".
 
-There are varying instructions depending on your Development OS (macOS, Windows, Linux) and Target OS (iOS, Android), so be sure to follow the steps for each closely.
+The instructions vary depending on your development OS (macOS, Windows, Linux) and target OS (iOS, Android), so be sure to follow the steps for each closely.
 
 **Note:** You will need Xcode (i.e. a Mac) for iOS development. 
 
@@ -45,31 +45,31 @@ Leave this terminal tab open and running.
 
 ### Running on iOS
 
-First, you'll need to do a one-time setup. This is required on iOS to build to device.
+First, you'll need to do a one-time setup. This is required to build to device.
 
 If you're familiar with Xcode, you'll need to open `DailyPlayground.xcworkspace` and, in the DailyPlayground target settings, provide a development team registered with Apple. 
 
 If you're newer to Xcode, here are some more detailed instructions to get you started.
 
-Start by opening the project in Xcode. Make sure you are specifically selecting `DailyPlayground.xcworkspace` from the `/DailyPlayground/ios` directory. This is also a good time to plug in your device to make sure the following steps are successful.
+First, open the project in Xcode. Make sure to specifically select `DailyPlayground.xcworkspace` from `/DailyPlayground/ios`. This is also a good time to plug in your device to be sure the following steps are successful.
  
 From the main menu, select `Preferences` and then `Accounts`. Click the `+` sign to add an account (e.g. an Apple ID).
 
-Once you have an account added, close `Preferences` and select the folder icon in the top left corner. Then select `DailyPlayground` from the side panel and navigate to `Signing & Capabilities` in the top nav bar. Open the "Team" dropdown and select the account you just added. The "Signing Certificate" section should update accordingly with your account information.
+Once an is account added, close `Preferences` and select the folder icon in the top left corner. Then select `DailyPlayground` from the side panel and navigate to `Signing & Capabilities` in the top nav bar. Open the "Team" dropdown and select the account added in the previous step. The "Signing Certificate" section should update accordingly with your account information.
 
 ![Xcode menu ](xcode-screenshot.png)
-
-**Debugging Tips**
-
-If you see an error that says `Change your bundle identifier to a unique string to try again.` update the "Bundle Identifier" input to make it unique. This should clear the error.
-
-If you see an error that says `Xcode was unable to launch because it has an invalid code signature, inadequate entitlements or its profile has not been explicitly trusted by the user` you may need to update the settings on your iPhone device to enable the required permissions. Open `Settings` on your iPhone, then select `General`, then `Device Management`, and click `Trust` for DailyPlayground.
-
-You may also be prompted to enter you login keychain password. Be sure to click `Always trust` to avoid the prompt showing multiple times.
 
 Once your settings have been updated, select your device from the device dropdown. Simply hit Run (or the Play icon) and you're ready to go!
 
 **Note:** The app should work as long as you're on the same WiFi as your dev box running the React Native development server.
+
+**iOS Debugging Tips**
+
+If you see the error `Change your bundle identifier to a unique string to try again.` update the "Bundle Identifier" input to make it unique. This should clear the error.
+
+If you see an error that says `Xcode was unable to launch because it has an invalid code signature, inadequate entitlements or its profile has not been explicitly trusted by the user` you may need to update the settings on your iPhone device to enable the required permissions. Open `Settings` on your iPhone, select `General`, then `Device Management`, and click `Trust` for DailyPlayground.
+
+You may also be prompted to enter you login keychain password. Be sure to click `Always trust` to avoid the prompt showing multiple times.
 
 ### Running on Android
 
