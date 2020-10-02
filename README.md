@@ -24,11 +24,6 @@ npm i
 
 # Generate ios/DailyPlayground.xcworkspace
 npx pod-install
-
-OR
-
-cd /ios
-pod install
 ```
 
 ### Running the React Native dev server
@@ -83,7 +78,7 @@ npm run android
 
 ### Room configuration
 
-To keep things simple, a pre-existing demo Daily.co room is used. To use one of your own rooms, update the object returned in `/DailyPlayground/api.ts`.
+To keep things simple, a one-time, temporary Daily.co room is used. To use one of your own rooms, update the object returned in `/DailyPlayground/api.ts`.
 
 ```js
 async function createRoom(): Promise<{ url: string }> {
@@ -134,4 +129,4 @@ useEffect(() => {
 
 ### React Native Debugger
 
-If you're looking to inspect specific components, update styles, or inspect network calls, you may also find [React Native Debugger](https://github.com/jhen0409/react-native-debugger) helpful for debugging.
+If you're looking to inspect specific components, update styles, or inspect network calls, [React Native Debugger](https://github.com/jhen0409/react-native-debugger) can also be helpful for debugging.
