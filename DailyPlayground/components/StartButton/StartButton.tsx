@@ -12,7 +12,7 @@ const StartButton = (props: Props) => {
     <TouchableHighlight onPress={props.onPress} disabled={props.disabled}>
       <View style={styles.button}>
         <Text style={styles.text}>
-          {props.starting ? 'Starting...' : 'Tap to start a call'}
+          {props.starting ? 'Starting...' : 'Start call'}
         </Text>
       </View>
     </TouchableHighlight>
