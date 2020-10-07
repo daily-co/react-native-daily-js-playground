@@ -1,5 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, StatusBar, View } from 'react-native';
+import {
+  SafeAreaView,
+  StyleSheet,
+  StatusBar,
+  View,
+  TextInput,
+} from 'react-native';
 import Daily, {
   DailyEvent,
   DailyCall,
@@ -32,6 +38,7 @@ const App = () => {
   const [appState, setAppState] = useState(AppState.Idle);
   const [roomUrl, setRoomUrl] = useState<string | null>(null);
   const [callObject, setCallObject] = useState<DailyCall | null>(null);
+  const [roomUrlFieldValue, setRoomUrlFieldValue] = useState('');
 
   /**
    * Uncomment to set up debugging globals.
@@ -158,16 +165,20 @@ const App = () => {
 
   const createRoom = useCallback(() => {
     setAppState(AppState.Creating);
-    return api
-      .createRoom()
-      .then((room) => {
-        setRoomUrl(room.url);
-      })
-      .catch(() => {
-        setRoomUrl(null);
-        setAppState(AppState.Idle);
-      });
-  }, []);
+    if (roomUrlFieldValue) {
+      setRoomUrl(roomUrlFieldValue);
+    } else {
+      api
+        .createRoom()
+        .then((room) => {
+          setRoomUrl(room.url);
+        })
+        .catch(() => {
+          setRoomUrl(null);
+          setAppState(AppState.Idle);
+        });
+    }
+  }, [roomUrlFieldValue]);
 
   const leaveCall = useCallback(() => {
     if (!callObject) {
@@ -194,6 +205,7 @@ const App = () => {
   const enableCallButtons = [AppState.Joined, AppState.Error].includes(
     appState
   );
+  const enableStartControls = appState === AppState.Idle;
 
   return (
     <CallObjectContext.Provider value={callObject}>
@@ -209,11 +221,23 @@ const App = () => {
               />
             </>
           ) : (
-            <StartButton
-              onPress={createRoom}
-              disabled={appState !== AppState.Idle}
-              starting={appState === AppState.Creating}
-            />
+            <>
+              <StartButton
+                onPress={createRoom}
+                disabled={!enableStartControls}
+                starting={appState === AppState.Creating}
+              />
+              <TextInput
+                style={styles.roomUrlField}
+                placeholder="Optional room URL"
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType="url"
+                editable={enableStartControls}
+                value={roomUrlFieldValue}
+                onChangeText={(text) => setRoomUrlFieldValue(text)}
+              />
+            </>
           )}
         </View>
       </SafeAreaView>
@@ -232,6 +256,20 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  startContainer: {
+    flexDirection: 'column',
+  },
+  roomUrlField: {
+    margin: 10,
+    padding: 10,
+    backgroundColor: '#fff',
+    fontFamily: 'Helvetica Neue',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: 14,
+    lineHeight: 17,
+    width: '75%',
   },
 });
 
