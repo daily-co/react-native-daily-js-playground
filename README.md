@@ -1,4 +1,4 @@
-# rn-daily-js-playground
+# react-native-daily-js-playground
 
 A simple app showcasing `react-native-daily-js`, the [Daily.co](https://www.daily.co) library for React Native.
 
