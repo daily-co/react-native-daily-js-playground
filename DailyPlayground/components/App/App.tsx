@@ -230,6 +230,7 @@ const App = () => {
               <TextInput
                 style={styles.roomUrlField}
                 placeholder="Optional room URL"
+                placeholderTextColor="#bbbbbb"
                 autoCapitalize="none"
                 autoCorrect={false}
                 keyboardType="url"
@@ -265,6 +266,7 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#fff',
     fontFamily: 'Helvetica Neue',
+    color: '#4a4a4a',
     fontStyle: 'normal',
     fontWeight: 'normal',
     fontSize: 14,
