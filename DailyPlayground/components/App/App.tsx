@@ -21,8 +21,8 @@ import CallObjectContext from '../../CallObjectContext';
 
 declare const global: { HermesInternal: null | {} };
 
-// Uncomment during development to temporarily intentionally ignore errors
-// and keep going
+// Uncomment during development to temporarily intentionally ignore errors,
+// preventing the red screen from popping up
 // (console as any).reportErrorsAsExceptions = false;
 
 enum AppState {
@@ -50,25 +50,25 @@ const App = () => {
   // }, [callObject]);
 
   /**
-   * Attach debugging events handlers.
+   * Uncomment to attach debugging events handlers.
    */
-  useEffect(() => {
-    if (!callObject) {
-      return;
-    }
+  // useEffect(() => {
+  //   if (!callObject) {
+  //     return;
+  //   }
 
-    const events: DailyEvent[] = ['loading', 'load-attempt-failed', 'loaded'];
+  //   const events: DailyEvent[] = ['loading', 'load-attempt-failed', 'loaded'];
 
-    for (const event of events) {
-      callObject.on(event, logDailyEvent);
-    }
+  //   for (const event of events) {
+  //     callObject.on(event, logDailyEvent);
+  //   }
 
-    return () => {
-      for (const event of events) {
-        callObject.off(event, logDailyEvent);
-      }
-    };
-  }, [callObject]);
+  //   return () => {
+  //     for (const event of events) {
+  //       callObject.off(event, logDailyEvent);
+  //     }
+  //   };
+  // }, [callObject]);
 
   /**
    * Attach lifecycle event handlers.
@@ -119,6 +119,7 @@ const App = () => {
 
   /**
    * Listen for app messages from other call participants.
+   * These only show up in the console.
    */
   useEffect(() => {
     if (!callObject) {
@@ -141,7 +142,7 @@ const App = () => {
 
   /**
    * Join a call as soon as a callObject is created.
-   * This must happen *after* the event handlers are attached, above.
+   * This effect must happen *after* the event handlers are attached, above.
    */
   useEffect(() => {
     if (!callObject || !roomUrl) {
@@ -166,6 +167,10 @@ const App = () => {
     setCallObject(newCallObject);
   }, [roomUrl]);
 
+  /**
+   * Create a room, which is the first step in the call sequence.
+   * If the user has specified a room, use it. Otherwise, create one.
+   */
   const createRoom = useCallback(() => {
     setAppState(AppState.Creating);
     if (roomUrlFieldValue) {
@@ -183,11 +188,15 @@ const App = () => {
     }
   }, [roomUrlFieldValue]);
 
+  /**
+   * Leave the current call.
+   * If we're in the error state (AppState.Error), we've already "left", so just
+   * clean up our state.
+   */
   const leaveCall = useCallback(() => {
     if (!callObject) {
       return;
     }
-    // If we're in the error state, we've already "left", so just clean up
     if (appState === AppState.Error) {
       callObject.destroy().then(() => {
         setRoomUrl(null);
