@@ -139,6 +139,9 @@ const CallPanel = (props: Props) => {
     [callObject]
   );
 
+  /**
+   * Get lists of large tiles and thumbnail tiles to render.
+   */
   const [largeTiles, thumbnailTiles] = useMemo(() => {
     let larges: JSX.Element[] = [];
     let thumbnails: JSX.Element[] = [];
