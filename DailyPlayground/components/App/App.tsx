@@ -147,7 +147,10 @@ const App = () => {
     if (!callObject || !roomUrl) {
       return;
     }
-    callObject.join({ url: roomUrl });
+    callObject.join({ url: roomUrl }).catch((_) => {
+      // Doing nothing here since we handle fatal join errors in another way,
+      // via our listener attached to the 'error' event
+    });
     setAppState(AppState.Joining);
   }, [callObject, roomUrl]);
 
