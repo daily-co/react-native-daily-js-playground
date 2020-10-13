@@ -55,9 +55,9 @@ export default function Tray(props: Props) {
 
     const handleNewParticipantsState = (event?: any) => {
       event && logDailyEvent(event);
-      const [isCameraMuted, isMicMuted] = getStreamStates(callObject);
-      setCameraMuted(isCameraMuted);
-      setMicMuted(isMicMuted);
+      const [cameraMuted, micMuted] = getStreamStates(callObject);
+      setCameraMuted(cameraMuted);
+      setMicMuted(micMuted);
     };
 
     // Use initial state
