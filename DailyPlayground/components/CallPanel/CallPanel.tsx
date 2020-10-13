@@ -1,13 +1,5 @@
 import React, { useEffect, useReducer, useMemo, useCallback } from 'react';
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-  Button,
-  TouchableHighlight,
-  Text,
-} from 'react-native';
-import Clipboard from '@react-native-community/clipboard';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { logDailyEvent } from '../../utils';
 import { DailyEvent } from '@daily-co/react-native-daily-js';
 import {
@@ -147,9 +139,12 @@ const CallPanel = (props: Props) => {
     [callObject]
   );
 
+  /**
+   * Get lists of large tiles and thumbnail tiles to render.
+   */
   const [largeTiles, thumbnailTiles] = useMemo(() => {
-    let largeTiles: JSX.Element[] = [];
-    let thumbnailTiles: JSX.Element[] = [];
+    let larges: JSX.Element[] = [];
+    let thumbnails: JSX.Element[] = [];
     Object.entries(callState.callItems).forEach(([id, callItem]) => {
       let tileType: TileType;
       if (isScreenShare(id)) {
@@ -179,12 +174,12 @@ const CallPanel = (props: Props) => {
         />
       );
       if (tileType === TileType.Thumbnail) {
-        thumbnailTiles.push(tile);
+        thumbnails.push(tile);
       } else {
-        largeTiles.push(tile);
+        larges.push(tile);
       }
     });
-    return [largeTiles, thumbnailTiles];
+    return [larges, thumbnails];
   }, [callState.callItems, flipCamera, sendHello]);
 
   const message = getMessage(callState, props.roomUrl);

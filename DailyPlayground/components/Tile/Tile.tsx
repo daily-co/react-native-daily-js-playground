@@ -31,7 +31,7 @@ export default function Tile(props: Props) {
         videoTrack={props.videoTrack}
         audioTrack={props.audioTrack}
         mirror={props.mirror}
-        // Assumption: thumbnails are on top
+        // Assumption: thumbnails should appear layered on top of other tiles
         zOrder={props.type === TileType.Thumbnail ? 1 : 0}
         style={styles.media}
         objectFit="cover"
