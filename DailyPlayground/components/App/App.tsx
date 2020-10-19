@@ -5,6 +5,7 @@ import {
   StatusBar,
   View,
   TextInput,
+  YellowBox,
 } from 'react-native';
 import Daily, {
   DailyEvent,
@@ -20,6 +21,11 @@ import Tray from '../Tray/Tray';
 import CallObjectContext from '../../CallObjectContext';
 
 declare const global: { HermesInternal: null | {} };
+
+// Silence an annoying warning about a harmless require cycle in React Native's
+// fetch library.
+// See https://github.com/facebook/react-native/issues/23130.
+YellowBox.ignoreWarnings(['Require cycle: node_modules']);
 
 // Uncomment during development to temporarily intentionally ignore errors,
 // preventing the red screen from popping up
