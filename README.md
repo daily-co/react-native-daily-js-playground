@@ -1,6 +1,6 @@
 # react-native-daily-js-playground
 
-A simple app showcasing `react-native-daily-js`, the [Daily.co](https://www.daily.co) library for React Native.
+A simple app showcasing `react-native-daily-js`, the [Daily](https://www.daily.co) library for React Native.
 
 ## Usage
 
@@ -10,7 +10,7 @@ In [the React Native development environment setup page](https://reactnative.dev
 
 The instructions vary depending on your development OS (macOS, Windows, Linux) and target OS (iOS, Android), so be sure to follow the steps for each closely.
 
-**Note:** You will need Xcode (i.e. a Mac) for iOS development. 
+**Note:** You will need Xcode (i.e. a Mac) for iOS development.
 
 ### Building
 
@@ -42,12 +42,12 @@ Leave this terminal tab open and running.
 
 First, you'll need to do a one-time setup. This is required to build to device.
 
-If you're familiar with Xcode, you'll need to open `DailyPlayground.xcworkspace` and, in the DailyPlayground target settings, provide a development team registered with Apple. 
+If you're familiar with Xcode, you'll need to open `DailyPlayground.xcworkspace` and, in the DailyPlayground target settings, provide a development team registered with Apple.
 
 If you're newer to Xcode, here are some more detailed instructions to get you started.
 
 First, open the project in Xcode. Make sure to specifically select `DailyPlayground.xcworkspace` from `/DailyPlayground/ios`. This is also a good time to plug in your device to be sure the following steps are successful.
- 
+
 From the main menu, select `Preferences` and then `Accounts`. Click the `+` sign to add an account (e.g. an Apple ID).
 
 Once an is account added, close `Preferences` and select the folder icon in the top left corner. Then select `DailyPlayground` from the side panel and navigate to `Signing & Capabilities` in the top nav bar. Open the "Team" dropdown and select the account added in the previous step. The "Signing Certificate" section should update accordingly with your account information.
@@ -74,11 +74,11 @@ After plugging in an Android device [configured for debugging](https://developer
 npm run android
 ```
 
-----
+---
 
 ### Room configuration
 
-To keep things simple, a one-time, temporary Daily.co room is used. To use one of your own rooms, update the object returned in `/DailyPlayground/api.ts`.
+To keep things simple, a one-time, temporary Daily room is used. To use one of your own rooms, update the object returned in `/DailyPlayground/api.ts`.
 
 ```js
 async function createRoom(): Promise<{ url: string }> {
@@ -91,7 +91,7 @@ async function createRoom(): Promise<{ url: string }> {
 }
 ```
 
-**Note:** Your Daily.co room must be configured in a particular way in order for a `react-native-daily-js` client to be able to connect to it: it must specify the property `signaling_impl: ws`.
+**Note:** Your Daily room must be configured in a particular way in order for a `react-native-daily-js` client to be able to connect to it: it must specify the property `signaling_impl: ws`.
 
 To create a room with the `signaling_impl` property set appropriately, run the following (replacing <your-api-key> with your actual API key):
 
@@ -103,9 +103,10 @@ curl --request POST \
   --data '{"properties":{"signaling_impl":"ws"}}'
 ```
 
-Of course, you may also want to specify a name as well as other properties. See the [Daily.co REST API docs](https://docs.daily.co/reference#rooms) for general guidance on how to create a new room or update an existing room.
+Of course, you may also want to specify a name as well as other properties. See the [Daily REST API docs](https://docs.daily.co/reference#rooms) for general guidance on how to create a new room or update an existing room.
 
-----
+---
+
 ### Console debugging
 
 Shake your device while it's running the app. A debugging menu will pop up. Select "Debug". This will automatically open a Chrome tab. Open Chrome dev tools. In the Console tab of Chrome dev tools, click the dropdown that says "top" and select "debuggerWorker" from the list.
