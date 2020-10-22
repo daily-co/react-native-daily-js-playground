@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableHighlight, View, StyleSheet, Text } from 'react-native';
+import Button from '../Button/Button';
 
 type Props = {
   onPress: () => void;
@@ -7,33 +7,14 @@ type Props = {
   starting: boolean;
 };
 
-const StartButton = (props: Props) => {
+const StartButton = ({ onPress, disabled, starting }: Props) => {
   return (
-    <TouchableHighlight onPress={props.onPress} disabled={props.disabled}>
-      <View style={styles.button}>
-        <Text style={styles.text}>
-          {props.starting ? 'Starting...' : 'Start call'}
-        </Text>
-      </View>
-    </TouchableHighlight>
+    <Button
+      onPress={onPress}
+      disabled={disabled}
+      label={starting ? 'Joining...' : 'Join call'}
+    />
   );
 };
-
-const styles = StyleSheet.create({
-  button: {
-    paddingHorizontal: 30,
-    paddingVertical: 20,
-    backgroundColor: '#ffffff',
-  },
-  text: {
-    fontFamily: 'Helvetica Neue',
-    fontStyle: 'normal',
-    fontWeight: 'normal',
-    fontSize: 14,
-    lineHeight: 17,
-    textAlign: 'center',
-    color: '#4a4a4a',
-  },
-});
 
 export default StartButton;
