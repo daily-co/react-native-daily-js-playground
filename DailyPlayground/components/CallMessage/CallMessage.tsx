@@ -27,7 +27,6 @@ export default function CallMessage(props: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 24,
     paddingVertical: 20,
   },
   errorContainer: {
@@ -35,7 +34,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontFamily: theme.fontFamily.body,
-    fontSize: 14,
+    fontSize: 16,
     textAlign: 'center',
     color: theme.colors.blueDark,
   },

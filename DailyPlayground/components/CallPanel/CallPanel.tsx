@@ -222,6 +222,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: '100%',
     height: '100%',
+    padding: 12,
   },
   thumbnailContainerOuter: {
     position: 'absolute',
@@ -229,9 +230,10 @@ const styles = StyleSheet.create({
     height: THUMBNAIL_HEIGHT,
     top: 0,
     left: 0,
+    paddingTop: 12,
   },
   thumbnailContainerInner: {
-    marginLeft: 10,
+    marginLeft: 12,
     flexDirection: 'row',
     justifyContent: 'flex-start',
   },
@@ -239,6 +241,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 12,
   },
   largeTilesContainerOuter: {
     justifyContent: 'center',

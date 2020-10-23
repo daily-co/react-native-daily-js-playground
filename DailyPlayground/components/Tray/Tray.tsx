@@ -2,9 +2,9 @@ import React, { useState, useCallback, useEffect } from 'react';
 import {
   StyleSheet,
   View,
-  TouchableHighlight,
-  Text,
+  TouchableWithoutFeedback,
   Image,
+  Text,
 } from 'react-native';
 import { logDailyEvent } from '../../utils';
 import { DailyCall } from '@daily-co/react-native-daily-js';
@@ -36,9 +36,9 @@ type Props = {
   disabled: boolean;
 };
 
-export const TRAY_HEIGHT = 80;
+export const TRAY_HEIGHT = 90;
 
-export default function Tray(props: Props) {
+export default function Tray({ disabled, onClickLeaveCall }: Props) {
   const callObject = useCallObject();
   const [isCameraMuted, setCameraMuted] = useState(false);
   const [isMicMuted, setMicMuted] = useState(false);
@@ -80,55 +80,54 @@ export default function Tray(props: Props) {
   }, [callObject]);
 
   return (
-    <View
-      style={[styles.container, !props.disabled && styles.disabledContainer]}
-    >
+    <View style={styles.container}>
       <View style={styles.controls}>
-        <TouchableHighlight
-          onPress={toggleMic}
-          style={styles.touchable}
-          disabled={props.disabled}
-        >
-          {isMicMuted ? (
-            <Image
-              style={styles.icon}
-              source={require('../../assets/mic-off.png')}
-            />
-          ) : (
-            <Image
-              style={styles.icon}
-              source={require('../../assets/mic.png')}
-            />
-          )}
-        </TouchableHighlight>
-        <TouchableHighlight
-          style={styles.touchable}
-          onPress={toggleCamera}
-          disabled={props.disabled}
-        >
-          {isCameraMuted ? (
-            <Image
-              style={styles.icon}
-              source={require('../../assets/camera-off.png')}
-            />
-          ) : (
-            <Image
-              style={styles.icon}
-              source={require('../../assets/camera.png')}
-            />
-          )}
-        </TouchableHighlight>
+        <TouchableWithoutFeedback onPress={toggleMic} disabled={disabled}>
+          <View style={styles.controlContainer}>
+            {isMicMuted ? (
+              <Image
+                style={[styles.icon, disabled && styles.disabled]}
+                source={require('../../assets/mic-off.png')}
+              />
+            ) : (
+              <Image
+                style={[styles.icon, disabled && styles.disabled]}
+                source={require('../../assets/mic.png')}
+              />
+            )}
+            <Text style={[styles.controlText, isMicMuted && styles.offText]}>
+              {isMicMuted ? 'Unmute' : 'Mute'}
+            </Text>
+          </View>
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback onPress={toggleCamera} disabled={disabled}>
+          <View style={styles.controlContainer}>
+            {isCameraMuted ? (
+              <Image
+                style={[styles.icon, disabled && styles.disabled]}
+                source={require('../../assets/camera-off.png')}
+              />
+            ) : (
+              <Image
+                style={[styles.icon, disabled && styles.disabled]}
+                source={require('../../assets/camera.png')}
+              />
+            )}
+            <Text style={[styles.controlText, isCameraMuted && styles.offText]}>
+              {isCameraMuted ? 'Turn on' : 'Turn off'}
+            </Text>
+          </View>
+        </TouchableWithoutFeedback>
       </View>
-      <TouchableHighlight
-        onPress={props.onClickLeaveCall}
-        style={styles.touchable}
-        disabled={props.disabled}
-      >
-        <Image
-          style={styles.iconLeave}
-          source={require('../../assets/leave.png')}
-        />
-      </TouchableHighlight>
+      <TouchableWithoutFeedback onPress={onClickLeaveCall} disabled={disabled}>
+        <View style={styles.controlContainer}>
+          <Image
+            style={[styles.iconLeave, disabled && styles.disabled]}
+            source={require('../../assets/leave.png')}
+          />
+          <Text style={[styles.controlText, styles.offText]}>Leave</Text>
+        </View>
+      </TouchableWithoutFeedback>
     </View>
   );
 }
@@ -144,26 +143,36 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.greyLight,
     borderTopColor: theme.colors.grey,
     borderTopWidth: 1,
-    padding: 24,
-  },
-  disabledContainer: {
-    opacity: 0.7,
+    paddingVertical: 16,
+    paddingHorizontal: 12,
   },
   controls: {
     flexDirection: 'row',
   },
-  touchable: {
-    backgroundColor: theme.colors.greyLight,
-    marginRight: 20,
-  },
   icon: {
     height: 32,
     width: 32,
+    marginHorizontal: 16,
     backgroundColor: theme.colors.greyLight,
   },
   iconLeave: {
     height: 28,
     width: 36,
+    marginHorizontal: 16,
     backgroundColor: theme.colors.greyLight,
+  },
+  disabled: {
+    opacity: 0.6,
+  },
+  controlContainer: {
+    alignItems: 'center',
+  },
+  controlText: {
+    fontWeight: '500',
+    paddingTop: 4,
+    color: theme.colors.blueDark,
+  },
+  offText: {
+    color: theme.colors.red,
   },
 });
