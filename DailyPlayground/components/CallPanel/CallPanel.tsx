@@ -221,24 +221,27 @@ const styles = StyleSheet.create({
   mainContainer: {
     position: 'absolute',
     width: '100%',
-    height: '100%'
+    height: '100%',
+    padding: 12
   },
   thumbnailContainerOuter: {
     position: 'absolute',
     width: '100%',
     height: THUMBNAIL_HEIGHT,
     top: 0,
-    left: 0
+    left: 0,
+    paddingTop: 12
   },
   thumbnailContainerInner: {
-    marginLeft: 10,
+    marginLeft: 12,
     flexDirection: 'row',
     justifyContent: 'flex-start'
   },
   messageContainer: {
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingHorizontal: 12
   },
   largeTilesContainerOuter: {
     justifyContent: 'center'

@@ -167,6 +167,9 @@ const App = () => {
       // via our listener attached to the 'error' event
     });
     setAppState(AppState.Joining);
+    return () => {
+      callObject.leave({ url: roomUrl });
+    };
   }, [callObject, roomUrl]);
 
   /**
@@ -281,7 +284,7 @@ const App = () => {
                   />
                   {roomUrlFieldValue && (
                     <TouchableWithoutFeedback
-                      onPress={() => setRoomUrlFieldValue(null)}
+                      onPress={() => setRoomUrlFieldValue(undefined)}
                     >
                       <Image
                         style={styles.closeIcon}
