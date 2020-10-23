@@ -102,7 +102,7 @@ const App = () => {
           break;
         case 'left-meeting':
           callObject?.destroy().then(() => {
-            setRoomUrl(null);
+            setRoomUrl(undefined);
             setCallObject(null);
             setAppState(AppState.Idle);
           });
@@ -167,9 +167,6 @@ const App = () => {
       // via our listener attached to the 'error' event
     });
     setAppState(AppState.Joining);
-    return () => {
-      callObject.leave({ url: roomUrl });
-    };
   }, [callObject, roomUrl]);
 
   /**
@@ -200,7 +197,7 @@ const App = () => {
           setAppState(AppState.Idle);
         })
         .catch(() => {
-          setRoomUrlFieldValue(null);
+          setRoomUrlFieldValue(undefined);
           setAppState(AppState.Idle);
         });
     }
@@ -221,7 +218,7 @@ const App = () => {
     }
     if (appState === AppState.Error) {
       callObject.destroy().then(() => {
-        setRoomUrl(null);
+        setRoomUrl(undefined);
         setCallObject(null);
         setAppState(AppState.Idle);
       });
