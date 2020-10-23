@@ -22,7 +22,7 @@ const CopyLinkButton = (props: Props) => {
       type="secondary"
       onPress={copy}
       disabled={showCopied}
-      label={showCopied ? 'Copied!' : 'Copy link'}
+      label={showCopied ? 'Copied!' : 'Copy room link'}
     />
   );
 };

@@ -8,8 +8,7 @@ import {
   YellowBox,
   Text,
   Image,
-  ScrollView,
-  Dimensions,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import Daily, {
   DailyEvent,
@@ -25,6 +24,7 @@ import api from '../../api';
 import Tray from '../Tray/Tray';
 import CallObjectContext from '../../CallObjectContext';
 import CopyLinkButton from '../CopyLinkButton/CopyLinkButton';
+import theme from '../../theme';
 
 declare const global: { HermesInternal: null | {} };
 
@@ -48,12 +48,11 @@ enum AppState {
 
 const App = () => {
   const [appState, setAppState] = useState(AppState.Idle);
-  const [generatedRoomUrl, setGeneratedRoomUrl] = useState<string | null>(null);
-  const [roomUrl, setRoomUrl] = useState<string | null>(null);
+  const [roomUrl, setRoomUrl] = useState<string | undefined>(undefined);
   const [callObject, setCallObject] = useState<DailyCall | null>(null);
-  const [roomUrlFieldValue, setRoomUrlFieldValue] = useState<string | null>(
-    null
-  );
+  const [roomUrlFieldValue, setRoomUrlFieldValue] = useState<
+    string | undefined
+  >(undefined);
 
   /**
    * Uncomment to set up debugging globals.
@@ -194,19 +193,18 @@ const App = () => {
       api
         .createRoom()
         .then((room) => {
-          setGeneratedRoomUrl(room.url);
+          setRoomUrlFieldValue(room.url);
           setAppState(AppState.Idle);
         })
         .catch(() => {
-          setGeneratedRoomUrl(null);
+          setRoomUrlFieldValue(null);
           setAppState(AppState.Idle);
         });
     }
   }, [roomUrlFieldValue]);
 
   const startCall = () => {
-    const url = roomUrlFieldValue || generatedRoomUrl;
-    setRoomUrl(url);
+    setRoomUrl(roomUrlFieldValue);
   };
 
   /**
@@ -261,24 +259,39 @@ const App = () => {
               />
               <View style={styles.buttonContainer}>
                 <Text style={styles.bodyText}>
-                  To get started, create a temporary demo room or add an
-                  existing room's URL
+                  To get started, enter an existing room URL or create a
+                  temporary demo room
                 </Text>
-
-                {generatedRoomUrl && (
-                  <>
-                    <TextInput
-                      style={styles.roomUrlField}
-                      placeholderTextColor="#bbbbbb"
-                      autoCapitalize="none"
-                      autoCorrect={false}
-                      keyboardType="url"
-                      defaultValue={generatedRoomUrl}
-                    />
-                  </>
-                )}
-                {generatedRoomUrl ? (
-                  <CopyLinkButton roomUrl={generatedRoomUrl} />
+                <View
+                  style={[
+                    styles.demoInputContainer,
+                    !!roomUrlFieldValue && styles.shortContainer,
+                  ]}
+                >
+                  <TextInput
+                    style={styles.roomUrlField}
+                    placeholder="Room URL"
+                    placeholderTextColor="#bbbbbb"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    keyboardType="url"
+                    editable={enableStartControls}
+                    value={roomUrlFieldValue}
+                    onChangeText={(text) => setRoomUrlFieldValue(text)}
+                  />
+                  {roomUrlFieldValue && (
+                    <TouchableWithoutFeedback
+                      onPress={() => setRoomUrlFieldValue(null)}
+                    >
+                      <Image
+                        style={styles.closeIcon}
+                        source={require('../../assets/close.png')}
+                      />
+                    </TouchableWithoutFeedback>
+                  )}
+                </View>
+                {roomUrlFieldValue ? (
+                  <CopyLinkButton roomUrl={roomUrlFieldValue} />
                 ) : (
                   <Button
                     type="secondary"
@@ -290,23 +303,9 @@ const App = () => {
                     }
                   />
                 )}
-                <TextInput
-                  style={styles.roomUrlField}
-                  placeholder="Optional room URL"
-                  placeholderTextColor="#bbbbbb"
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  keyboardType="url"
-                  editable={enableStartControls}
-                  value={roomUrlFieldValue}
-                  onChangeText={(text) => setRoomUrlFieldValue(text)}
-                />
                 <StartButton
                   onPress={startCall}
-                  disabled={
-                    !enableStartControls ||
-                    (!roomUrlFieldValue && !generatedRoomUrl)
-                  }
+                  disabled={!enableStartControls || !roomUrlFieldValue}
                   starting={appState === AppState.Joining}
                 />
               </View>
@@ -320,47 +319,61 @@ const App = () => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#f7f9fa',
+    backgroundColor: theme.colors.greyLightest,
   },
   container: {
     flex: 1,
     width: '100%',
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
   bodyText: {
     fontSize: 16,
-    marginBottom: 16,
+    marginBottom: 8,
+    fontFamily: theme.fontFamily.body,
   },
   startContainer: {
     flexDirection: 'column',
   },
   homeContainer: {
     paddingHorizontal: 24,
-    flex: 12,
   },
   buttonContainer: {
     justifyContent: 'center',
-    flex: 1,
+    marginTop: 40,
   },
   logo: {
     alignSelf: 'flex-start',
-    marginVertical: 24,
+    marginVertical: 40,
   },
   roomUrlField: {
     borderRadius: 8,
     marginVertical: 8,
     padding: 12,
-    backgroundColor: '#fff',
-    fontFamily: 'Helvetica Neue',
-    color: '#4a4a4a',
+    backgroundColor: theme.colors.white,
+    fontFamily: theme.fontFamily.body,
+    color: theme.colors.greyDark,
     fontStyle: 'normal',
     fontWeight: 'normal',
     fontSize: 16,
     lineHeight: 17,
     borderWidth: 1,
-    borderColor: '#c8d1dc',
+    borderColor: theme.colors.grey,
+    width: '100%',
+  },
+  demoInputContainer: {
+    flexDirection: 'row',
+    width: '100%',
+    alignItems: 'center',
+  },
+  shortContainer: {
+    width: '90%',
+  },
+  closeIcon: {
+    height: 16,
+    width: 16,
+    marginLeft: 16,
   },
 });
 

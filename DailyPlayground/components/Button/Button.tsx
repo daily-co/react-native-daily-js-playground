@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   TouchableWithoutFeedback,
   Animated,
   StyleSheet,
   Text,
 } from 'react-native';
+import theme from '../../theme';
 
 type Props = {
   onPress: () => void;
@@ -73,18 +74,18 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   primary: {
-    backgroundColor: '#72cc18',
+    backgroundColor: theme.colors.green,
   },
   secondary: {
-    backgroundColor: '#fff',
+    backgroundColor: theme.colors.white,
     borderWidth: 1,
-    borderColor: '#c8d1dc',
+    borderColor: theme.colors.grey,
   },
   disabled: {
     backgroundColor: '#e6eaef',
   },
   text: {
-    fontFamily: 'Helvetica Neue',
+    fontFamily: theme.fontFamily.body,
     color: '#121a24',
     fontSize: 16,
     fontWeight: '700',

@@ -1,8 +1,15 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { StyleSheet, View, TouchableHighlight, Text } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TouchableHighlight,
+  Text,
+  Image,
+} from 'react-native';
 import { logDailyEvent } from '../../utils';
 import { DailyCall } from '@daily-co/react-native-daily-js';
 import { useCallObject } from '../../useCallObject';
+import theme from '../../theme';
 
 /**
  * Gets [isCameraMuted, isMicMuted].
@@ -73,53 +80,54 @@ export default function Tray(props: Props) {
   }, [callObject]);
 
   return (
-    <View style={styles.container}>
-      <TouchableHighlight
-        onPress={toggleMic}
-        style={[styles.touchable, styles.muteTouchable]}
-        disabled={props.disabled}
-      >
-        <View
-          style={[
-            styles.button,
-            styles.muteButton,
-            isMicMuted ? styles.muteButtonMuted : styles.muteButtonUnmuted,
-            props.disabled ? styles.buttonDisabled : null,
-          ]}
+    <View
+      style={[styles.container, !props.disabled && styles.disabledContainer]}
+    >
+      <View style={styles.controls}>
+        <TouchableHighlight
+          onPress={toggleMic}
+          style={styles.touchable}
+          disabled={props.disabled}
         >
-          <Text>mic</Text>
-        </View>
-      </TouchableHighlight>
+          {isMicMuted ? (
+            <Image
+              style={styles.icon}
+              source={require('../../assets/mic-off.png')}
+            />
+          ) : (
+            <Image
+              style={styles.icon}
+              source={require('../../assets/mic.png')}
+            />
+          )}
+        </TouchableHighlight>
+        <TouchableHighlight
+          style={styles.touchable}
+          onPress={toggleCamera}
+          disabled={props.disabled}
+        >
+          {isCameraMuted ? (
+            <Image
+              style={styles.icon}
+              source={require('../../assets/camera-off.png')}
+            />
+          ) : (
+            <Image
+              style={styles.icon}
+              source={require('../../assets/camera.png')}
+            />
+          )}
+        </TouchableHighlight>
+      </View>
       <TouchableHighlight
         onPress={props.onClickLeaveCall}
-        style={[styles.touchable, styles.leaveTouchable]}
+        style={styles.touchable}
         disabled={props.disabled}
       >
-        <View
-          style={[
-            styles.button,
-            styles.leaveButton,
-            props.disabled ? styles.buttonDisabled : null,
-          ]}
-        >
-          <Text style={styles.leaveButtonText}>x</Text>
-        </View>
-      </TouchableHighlight>
-      <TouchableHighlight
-        onPress={toggleCamera}
-        style={[styles.touchable, styles.muteTouchable]}
-        disabled={props.disabled}
-      >
-        <View
-          style={[
-            styles.button,
-            styles.muteButton,
-            isCameraMuted ? styles.muteButtonMuted : styles.muteButtonUnmuted,
-            props.disabled ? styles.buttonDisabled : null,
-          ]}
-        >
-          <Text>cam</Text>
-        </View>
+        <Image
+          style={styles.iconLeave}
+          source={require('../../assets/leave.png')}
+        />
       </TouchableHighlight>
     </View>
   );
@@ -131,53 +139,31 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
+    backgroundColor: theme.colors.greyLight,
+    borderTopColor: theme.colors.grey,
+    borderTopWidth: 1,
+    padding: 24,
   },
-  // touchable styles
+  disabledContainer: {
+    opacity: 0.7,
+  },
+  controls: {
+    flexDirection: 'row',
+  },
   touchable: {
-    marginHorizontal: 10,
+    backgroundColor: theme.colors.greyLight,
+    marginRight: 20,
   },
-  leaveTouchable: {
-    borderRadius: TRAY_HEIGHT / 2,
+  icon: {
+    height: 32,
+    width: 32,
+    backgroundColor: theme.colors.greyLight,
   },
-  muteTouchable: {
-    borderRadius: 25,
-  },
-  // button view styles
-  button: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonDisabled: {
-    opacity: 0.25,
-  },
-  leaveButton: {
-    backgroundColor: '#d81a1a',
-    width: TRAY_HEIGHT,
-    height: TRAY_HEIGHT,
-    borderRadius: TRAY_HEIGHT / 2,
-  },
-  muteButton: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-  },
-  muteButtonMuted: {
-    backgroundColor: '#ffffff',
-  },
-  muteButtonUnmuted: {
-    backgroundColor: '#77dd77',
-  },
-  // button text styles
-  leaveButtonText: {
-    color: '#ffffff',
-    fontWeight: '200',
-    fontSize: 50,
-    textAlign: 'center',
-    textAlignVertical: 'center',
-    position: 'relative',
-    top: -3,
-    left: 1,
+  iconLeave: {
+    height: 28,
+    width: 36,
+    backgroundColor: theme.colors.greyLight,
   },
 });
