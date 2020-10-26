@@ -6,6 +6,9 @@ import {
   View,
   TextInput,
   YellowBox,
+  Text,
+  Image,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import Daily, {
   DailyEvent,
@@ -14,11 +17,14 @@ import Daily, {
   DailyEventObjectAppMessage,
 } from '@daily-co/react-native-daily-js';
 import CallPanel from '../CallPanel/CallPanel';
+import Button from '../Button/Button';
 import StartButton from '../StartButton/StartButton';
 import { logDailyEvent } from '../../utils';
 import api from '../../api';
 import Tray from '../Tray/Tray';
 import CallObjectContext from '../../CallObjectContext';
+import CopyLinkButton from '../CopyLinkButton/CopyLinkButton';
+import theme from '../../theme';
 
 declare const global: { HermesInternal: null | {} };
 
@@ -42,9 +48,11 @@ enum AppState {
 
 const App = () => {
   const [appState, setAppState] = useState(AppState.Idle);
-  const [roomUrl, setRoomUrl] = useState<string | null>(null);
+  const [roomUrl, setRoomUrl] = useState<string | undefined>(undefined);
   const [callObject, setCallObject] = useState<DailyCall | null>(null);
-  const [roomUrlFieldValue, setRoomUrlFieldValue] = useState('');
+  const [roomUrlFieldValue, setRoomUrlFieldValue] = useState<
+    string | undefined
+  >(undefined);
 
   /**
    * Uncomment to set up debugging globals.
@@ -94,7 +102,7 @@ const App = () => {
           break;
         case 'left-meeting':
           callObject?.destroy().then(() => {
-            setRoomUrl(null);
+            setRoomUrl(undefined);
             setCallObject(null);
             setAppState(AppState.Idle);
           });
@@ -174,8 +182,9 @@ const App = () => {
   }, [roomUrl]);
 
   /**
-   * Create a room, which is the first step in the call sequence.
-   * If the user has specified a room, use it. Otherwise, create one.
+   * Create a room that will become available to join.
+   * The user will need to input an existing room URL or create
+   * a room before the Join Call button will enable.
    */
   const createRoom = useCallback(() => {
     setAppState(AppState.Creating);
@@ -185,14 +194,22 @@ const App = () => {
       api
         .createRoom()
         .then((room) => {
-          setRoomUrl(room.url);
+          setRoomUrlFieldValue(room.url);
+          setAppState(AppState.Idle);
         })
         .catch(() => {
-          setRoomUrl(null);
+          setRoomUrlFieldValue(undefined);
           setAppState(AppState.Idle);
         });
     }
   }, [roomUrlFieldValue]);
+
+  /**
+   * Join the room provided by the user or the temporary room created by createRoom
+   */
+  const startCall = () => {
+    setRoomUrl(roomUrlFieldValue);
+  };
 
   /**
    * Leave the current call.
@@ -205,7 +222,7 @@ const App = () => {
     }
     if (appState === AppState.Error) {
       callObject.destroy().then(() => {
-        setRoomUrl(null);
+        setRoomUrl(undefined);
         setCallObject(null);
         setAppState(AppState.Idle);
       });
@@ -223,7 +240,7 @@ const App = () => {
   const enableCallButtons = [AppState.Joined, AppState.Error].includes(
     appState
   );
-  const enableStartControls = appState === AppState.Idle;
+  const isAppStateIdle = appState === AppState.Idle;
 
   return (
     <CallObjectContext.Provider value={callObject}>
@@ -239,57 +256,128 @@ const App = () => {
               />
             </>
           ) : (
-            <>
-              <StartButton
-                onPress={createRoom}
-                disabled={!enableStartControls}
-                starting={appState === AppState.Creating}
+            <View style={styles.homeContainer}>
+              <Image
+                style={styles.logo}
+                source={require('../../assets/logo.png')}
               />
-              <TextInput
-                style={styles.roomUrlField}
-                placeholder="Optional room URL"
-                placeholderTextColor="#bbbbbb"
-                autoCapitalize="none"
-                autoCorrect={false}
-                keyboardType="url"
-                editable={enableStartControls}
-                value={roomUrlFieldValue}
-                onChangeText={(text) => setRoomUrlFieldValue(text)}
-              />
-            </>
+              <View style={styles.buttonContainer}>
+                <Text style={styles.bodyText}>
+                  To get started, enter an existing room URL or create a
+                  temporary demo room
+                </Text>
+                <View
+                  style={[
+                    styles.demoInputContainer,
+                    !!roomUrlFieldValue && styles.shortContainer,
+                  ]}
+                >
+                  <TextInput
+                    style={styles.roomUrlField}
+                    placeholder="Room URL"
+                    placeholderTextColor={theme.colors.greyDark}
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    keyboardType="url"
+                    editable={isAppStateIdle}
+                    value={roomUrlFieldValue}
+                    onChangeText={(text) => setRoomUrlFieldValue(text)}
+                  />
+                  {roomUrlFieldValue && (
+                    <TouchableWithoutFeedback
+                      onPress={() => setRoomUrlFieldValue(undefined)}
+                    >
+                      <Image
+                        style={styles.closeIcon}
+                        source={require('../../assets/close.png')}
+                      />
+                    </TouchableWithoutFeedback>
+                  )}
+                </View>
+                {roomUrlFieldValue ? (
+                  <CopyLinkButton roomUrl={roomUrlFieldValue} />
+                ) : (
+                  <Button
+                    type="secondary"
+                    onPress={createRoom}
+                    label={
+                      appState === AppState.Creating
+                        ? 'Creating room...'
+                        : 'Create demo room'
+                    }
+                  />
+                )}
+                <StartButton
+                  onPress={startCall}
+                  disabled={!isAppStateIdle || !roomUrlFieldValue}
+                  starting={appState === AppState.Joining}
+                />
+              </View>
+            </View>
           )}
         </View>
       </SafeAreaView>
     </CallObjectContext.Provider>
   );
 };
-
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#4a4a4a',
+    backgroundColor: theme.colors.greyLightest,
   },
   container: {
     flex: 1,
     width: '100%',
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  bodyText: {
+    fontSize: 16,
+    marginBottom: 8,
+    fontFamily: theme.fontFamily.body,
   },
   startContainer: {
     flexDirection: 'column',
   },
+  homeContainer: {
+    paddingHorizontal: 24,
+  },
+  buttonContainer: {
+    justifyContent: 'center',
+    marginTop: 40,
+  },
+  logo: {
+    alignSelf: 'flex-start',
+    marginVertical: 40,
+  },
   roomUrlField: {
-    margin: 10,
-    padding: 10,
-    backgroundColor: '#fff',
-    fontFamily: 'Helvetica Neue',
-    color: '#4a4a4a',
+    borderRadius: 8,
+    marginVertical: 8,
+    padding: 12,
+    backgroundColor: theme.colors.white,
+    fontFamily: theme.fontFamily.body,
+    color: theme.colors.greyDark,
     fontStyle: 'normal',
     fontWeight: 'normal',
-    fontSize: 14,
+    fontSize: 16,
     lineHeight: 17,
-    width: '75%',
+    borderWidth: 1,
+    borderColor: theme.colors.grey,
+    width: '100%',
+  },
+  demoInputContainer: {
+    flexDirection: 'row',
+    width: '100%',
+    alignItems: 'center',
+  },
+  shortContainer: {
+    width: '90%',
+  },
+  closeIcon: {
+    height: 16,
+    width: 16,
+    marginLeft: 16,
   },
 });
 

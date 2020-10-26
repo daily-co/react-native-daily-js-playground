@@ -6,8 +6,10 @@ import {
   StyleSheet,
   TouchableHighlight,
   ViewStyle,
+  Image,
 } from 'react-native';
 import { DailyMediaView } from '@daily-co/react-native-daily-js';
+import theme from '../../theme';
 
 export enum TileType {
   Thumbnail,
@@ -51,6 +53,25 @@ export default function Tile(props: Props) {
     );
   }, [props.onPress, mediaComponent]);
 
+  const muteOverlayComponent = useMemo(() => {
+    return (!props.videoTrack || !props.audioTrack) && !props.isLoading ? (
+      <View style={styles.iconContainer}>
+        {!props.videoTrack && (
+          <Image
+            style={styles.icon}
+            source={require('../../assets/camera-off.png')}
+          />
+        )}
+        {!props.audioTrack && (
+          <Image
+            style={styles.icon}
+            source={require('../../assets/mic-off.png')}
+          />
+        )}
+      </View>
+    ) : null;
+  }, [props.videoTrack, props.audioTrack, props.isLoading]);
+
   const loadingComponent = useMemo(() => {
     return props.isLoading ? (
       <Text style={styles.loading}>Loading...</Text>
@@ -66,19 +87,18 @@ export default function Tile(props: Props) {
       typeSpecificStyle = styles.containerFullWidth;
       break;
   }
-
   return (
     <View
       style={[
         styles.container,
-        props.isLoading || !props.videoTrack
-          ? styles.containerLoadingOrNotShowingVideo
-          : null,
+        (props.isLoading || !props.videoTrack) &&
+          styles.containerLoadingOrNotShowingVideo,
         typeSpecificStyle,
       ]}
     >
       {touchableMediaComponent}
       {loadingComponent}
+      {muteOverlayComponent}
     </View>
   );
 }
@@ -88,7 +108,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10,
     overflow: 'hidden',
     aspectRatio: 1,
   },
@@ -99,7 +118,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   containerLoadingOrNotShowingVideo: {
-    backgroundColor: '#000000',
+    backgroundColor: theme.colors.blueDark,
   },
   media: {
     width: '100%',
@@ -107,8 +126,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   loading: {
-    color: '#ffffff',
+    color: theme.colors.white,
     justifyContent: 'center',
     alignItems: 'stretch',
+  },
+  iconContainer: {
+    flexDirection: 'row',
+  },
+  icon: {
+    marginHorizontal: 4,
   },
 });

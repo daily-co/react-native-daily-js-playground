@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
+import theme from '../../theme';
 
 type Props = {
   header: string;
@@ -9,9 +10,7 @@ type Props = {
 
 export default function CallMessage(props: Props) {
   return (
-    <View
-      style={[styles.container, props.isError ? styles.errorContainer : {}]}
-    >
+    <View style={[styles.container, props.isError && styles.errorContainer]}>
       <Text
         style={[
           styles.text,
@@ -28,23 +27,21 @@ export default function CallMessage(props: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 30,
     paddingVertical: 20,
   },
   errorContainer: {
-    backgroundColor: '#ffffff',
+    backgroundColor: theme.colors.greyLightest,
   },
   text: {
-    fontFamily: 'Helvetica Neue',
-    fontSize: 14,
-    lineHeight: 17,
+    fontFamily: theme.fontFamily.body,
+    fontSize: 16,
     textAlign: 'center',
-    color: '#ffffff',
+    color: theme.colors.blueDark,
   },
   headerText: {
     fontWeight: 'bold',
   },
   errorText: {
-    color: '#d81a1a',
+    color: theme.colors.red,
   },
 });
