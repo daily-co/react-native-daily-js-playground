@@ -67,7 +67,8 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.greyLight,
   },
   iconLeave: {
-    width: 42,
+    height: 28,
+    width: 36,
   },
   disabled: {
     opacity: 0.6,
