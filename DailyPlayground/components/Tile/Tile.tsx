@@ -53,7 +53,7 @@ export default function Tile(props: Props) {
     );
   }, [props.onPress, mediaComponent]);
 
-  const tracksComponent = useMemo(() => {
+  const muteOverlayComponent = useMemo(() => {
     return (!props.videoTrack || !props.audioTrack) && !props.isLoading ? (
       <View style={styles.iconContainer}>
         {!props.videoTrack && (
@@ -98,7 +98,7 @@ export default function Tile(props: Props) {
     >
       {touchableMediaComponent}
       {loadingComponent}
-      {tracksComponent}
+      {muteOverlayComponent}
     </View>
   );
 }

@@ -1,15 +1,10 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import {
-  StyleSheet,
-  View,
-  TouchableWithoutFeedback,
-  Image,
-  Text,
-} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { logDailyEvent } from '../../utils';
 import { DailyCall } from '@daily-co/react-native-daily-js';
 import { useCallObject } from '../../useCallObject';
 import theme from '../../theme';
+import TrayButton from '../TrayButton/TrayButton';
 
 /**
  * Gets [isCameraMuted, isMicMuted].
@@ -82,52 +77,27 @@ export default function Tray({ disabled, onClickLeaveCall }: Props) {
   return (
     <View style={styles.container}>
       <View style={styles.controls}>
-        <TouchableWithoutFeedback onPress={toggleMic} disabled={disabled}>
-          <View style={styles.controlContainer}>
-            {isMicMuted ? (
-              <Image
-                style={[styles.icon, disabled && styles.disabled]}
-                source={require('../../assets/mic-off.png')}
-              />
-            ) : (
-              <Image
-                style={[styles.icon, disabled && styles.disabled]}
-                source={require('../../assets/mic.png')}
-              />
-            )}
-            <Text style={[styles.controlText, isMicMuted && styles.offText]}>
-              {isMicMuted ? 'Unmute' : 'Mute'}
-            </Text>
-          </View>
-        </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={toggleCamera} disabled={disabled}>
-          <View style={styles.controlContainer}>
-            {isCameraMuted ? (
-              <Image
-                style={[styles.icon, disabled && styles.disabled]}
-                source={require('../../assets/camera-off.png')}
-              />
-            ) : (
-              <Image
-                style={[styles.icon, disabled && styles.disabled]}
-                source={require('../../assets/camera.png')}
-              />
-            )}
-            <Text style={[styles.controlText, isCameraMuted && styles.offText]}>
-              {isCameraMuted ? 'Turn on' : 'Turn off'}
-            </Text>
-          </View>
-        </TouchableWithoutFeedback>
+        <TrayButton
+          disabled={disabled}
+          onPress={toggleMic}
+          muted={isMicMuted}
+          text={isMicMuted ? 'Unmute' : 'Mute'}
+          type="mic"
+        />
+        <TrayButton
+          disabled={disabled}
+          onPress={toggleCamera}
+          muted={isCameraMuted}
+          text={isCameraMuted ? 'Turn on' : 'Turn off'}
+          type="camera"
+        />
       </View>
-      <TouchableWithoutFeedback onPress={onClickLeaveCall} disabled={disabled}>
-        <View style={styles.controlContainer}>
-          <Image
-            style={[styles.iconLeave, disabled && styles.disabled]}
-            source={require('../../assets/leave.png')}
-          />
-          <Text style={[styles.controlText, styles.offText]}>Leave</Text>
-        </View>
-      </TouchableWithoutFeedback>
+      <TrayButton
+        disabled={disabled}
+        onPress={onClickLeaveCall}
+        text="Leave"
+        type="leave"
+      />
     </View>
   );
 }
@@ -148,31 +118,5 @@ const styles = StyleSheet.create({
   },
   controls: {
     flexDirection: 'row',
-  },
-  icon: {
-    height: 32,
-    width: 32,
-    marginHorizontal: 16,
-    backgroundColor: theme.colors.greyLight,
-  },
-  iconLeave: {
-    height: 28,
-    width: 36,
-    marginHorizontal: 16,
-    backgroundColor: theme.colors.greyLight,
-  },
-  disabled: {
-    opacity: 0.6,
-  },
-  controlContainer: {
-    alignItems: 'center',
-  },
-  controlText: {
-    fontWeight: '500',
-    paddingTop: 4,
-    color: theme.colors.blueDark,
-  },
-  offText: {
-    color: theme.colors.red,
   },
 });

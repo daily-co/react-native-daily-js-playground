@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
   TouchableWithoutFeedback,
   Animated,
@@ -20,15 +20,15 @@ const Button = ({
   label,
   type = 'primary',
 }: Props) => {
-  const animatedValue = new Animated.Value(0);
+  const scaleAnimation = useRef(new Animated.Value(0)).current;
 
-  const animatedScale = animatedValue.interpolate({
+  const animatedScale = scaleAnimation.interpolate({
     inputRange: [0, 1],
     outputRange: [1, 0.9],
   });
 
   const onPressIn = () => {
-    Animated.timing(animatedValue, {
+    Animated.timing(scaleAnimation, {
       toValue: 1,
       duration: 150,
       useNativeDriver: true,
@@ -36,7 +36,7 @@ const Button = ({
   };
 
   const onPressOut = () => {
-    Animated.timing(animatedValue, {
+    Animated.timing(scaleAnimation, {
       toValue: 0,
       duration: 150,
       useNativeDriver: true,
@@ -82,11 +82,11 @@ const styles = StyleSheet.create({
     borderColor: theme.colors.grey,
   },
   disabled: {
-    backgroundColor: '#e6eaef',
+    backgroundColor: theme.colors.greyLight,
   },
   text: {
     fontFamily: theme.fontFamily.body,
-    color: '#121a24',
+    color: theme.colors.blueDark,
     fontSize: 16,
     fontWeight: '700',
   },

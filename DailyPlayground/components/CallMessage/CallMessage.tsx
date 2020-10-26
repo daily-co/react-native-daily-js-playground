@@ -42,6 +42,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   errorText: {
-    color: '#d81a1a',
+    color: theme.colors.red,
   },
 });

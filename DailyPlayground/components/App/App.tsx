@@ -182,8 +182,9 @@ const App = () => {
   }, [roomUrl]);
 
   /**
-   * Create a room, which is the first step in the call sequence.
-   * If the user has specified a room, use it. Otherwise, create one.
+   * Create a room that will become available to join.
+   * The user will need to input an existing room URL or create
+   * a room before the Join Call button will enable.
    */
   const createRoom = useCallback(() => {
     setAppState(AppState.Creating);
@@ -203,6 +204,9 @@ const App = () => {
     }
   }, [roomUrlFieldValue]);
 
+  /**
+   * Join the room provided by the user or the temporary room created by createRoom
+   */
   const startCall = () => {
     setRoomUrl(roomUrlFieldValue);
   };
@@ -236,7 +240,7 @@ const App = () => {
   const enableCallButtons = [AppState.Joined, AppState.Error].includes(
     appState
   );
-  const enableStartControls = appState === AppState.Idle;
+  const isAppStateIdle = appState === AppState.Idle;
 
   return (
     <CallObjectContext.Provider value={callObject}>
@@ -271,11 +275,11 @@ const App = () => {
                   <TextInput
                     style={styles.roomUrlField}
                     placeholder="Room URL"
-                    placeholderTextColor="#bbbbbb"
+                    placeholderTextColor={theme.colors.greyDark}
                     autoCapitalize="none"
                     autoCorrect={false}
                     keyboardType="url"
-                    editable={enableStartControls}
+                    editable={isAppStateIdle}
                     value={roomUrlFieldValue}
                     onChangeText={(text) => setRoomUrlFieldValue(text)}
                   />
@@ -305,7 +309,7 @@ const App = () => {
                 )}
                 <StartButton
                   onPress={startCall}
-                  disabled={!enableStartControls || !roomUrlFieldValue}
+                  disabled={!isAppStateIdle || !roomUrlFieldValue}
                   starting={appState === AppState.Joining}
                 />
               </View>
