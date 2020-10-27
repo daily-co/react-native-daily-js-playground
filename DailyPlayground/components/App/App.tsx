@@ -361,7 +361,6 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
     fontWeight: 'normal',
     fontSize: 16,
-    lineHeight: 17,
     borderWidth: 1,
     borderColor: theme.colors.grey,
     width: '100%',
