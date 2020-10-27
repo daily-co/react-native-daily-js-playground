@@ -244,7 +244,7 @@ const App = () => {
 
   return (
     <CallObjectContext.Provider value={callObject}>
-      <StatusBar />
+      <StatusBar barStyle="dark-content" />
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.container}>
           {showCallPanel ? (
