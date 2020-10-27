@@ -283,7 +283,7 @@ const App = () => {
                     value={roomUrlFieldValue}
                     onChangeText={(text) => setRoomUrlFieldValue(text)}
                   />
-                  {roomUrlFieldValue && (
+                  {!!roomUrlFieldValue && (
                     <TouchableWithoutFeedback
                       onPress={() => setRoomUrlFieldValue(undefined)}
                     >
