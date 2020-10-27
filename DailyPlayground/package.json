@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
-    "ios": "npx react-native-fix-image && react-native run-ios",
+    "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "tsc && eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "tsc && eslint . --ext .js,.jsx,.ts,.tsx",
+    "postinstall": "npx react-native-fix-image"
   },
   "dependencies": {
     "@daily-co/react-native-daily-js": "^0.1.0",
