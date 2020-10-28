@@ -23,7 +23,7 @@ import {
 import Tile, { TileType } from '../Tile/Tile';
 import CallMessage from '../CallMessage/CallMessage';
 import { useCallObject } from '../../useCallObject';
-import { TRAY_HEIGHT } from '../Tray/Tray';
+import { TRAY_HEIGHT as TRAY_THICKNESS } from '../Tray/Tray';
 import CopyLinkButton from '../CopyLinkButton/CopyLinkButton';
 import { useOrientation, Orientation } from '../../useOrientation';
 
@@ -31,7 +31,7 @@ type Props = {
   roomUrl: string;
 };
 
-const THUMBNAIL_HEIGHT = 100;
+const THUMBNAIL_EDGE_LENGTH = 100;
 
 const CallPanel = (props: Props) => {
   const callObject = useCallObject();
@@ -236,9 +236,28 @@ const CallPanel = (props: Props) => {
           </ScrollView>
         )}
       </View>
-      <View style={styles.thumbnailContainerOuter}>
-        <ScrollView horizontal={true} alwaysBounceHorizontal={false}>
-          <View style={styles.thumbnailContainerInner}>{thumbnailTiles}</View>
+      <View
+        style={[
+          styles.thumbnailContainerOuterBase,
+          orientation === Orientation.Portrait
+            ? styles.thumbnailContainerOuterPortrait
+            : styles.thumbnailContainerOuterLandscape,
+        ]}
+      >
+        <ScrollView
+          horizontal={orientation === Orientation.Portrait}
+          alwaysBounceHorizontal={false}
+          alwaysBounceVertical={false}
+        >
+          <View
+            style={
+              orientation === Orientation.Portrait
+                ? styles.thumbnailContainerInnerPortrait
+                : styles.thumbnailContainerInnerLandscape
+            }
+          >
+            {thumbnailTiles}
+          </View>
         </ScrollView>
       </View>
     </>
@@ -252,17 +271,29 @@ const styles = StyleSheet.create({
     height: '100%',
     padding: 12,
   },
-  thumbnailContainerOuter: {
+  thumbnailContainerOuterBase: {
     position: 'absolute',
-    width: '100%',
-    height: THUMBNAIL_HEIGHT,
     top: 0,
     left: 0,
+  },
+  thumbnailContainerOuterPortrait: {
+    width: '100%',
+    height: THUMBNAIL_EDGE_LENGTH,
     paddingTop: 12,
   },
-  thumbnailContainerInner: {
+  thumbnailContainerOuterLandscape: {
+    height: '100%',
+    width: THUMBNAIL_EDGE_LENGTH,
+    paddingLeft: 12,
+  },
+  thumbnailContainerInnerPortrait: {
     marginLeft: 12,
     flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
+  thumbnailContainerInnerLandscape: {
+    marginTop: 12,
+    flexDirection: 'column',
     justifyContent: 'flex-start',
   },
   messageContainer: {
@@ -281,13 +312,13 @@ const styles = StyleSheet.create({
   },
   largeTilesContainerInnerPortrait: {
     flexDirection: 'row',
-    marginTop: THUMBNAIL_HEIGHT,
-    marginBottom: TRAY_HEIGHT,
+    marginTop: THUMBNAIL_EDGE_LENGTH,
+    marginBottom: TRAY_THICKNESS,
   },
   largeTilesContainerInnerLandscape: {
     flexDirection: 'column',
-    marginLeft: THUMBNAIL_HEIGHT,
-    marginRight: TRAY_HEIGHT,
+    marginLeft: THUMBNAIL_EDGE_LENGTH,
+    marginRight: TRAY_THICKNESS,
   },
 });
 
