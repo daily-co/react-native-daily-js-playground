@@ -9,6 +9,7 @@ import {
   Text,
   Image,
   TouchableWithoutFeedback,
+  ScrollView,
 } from 'react-native';
 import Daily, {
   DailyEvent,
@@ -25,6 +26,7 @@ import Tray from '../Tray/Tray';
 import CallObjectContext from '../../CallObjectContext';
 import CopyLinkButton from '../CopyLinkButton/CopyLinkButton';
 import theme from '../../theme';
+import { useOrientation, Orientation } from '../../useOrientation';
 
 declare const global: { HermesInternal: null | {} };
 
@@ -53,6 +55,7 @@ const App = () => {
   const [roomUrlFieldValue, setRoomUrlFieldValue] = useState<
     string | undefined
   >(undefined);
+  const orientation = useOrientation();
 
   /**
    * Uncomment to set up debugging globals.
@@ -256,63 +259,71 @@ const App = () => {
               />
             </>
           ) : (
-            <View style={styles.homeContainer}>
-              <Image
-                style={styles.logo}
-                source={require('../../assets/logo.png')}
-              />
-              <View style={styles.buttonContainer}>
-                <Text style={styles.bodyText}>
-                  To get started, enter an existing room URL or create a
-                  temporary demo room
-                </Text>
-                <View
-                  style={[
-                    styles.demoInputContainer,
-                    !!roomUrlFieldValue && styles.shortContainer,
-                  ]}
-                >
-                  <TextInput
-                    style={styles.roomUrlField}
-                    placeholder="Room URL"
-                    placeholderTextColor={theme.colors.greyDark}
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    keyboardType="url"
-                    editable={isAppStateIdle}
-                    value={roomUrlFieldValue}
-                    onChangeText={(text) => setRoomUrlFieldValue(text)}
-                  />
-                  {!!roomUrlFieldValue && (
-                    <TouchableWithoutFeedback
-                      onPress={() => setRoomUrlFieldValue(undefined)}
-                    >
-                      <Image
-                        style={styles.closeIcon}
-                        source={require('../../assets/close.png')}
-                      />
-                    </TouchableWithoutFeedback>
-                  )}
-                </View>
-                {roomUrlFieldValue ? (
-                  <CopyLinkButton roomUrl={roomUrlFieldValue} />
-                ) : (
-                  <Button
-                    type="secondary"
-                    onPress={createRoom}
-                    label={
-                      appState === AppState.Creating
-                        ? 'Creating room...'
-                        : 'Create demo room'
-                    }
-                  />
-                )}
-                <StartButton
-                  onPress={startCall}
-                  disabled={!isAppStateIdle || !roomUrlFieldValue}
-                  starting={appState === AppState.Joining}
+            <View
+              style={
+                orientation === Orientation.Portrait
+                  ? styles.homeContainerPortrait
+                  : styles.homeContainerLandscape
+              }
+            >
+              <ScrollView alwaysBounceVertical={false}>
+                <Image
+                  style={styles.logo}
+                  source={require('../../assets/logo.png')}
                 />
-              </View>
+                <View style={styles.buttonContainer}>
+                  <Text style={styles.bodyText}>
+                    To get started, enter an existing room URL or create a
+                    temporary demo room
+                  </Text>
+                  <View
+                    style={[
+                      styles.demoInputContainer,
+                      !!roomUrlFieldValue && styles.shortContainer,
+                    ]}
+                  >
+                    <TextInput
+                      style={styles.roomUrlField}
+                      placeholder="Room URL"
+                      placeholderTextColor={theme.colors.greyDark}
+                      autoCapitalize="none"
+                      autoCorrect={false}
+                      keyboardType="url"
+                      editable={isAppStateIdle}
+                      value={roomUrlFieldValue}
+                      onChangeText={(text) => setRoomUrlFieldValue(text)}
+                    />
+                    {!!roomUrlFieldValue && (
+                      <TouchableWithoutFeedback
+                        onPress={() => setRoomUrlFieldValue(undefined)}
+                      >
+                        <Image
+                          style={styles.closeIcon}
+                          source={require('../../assets/close.png')}
+                        />
+                      </TouchableWithoutFeedback>
+                    )}
+                  </View>
+                  {roomUrlFieldValue ? (
+                    <CopyLinkButton roomUrl={roomUrlFieldValue} />
+                  ) : (
+                    <Button
+                      type="secondary"
+                      onPress={createRoom}
+                      label={
+                        appState === AppState.Creating
+                          ? 'Creating room...'
+                          : 'Create demo room'
+                      }
+                    />
+                  )}
+                  <StartButton
+                    onPress={startCall}
+                    disabled={!isAppStateIdle || !roomUrlFieldValue}
+                    starting={appState === AppState.Joining}
+                  />
+                </View>
+              </ScrollView>
             </View>
           )}
         </View>
@@ -340,8 +351,12 @@ const styles = StyleSheet.create({
   startContainer: {
     flexDirection: 'column',
   },
-  homeContainer: {
+  homeContainerPortrait: {
     paddingHorizontal: 24,
+  },
+  homeContainerLandscape: {
+    width: '75%',
+    minWidth: 360,
   },
   buttonContainer: {
     justifyContent: 'center',
