@@ -5,6 +5,7 @@ import { DailyCall } from '@daily-co/react-native-daily-js';
 import { useCallObject } from '../../useCallObject';
 import theme from '../../theme';
 import TrayButton from '../TrayButton/TrayButton';
+import { useOrientation, Orientation } from '../../useOrientation';
 
 /**
  * Gets [isCameraMuted, isMicMuted].
@@ -37,6 +38,7 @@ export default function Tray({ disabled, onClickLeaveCall }: Props) {
   const callObject = useCallObject();
   const [isCameraMuted, setCameraMuted] = useState(false);
   const [isMicMuted, setMicMuted] = useState(false);
+  const orientation = useOrientation();
 
   const toggleCamera = useCallback(() => {
     callObject?.setLocalVideo(isCameraMuted);
@@ -75,8 +77,21 @@ export default function Tray({ disabled, onClickLeaveCall }: Props) {
   }, [callObject]);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.controls}>
+    <View
+      style={[
+        styles.containerBase,
+        orientation === Orientation.Portrait
+          ? styles.containerPortrait
+          : styles.containerLandscape,
+      ]}
+    >
+      <View
+        style={
+          orientation === Orientation.Portrait
+            ? styles.controlsPortrait
+            : styles.controlsLandscape
+        }
+      >
         <TrayButton
           disabled={disabled}
           onPress={toggleMic}
@@ -103,20 +118,34 @@ export default function Tray({ disabled, onClickLeaveCall }: Props) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    position: 'absolute',
-    bottom: 0,
-    flexDirection: 'row',
+  containerBase: {
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: theme.colors.greyLight,
     borderTopColor: theme.colors.grey,
+  },
+  containerPortrait: {
+    width: '100%',
+    position: 'absolute',
+    bottom: 0,
+    flexDirection: 'row',
     borderTopWidth: 1,
     paddingVertical: 16,
     paddingHorizontal: 12,
   },
-  controls: {
+  containerLandscape: {
+    height: '100%',
+    position: 'absolute',
+    right: 0,
+    flexDirection: 'column-reverse',
+    borderLeftWidth: 1,
+    paddingHorizontal: 12,
+    paddingVertical: 16,
+  },
+  controlsPortrait: {
     flexDirection: 'row',
+  },
+  controlsLandscape: {
+    flexDirection: 'column-reverse',
   },
 });

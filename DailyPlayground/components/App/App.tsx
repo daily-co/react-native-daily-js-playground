@@ -251,13 +251,20 @@ const App = () => {
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.container}>
           {showCallPanel ? (
-            <>
+            <View
+              style={[
+                styles.callContainerBase,
+                orientation === Orientation.Landscape
+                  ? styles.callContainerLandscape
+                  : null,
+              ]}
+            >
               <CallPanel roomUrl={roomUrl || ''} />
               <Tray
                 onClickLeaveCall={leaveCall}
                 disabled={!enableCallButtons}
               />
-            </>
+            </View>
           ) : (
             <View
               style={
@@ -342,6 +349,14 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  callContainerBase: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+  },
+  callContainerLandscape: {
+    flexDirection: 'row',
   },
   bodyText: {
     fontSize: 16,

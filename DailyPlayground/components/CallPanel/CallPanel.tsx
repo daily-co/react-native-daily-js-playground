@@ -25,6 +25,7 @@ import CallMessage from '../CallMessage/CallMessage';
 import { useCallObject } from '../../useCallObject';
 import { TRAY_HEIGHT } from '../Tray/Tray';
 import CopyLinkButton from '../CopyLinkButton/CopyLinkButton';
+import { useOrientation, Orientation } from '../../useOrientation';
 
 type Props = {
   roomUrl: string;
@@ -36,6 +37,7 @@ const CallPanel = (props: Props) => {
   const callObject = useCallObject();
   const [callState, dispatch] = useReducer(callReducer, initialCallState);
   const [usingFrontCamera, setUsingFrontCamera] = useState(true); // default
+  const orientation = useOrientation();
 
   /**
    * Start listening for participant changes, when the callObject is set.
@@ -137,7 +139,7 @@ const CallPanel = (props: Props) => {
     }
     const { device } = await callObject.cycleCamera();
     if (device) {
-      setUsingFrontCamera(device.facingMode === 'user')
+      setUsingFrontCamera(device.facingMode === 'user');
     }
   }, [callObject]);
 
@@ -161,13 +163,13 @@ const CallPanel = (props: Props) => {
     Object.entries(callState.callItems).forEach(([id, callItem]) => {
       let tileType: TileType;
       if (isScreenShare(id)) {
-        tileType = TileType.FullWidth;
+        tileType = TileType.Full;
       } else if (isLocal(id) || containsScreenShare(callState.callItems)) {
         tileType = TileType.Thumbnail;
       } else if (participantCount(callState.callItems) <= 3) {
-        tileType = TileType.FullWidth;
+        tileType = TileType.Full;
       } else {
-        tileType = TileType.HalfWidth;
+        tileType = TileType.Half;
       }
       const tile = (
         <Tile
@@ -216,8 +218,21 @@ const CallPanel = (props: Props) => {
             {showCopyLinkButton && <CopyLinkButton roomUrl={props.roomUrl} />}
           </>
         ) : (
-          <ScrollView alwaysBounceVertical={false}>
-            <View style={styles.largeTilesContainerInner}>{largeTiles}</View>
+          <ScrollView
+            alwaysBounceVertical={false}
+            alwaysBounceHorizontal={false}
+            horizontal={orientation === Orientation.Landscape}
+          >
+            <View
+              style={[
+                styles.largeTilesContainerInnerBase,
+                orientation === Orientation.Portrait
+                  ? styles.largeTilesContainerInnerPortrait
+                  : styles.largeTilesContainerInnerLandscape,
+              ]}
+            >
+              {largeTiles}
+            </View>
           </ScrollView>
         )}
       </View>
@@ -259,13 +274,20 @@ const styles = StyleSheet.create({
   largeTilesContainerOuter: {
     justifyContent: 'center',
   },
-  largeTilesContainerInner: {
-    flexDirection: 'row',
+  largeTilesContainerInnerBase: {
     justifyContent: 'center',
     alignItems: 'center',
     flexWrap: 'wrap',
+  },
+  largeTilesContainerInnerPortrait: {
+    flexDirection: 'row',
     marginTop: THUMBNAIL_HEIGHT,
     marginBottom: TRAY_HEIGHT,
+  },
+  largeTilesContainerInnerLandscape: {
+    flexDirection: 'column',
+    marginLeft: THUMBNAIL_HEIGHT,
+    marginRight: TRAY_HEIGHT,
   },
 });
 
