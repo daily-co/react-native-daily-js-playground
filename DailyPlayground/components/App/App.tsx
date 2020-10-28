@@ -236,12 +236,7 @@ const App = () => {
     appState
   );
   const isAppStateIdle = appState === AppState.Idle;
-  const isValidURL = (url: string) => {
-    const found = url.match(/(.*\.)?daily\.co.*/g);
-    return !!found?.length;
-  };
-  const startButtonDisabled =
-    !isAppStateIdle || !roomUrlFieldValue || !isValidURL(roomUrlFieldValue);
+  const startButtonDisabled = !isAppStateIdle || !roomUrlFieldValue;
 
   return (
     <CallObjectContext.Provider value={callObject}>
