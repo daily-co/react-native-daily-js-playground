@@ -7,8 +7,7 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "tsc && eslint . --ext .js,.jsx,.ts,.tsx",
-    "postinstall": "npx react-native-fix-image"
+    "lint": "tsc && eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
     "@daily-co/react-native-daily-js": "^0.2.0",
