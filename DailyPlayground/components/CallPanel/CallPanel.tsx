@@ -1,4 +1,10 @@
-import React, { useEffect, useReducer, useMemo, useCallback } from 'react';
+import React, {
+  useEffect,
+  useReducer,
+  useMemo,
+  useCallback,
+  useState,
+} from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { logDailyEvent } from '../../utils';
 import { DailyEvent } from '@daily-co/react-native-daily-js';
@@ -29,6 +35,7 @@ const THUMBNAIL_HEIGHT = 100;
 const CallPanel = (props: Props) => {
   const callObject = useCallObject();
   const [callState, dispatch] = useReducer(callReducer, initialCallState);
+  const [usingFrontCamera, setUsingFrontCamera] = useState(true); // default
 
   /**
    * Start listening for participant changes, when the callObject is set.
@@ -124,8 +131,14 @@ const CallPanel = (props: Props) => {
   /**
    * Toggle between front and rear cameras.
    */
-  const flipCamera = useCallback(() => {
-    callObject && callObject.cycleCamera();
+  const flipCamera = useCallback(async () => {
+    if (!callObject) {
+      return;
+    }
+    const { device } = await callObject.cycleCamera();
+    if (device) {
+      setUsingFrontCamera(device.facingMode === 'user')
+    }
   }, [callObject]);
 
   /**
@@ -161,7 +174,7 @@ const CallPanel = (props: Props) => {
           key={id}
           videoTrack={callItem.videoTrack}
           audioTrack={callItem.audioTrack}
-          mirror={isLocal(id)}
+          mirror={usingFrontCamera && isLocal(id)}
           type={tileType}
           isLoading={callItem.isLoading}
           onPress={
@@ -180,7 +193,7 @@ const CallPanel = (props: Props) => {
       }
     });
     return [larges, thumbnails];
-  }, [callState.callItems, flipCamera, sendHello]);
+  }, [callState.callItems, flipCamera, sendHello, usingFrontCamera]);
 
   const message = getMessage(callState, props.roomUrl);
   const showCopyLinkButton = message && !message.isError;
