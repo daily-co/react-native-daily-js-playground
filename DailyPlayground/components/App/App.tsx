@@ -362,6 +362,7 @@ const styles = StyleSheet.create({
   },
   callContainerLandscape: {
     flexDirection: 'row',
+  },
   textRow: {
     flexDirection: 'row',
     alignItems: 'center',
