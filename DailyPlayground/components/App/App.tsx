@@ -189,6 +189,7 @@ const App = () => {
    * Create a temporary room that will become available to join.
    */
   const createRoom = () => {
+    setRoomError(false);
     setAppState(AppState.Creating);
     api
       .createRoom()
@@ -296,7 +297,12 @@ const App = () => {
                     keyboardType="url"
                     editable={isAppStateIdle}
                     value={roomUrlFieldValue}
-                    onChangeText={(text) => setRoomUrlFieldValue(text)}
+                    onChangeText={(text) => {
+                      setRoomUrlFieldValue(text);
+                      if (roomError) {
+                        setRoomError(false);
+                      }
+                    }}
                   />
                   {!!roomUrlFieldValue && (
                     <TouchableWithoutFeedback
