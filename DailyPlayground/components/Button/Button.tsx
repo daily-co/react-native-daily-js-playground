@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: theme.fontFamily.body,
     color: theme.colors.blueDark,
-    fontSize: 16,
+    fontSize: theme.fontSize.base,
     fontWeight: '700',
   },
 });

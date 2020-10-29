@@ -51,6 +51,7 @@ enum AppState {
 const App = () => {
   const [appState, setAppState] = useState(AppState.Idle);
   const [roomUrl, setRoomUrl] = useState<string | undefined>(undefined);
+  const [roomError, setRoomError] = useState<boolean>(false);
   const [callObject, setCallObject] = useState<DailyCall | null>(null);
   const [roomUrlFieldValue, setRoomUrlFieldValue] = useState<
     string | undefined
@@ -196,6 +197,7 @@ const App = () => {
         setAppState(AppState.Idle);
       })
       .catch(() => {
+        setRoomError(true);
         setRoomUrlFieldValue(undefined);
         setAppState(AppState.Idle);
       });
@@ -307,6 +309,14 @@ const App = () => {
                     </TouchableWithoutFeedback>
                   )}
                 </View>
+                {roomError && (
+                  <View style={styles.textRow}>
+                    <Image source={require('../../assets/error.png')} />
+                    <Text style={styles.errorText}>
+                      Oops! Something went wrong.
+                    </Text>
+                  </View>
+                )}
                 {roomUrlFieldValue ? (
                   <CopyLinkButton roomUrl={roomUrlFieldValue} />
                 ) : (
@@ -352,9 +362,12 @@ const styles = StyleSheet.create({
   },
   callContainerLandscape: {
     flexDirection: 'row',
+  textRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   bodyText: {
-    fontSize: 16,
+    fontSize: theme.fontSize.base,
     marginBottom: 8,
     fontFamily: theme.fontFamily.body,
   },
@@ -384,10 +397,15 @@ const styles = StyleSheet.create({
     color: theme.colors.greyDark,
     fontStyle: 'normal',
     fontWeight: 'normal',
-    fontSize: 16,
+    fontSize: theme.fontSize.base,
     borderWidth: 1,
     borderColor: theme.colors.grey,
     width: '100%',
+  },
+  errorText: {
+    fontSize: theme.fontSize.base,
+    color: theme.colors.red,
+    marginLeft: 8,
   },
   demoInputContainer: {
     flexDirection: 'row',
