@@ -10,11 +10,12 @@ import {
 } from 'react-native';
 import { DailyMediaView } from '@daily-co/react-native-daily-js';
 import theme from '../../theme';
+import { useOrientation, Orientation } from '../../useOrientation';
 
 export enum TileType {
   Thumbnail,
-  HalfWidth,
-  FullWidth,
+  Half,
+  Full,
 }
 
 type Props = {
@@ -27,6 +28,8 @@ type Props = {
 };
 
 export default function Tile(props: Props) {
+  const orientation = useOrientation();
+
   const mediaComponent = useMemo(() => {
     return (
       <DailyMediaView
@@ -80,11 +83,17 @@ export default function Tile(props: Props) {
 
   let typeSpecificStyle: ViewStyle | null = null;
   switch (props.type) {
-    case TileType.HalfWidth:
-      typeSpecificStyle = styles.containerHalfWidth;
+    case TileType.Half:
+      typeSpecificStyle =
+        orientation === Orientation.Portrait
+          ? styles.containerHalfPortrait
+          : styles.containerHalfLandscape;
       break;
-    case TileType.FullWidth:
-      typeSpecificStyle = styles.containerFullWidth;
+    case TileType.Full:
+      typeSpecificStyle =
+        orientation === Orientation.Portrait
+          ? styles.containerFullPortrait
+          : styles.containerFullLandscape;
       break;
   }
   return (
@@ -111,11 +120,17 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     aspectRatio: 1,
   },
-  containerHalfWidth: {
+  containerHalfPortrait: {
     width: '50%',
   },
-  containerFullWidth: {
+  containerHalfLandscape: {
+    height: '50%',
+  },
+  containerFullPortrait: {
     width: '100%',
+  },
+  containerFullLandscape: {
+    height: '100%',
   },
   containerLoadingOrNotShowingVideo: {
     backgroundColor: theme.colors.blueDark,

@@ -7,6 +7,7 @@ import {
   View,
 } from 'react-native';
 import theme from '../../theme';
+import { useOrientation, Orientation } from '../../useOrientation';
 
 type Props = {
   disabled?: boolean;
@@ -22,6 +23,8 @@ export default function TrayButton({
   text,
   type,
 }: Props) {
+  const orientation = useOrientation();
+
   let source: NodeRequire = require('../../assets/leave.png');
   if (type === 'camera') {
     source = muted
@@ -40,7 +43,10 @@ export default function TrayButton({
       <View style={styles.controlContainer}>
         <Image
           style={[
-            styles.icon,
+            styles.iconBase,
+            orientation === Orientation.Portrait
+              ? styles.iconPortrait
+              : styles.iconLandscape,
             disabled && styles.disabled,
             isLeaveButton && styles.iconLeave,
           ]}
@@ -60,11 +66,16 @@ export default function TrayButton({
 }
 
 const styles = StyleSheet.create({
-  icon: {
+  iconBase: {
     height: 32,
     width: 32,
-    marginHorizontal: 16,
     backgroundColor: theme.colors.greyLight,
+  },
+  iconPortrait: {
+    marginHorizontal: 16,
+  },
+  iconLandscape: {
+    marginTop: 16,
   },
   iconLeave: {
     height: 28,

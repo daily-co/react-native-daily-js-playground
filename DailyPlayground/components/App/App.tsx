@@ -9,6 +9,7 @@ import {
   Text,
   Image,
   TouchableWithoutFeedback,
+  ScrollView,
 } from 'react-native';
 import Daily, {
   DailyEvent,
@@ -25,6 +26,7 @@ import Tray from '../Tray/Tray';
 import CallObjectContext from '../../CallObjectContext';
 import CopyLinkButton from '../CopyLinkButton/CopyLinkButton';
 import theme from '../../theme';
+import { useOrientation, Orientation } from '../../useOrientation';
 
 declare const global: { HermesInternal: null | {} };
 
@@ -53,6 +55,7 @@ const App = () => {
   const [roomUrlFieldValue, setRoomUrlFieldValue] = useState<
     string | undefined
   >(undefined);
+  const orientation = useOrientation();
 
   /**
    * Uncomment to set up debugging globals.
@@ -244,15 +247,29 @@ const App = () => {
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.container}>
           {showCallPanel ? (
-            <>
+            <View
+              style={[
+                styles.callContainerBase,
+                orientation === Orientation.Landscape
+                  ? styles.callContainerLandscape
+                  : null,
+              ]}
+            >
               <CallPanel roomUrl={roomUrl || ''} />
               <Tray
                 onClickLeaveCall={leaveCall}
                 disabled={!enableCallButtons}
               />
-            </>
+            </View>
           ) : (
-            <View style={styles.homeContainer}>
+            <ScrollView
+              contentContainerStyle={
+                orientation === Orientation.Portrait
+                  ? styles.homeContainerPortrait
+                  : styles.homeContainerLandscape
+              }
+              alwaysBounceVertical={false}
+            >
               <Image
                 style={styles.logo}
                 source={require('../../assets/logo.png')}
@@ -309,7 +326,7 @@ const App = () => {
                   starting={appState === AppState.Joining}
                 />
               </View>
-            </View>
+            </ScrollView>
           )}
         </View>
       </SafeAreaView>
@@ -328,6 +345,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  callContainerBase: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+  },
+  callContainerLandscape: {
+    flexDirection: 'row',
+  },
   bodyText: {
     fontSize: 16,
     marginBottom: 8,
@@ -336,8 +361,11 @@ const styles = StyleSheet.create({
   startContainer: {
     flexDirection: 'column',
   },
-  homeContainer: {
+  homeContainerPortrait: {
     paddingHorizontal: 24,
+  },
+  homeContainerLandscape: {
+    paddingHorizontal: '20%',
   },
   buttonContainer: {
     justifyContent: 'center',
