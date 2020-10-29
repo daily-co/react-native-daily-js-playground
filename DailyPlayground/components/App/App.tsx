@@ -182,27 +182,21 @@ const App = () => {
   }, [roomUrl]);
 
   /**
-   * Create a room that will become available to join.
-   * The user will need to input an existing room URL or create
-   * a room before the Join Call button will enable.
+   * Create a temporary room that will become available to join.
    */
-  const createRoom = useCallback(() => {
+  const createRoom = () => {
     setAppState(AppState.Creating);
-    if (roomUrlFieldValue) {
-      setRoomUrl(roomUrlFieldValue);
-    } else {
-      api
-        .createRoom()
-        .then((room) => {
-          setRoomUrlFieldValue(room.url);
-          setAppState(AppState.Idle);
-        })
-        .catch(() => {
-          setRoomUrlFieldValue(undefined);
-          setAppState(AppState.Idle);
-        });
-    }
-  }, [roomUrlFieldValue]);
+    api
+      .createRoom()
+      .then((room) => {
+        setRoomUrlFieldValue(room.url);
+        setAppState(AppState.Idle);
+      })
+      .catch(() => {
+        setRoomUrlFieldValue(undefined);
+        setAppState(AppState.Idle);
+      });
+  };
 
   /**
    * Join the room provided by the user or the temporary room created by createRoom
@@ -223,6 +217,7 @@ const App = () => {
     if (appState === AppState.Error) {
       callObject.destroy().then(() => {
         setRoomUrl(undefined);
+        setRoomUrlFieldValue(undefined);
         setCallObject(null);
         setAppState(AppState.Idle);
       });
@@ -241,6 +236,7 @@ const App = () => {
     appState
   );
   const isAppStateIdle = appState === AppState.Idle;
+  const startButtonDisabled = !isAppStateIdle || !roomUrlFieldValue;
 
   return (
     <CallObjectContext.Provider value={callObject}>
@@ -309,7 +305,7 @@ const App = () => {
                 )}
                 <StartButton
                   onPress={startCall}
-                  disabled={!isAppStateIdle || !roomUrlFieldValue}
+                  disabled={startButtonDisabled}
                   starting={appState === AppState.Joining}
                 />
               </View>
