@@ -51,7 +51,7 @@ enum AppState {
 const App = () => {
   const [appState, setAppState] = useState(AppState.Idle);
   const [roomUrl, setRoomUrl] = useState<string | undefined>(undefined);
-  const [roomError, setRoomError] = useState<boolean>(false);
+  const [roomCreateError, setRoomCreateError] = useState<boolean>(false);
   const [callObject, setCallObject] = useState<DailyCall | null>(null);
   const [roomUrlFieldValue, setRoomUrlFieldValue] = useState<
     string | undefined
@@ -189,7 +189,7 @@ const App = () => {
    * Create a temporary room that will become available to join.
    */
   const createRoom = () => {
-    setRoomError(false);
+    setRoomCreateError(false);
     setAppState(AppState.Creating);
     api
       .createRoom()
@@ -198,7 +198,7 @@ const App = () => {
         setAppState(AppState.Idle);
       })
       .catch(() => {
-        setRoomError(true);
+        setRoomCreateError(true);
         setRoomUrlFieldValue(undefined);
         setAppState(AppState.Idle);
       });
@@ -299,9 +299,7 @@ const App = () => {
                     value={roomUrlFieldValue}
                     onChangeText={(text) => {
                       setRoomUrlFieldValue(text);
-                      if (roomError) {
-                        setRoomError(false);
-                      }
+                      setRoomCreateError(false);
                     }}
                   />
                   {!!roomUrlFieldValue && (
@@ -315,11 +313,11 @@ const App = () => {
                     </TouchableWithoutFeedback>
                   )}
                 </View>
-                {roomError && (
+                {roomCreateError && (
                   <View style={styles.textRow}>
                     <Image source={require('../../assets/error.png')} />
                     <Text style={styles.errorText}>
-                      Oops! Something went wrong.
+                      Oops! A room couldn't be created.
                     </Text>
                   </View>
                 )}
