@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Image } from 'react-native';
 import theme from '../../theme';
 
 type Props = {
@@ -11,15 +11,18 @@ type Props = {
 export default function CallMessage(props: Props) {
   return (
     <View style={[styles.container, props.isError && styles.errorContainer]}>
-      <Text
-        style={[
-          styles.text,
-          styles.headerText,
-          props.isError ? styles.errorText : {},
-        ]}
-      >
-        {props.header}
-      </Text>
+      <View style={styles.textRow}>
+        {props.isError && <Image source={require('../../assets/error.png')} />}
+        <Text
+          style={[
+            styles.text,
+            styles.headerText,
+            props.isError ? styles.errorText : {},
+          ]}
+        >
+          {props.header}
+        </Text>
+      </View>
       {props.detail && <Text style={styles.text}>{props.detail}</Text>}
     </View>
   );
@@ -27,21 +30,27 @@ export default function CallMessage(props: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 20,
+    padding: 20,
   },
   errorContainer: {
     backgroundColor: theme.colors.greyLightest,
   },
   text: {
     fontFamily: theme.fontFamily.body,
-    fontSize: 16,
+    fontSize: theme.fontSize.base,
     textAlign: 'center',
     color: theme.colors.blueDark,
   },
   headerText: {
     fontWeight: 'bold',
   },
+  textRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+  },
   errorText: {
     color: theme.colors.red,
+    marginLeft: 8,
   },
 });

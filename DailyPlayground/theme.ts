@@ -12,6 +12,9 @@ const theme = {
   fontFamily: {
     body: 'Helvetica Neue',
   },
+  fontSize: {
+    base: 16,
+  },
 };
 
 export default theme;
