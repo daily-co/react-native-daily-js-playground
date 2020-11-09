@@ -4,10 +4,6 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 platform :ios, '10.0'
 
 target 'DailyPlayground' do
-  config = use_native_modules!
-
-  use_react_native!(:path => config["reactNativePath"])
-
   # As part of `npm run install-dev`, the below are automatically replaced to
   # enable editing react-native-daily-js's and react-native-webrtc's native iOS
   # files directly in DailyPlayground without having to reinstall npm packages
@@ -15,6 +11,10 @@ target 'DailyPlayground' do
   # pod 'react-native-daily-js', :path => INSERT_PATH_HERE
   # pod 'react-native-webrtc', :path => INSERT_PATH_HERE
 
+  config = use_native_modules!
+
+  use_react_native!(:path => config["reactNativePath"])
+  
   target 'DailyPlaygroundTests' do
     inherit! :complete
     # Pods for testing
