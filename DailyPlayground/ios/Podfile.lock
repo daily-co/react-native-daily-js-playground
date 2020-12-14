@@ -238,7 +238,7 @@ PODS:
   - React-jsinspector (0.63.3)
   - react-native-background-timer (2.3.1):
     - React
-  - react-native-daily-js (0.3.0):
+  - react-native-daily-js (0.4.0):
     - React
   - react-native-webrtc (1.75.8):
     - React
@@ -471,7 +471,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: b56c03e61c0dd5f5801255f2160a815f4a53d451
   React-jsinspector: 8e68ffbfe23880d3ee9bafa8be2777f60b25cbe2
   react-native-background-timer: fce82e42cc2b82e53c03780aefc87178a7c15028
-  react-native-daily-js: 476f6ebe41fc9f831f980c4d6bcf29747b67a5ff
+  react-native-daily-js: 4e720d34e2ad06786c0542165c55c895680db228
   react-native-webrtc: 76eca37046818f2b856bf9731367da514c306b6a
   React-RCTActionSheet: 53ea72699698b0b47a6421cb1c8b4ab215a774aa
   React-RCTAnimation: 1befece0b5183c22ae01b966f5583f42e69a83c2
