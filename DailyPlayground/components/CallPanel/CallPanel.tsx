@@ -174,11 +174,11 @@ const CallPanel = (props: Props) => {
       const tile = (
         <Tile
           key={id}
-          videoTrack={callItem.videoTrack}
-          audioTrack={callItem.audioTrack}
+          videoTrackState={callItem.videoTrackState}
+          audioTrackState={callItem.audioTrackState}
           mirror={usingFrontCamera && isLocal(id)}
           type={tileType}
-          isLoading={callItem.isLoading}
+          disableAudioIndicators={isScreenShare(id)}
           onPress={
             isLocal(id)
               ? flipCamera
