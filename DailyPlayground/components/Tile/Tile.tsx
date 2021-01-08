@@ -41,7 +41,9 @@ function getTrackUnavailableMessage(
       }
     case 'off':
       if (trackState.off?.byUser) {
-        return `${kind} off`;
+        // In this particular case the message doesn't really matter, since the
+        // special mute overlay is shown over it
+        return `${kind} muted`;
       } else if (trackState.off?.byBandwidth) {
         return `${kind} muted to save bandwidth`;
       }
