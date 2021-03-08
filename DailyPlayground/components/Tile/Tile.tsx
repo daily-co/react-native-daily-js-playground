@@ -39,6 +39,7 @@ function getTrackUnavailableMessage(
       } else if (trackState.blocked?.byDeviceMissing) {
         return `${kind} device missing`;
       }
+      return `${kind} blocked`;
     case 'off':
       if (trackState.off?.byUser) {
         // In this particular case the message doesn't really matter, since the
@@ -47,6 +48,7 @@ function getTrackUnavailableMessage(
       } else if (trackState.off?.byBandwidth) {
         return `${kind} muted to save bandwidth`;
       }
+      return `${kind} off`;
     case 'sendable':
       return `${kind} not subscribed`;
     case 'loading':
