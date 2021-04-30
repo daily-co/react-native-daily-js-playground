@@ -463,10 +463,12 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-DailyPlayground-DailyPlaygroundTests/Pods-DailyPlayground-DailyPlaygroundTests-frameworks.sh",
 				"${PODS_ROOT}/../../node_modules/@daily-co/react-native-webrtc/ios/WebRTC.framework",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL/OpenSSL.framework/OpenSSL",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WebRTC.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenSSL.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -481,10 +483,12 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-DailyPlayground/Pods-DailyPlayground-frameworks.sh",
 				"${PODS_ROOT}/../../node_modules/@daily-co/react-native-webrtc/ios/WebRTC.framework",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL/OpenSSL.framework/OpenSSL",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WebRTC.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenSSL.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
