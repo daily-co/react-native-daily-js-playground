@@ -468,7 +468,7 @@ SPEC CHECKSUMS:
   React-jsi: df07aa95b39c5be3e41199921509bfa929ed2b9d
   React-jsiexecutor: b56c03e61c0dd5f5801255f2160a815f4a53d451
   React-jsinspector: 8e68ffbfe23880d3ee9bafa8be2777f60b25cbe2
-  react-native-background-timer: 1275225bd2c74eeba9f3898480cb6a635c7d2cb0
+  react-native-background-timer: fce82e42cc2b82e53c03780aefc87178a7c15028
   react-native-daily-js: 37f42780345c2dd4b3792201320ddcca8ac3bf02
   react-native-webrtc: 76eca37046818f2b856bf9731367da514c306b6a
   React-RCTActionSheet: 53ea72699698b0b47a6421cb1c8b4ab215a774aa
@@ -481,8 +481,8 @@ SPEC CHECKSUMS:
   React-RCTText: 65a6de06a7389098ce24340d1d3556015c38f746
   React-RCTVibration: 8e9fb25724a0805107fc1acc9075e26f814df454
   ReactCommon: 4167844018c9ed375cc01a843e9ee564399e53c3
-  RNCAsyncStorage: d059c3ee71738c39834a627476322a5a8cd5bf36
-  RNCClipboard: 48eaf27bea3de7c9a265529725434268d47a2ee9
+  RNCAsyncStorage: db711e29e5e0500d9bd21aa0c2e397efa45302b1
+  RNCClipboard: 5f3218dcdc28405aa2ae72b78e388f150b826dd3
   Yoga: 7d13633d129fd179e01b8953d38d47be90db185a
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
