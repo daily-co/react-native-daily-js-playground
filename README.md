@@ -23,6 +23,7 @@ nvm i
 npm i
 
 # Generate ios/DailyPlayground.xcworkspace
+# IMPORTANT: make sure you have the right version of Cocoapods installed for this project. See Podfile.lock for version.
 npx pod-install
 ```
 
