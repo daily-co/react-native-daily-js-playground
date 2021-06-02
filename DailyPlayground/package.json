@@ -10,8 +10,8 @@
     "lint": "tsc && eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
-    "@daily-co/react-native-daily-js": "^0.10.0",
-    "@daily-co/react-native-webrtc": "^1.75.8",
+    "@daily-co/react-native-daily-js": "^0.11.0",
+    "@daily-co/react-native-webrtc": "1.89.2-daily.2",
     "@react-native-community/async-storage": "^1.11.0",
     "@react-native-community/clipboard": "^1.2.3",
     "react": "16.13.1",

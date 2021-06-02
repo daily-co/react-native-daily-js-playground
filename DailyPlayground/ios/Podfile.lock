@@ -236,10 +236,10 @@ PODS:
   - React-jsinspector (0.63.3)
   - react-native-background-timer (2.3.1):
     - React
-  - react-native-daily-js (0.10.0):
+  - react-native-daily-js (0.11.0):
     - React
-  - react-native-webrtc (1.75.8):
-    - React
+  - react-native-webrtc (1.89.2-daily.2):
+    - React-Core
   - React-RCTActionSheet (0.63.3):
     - React-Core/RCTActionSheetHeaders (= 0.63.3)
   - React-RCTAnimation (0.63.3):
@@ -469,8 +469,8 @@ SPEC CHECKSUMS:
   React-jsiexecutor: b56c03e61c0dd5f5801255f2160a815f4a53d451
   React-jsinspector: 8e68ffbfe23880d3ee9bafa8be2777f60b25cbe2
   react-native-background-timer: fce82e42cc2b82e53c03780aefc87178a7c15028
-  react-native-daily-js: 79a9988f23d3fba542ba37a440bcd20fb5c3bea2
-  react-native-webrtc: 76eca37046818f2b856bf9731367da514c306b6a
+  react-native-daily-js: 0ef486e6295c019e9a6df38c5d2bbe08b76125a0
+  react-native-webrtc: 022df345bdde963481ee97d3a9c1b6eee087bb75
   React-RCTActionSheet: 53ea72699698b0b47a6421cb1c8b4ab215a774aa
   React-RCTAnimation: 1befece0b5183c22ae01b966f5583f42e69a83c2
   React-RCTBlob: 0b284339cbe4b15705a05e2313a51c6d8b51fa40
@@ -486,6 +486,6 @@ SPEC CHECKSUMS:
   Yoga: 7d13633d129fd179e01b8953d38d47be90db185a
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 40adc2d865cd16c4082096a201ce0f2df1160b95
+PODFILE CHECKSUM: 562fdb86bfcfa9b67321921c7c7999c1ab4ac524
 
 COCOAPODS: 1.10.1
