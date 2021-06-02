@@ -108,13 +108,11 @@ Of course, you may also want to specify a name as well as other properties. See 
 
 ---
 
-### Console debugging
+### Interactive debugging
 
-Shake your device while it's running the app. A debugging menu will pop up. Select "Debug". This will automatically open a Chrome tab. Open Chrome dev tools. In the Console tab of Chrome dev tools, click the dropdown that says "top" and select "debuggerWorker" from the list.
+Since the [introduction of synchronous methods](https://github.com/react-native-webrtc/react-native-webrtc/commit/1fbe7e14bf540e1651c98ee11fc11f690f61f622) to `react-native-webrtc`, the common approach of using the Chrome dev tools for interactive debugging will not work.
 
-![Image showing selecting "debuggerWorker" from the Console tab in the Chrome debugger](debuggerWorker-screenshot.png)
-
-Now you should be all set to use Chrome dev tools to view logged messages and run commands like you would on a website! (**Note**: you may have to reload the JavaScript a couple of times for the debugger to properly connect).
+Instead, you'll need to debug JavaScript [on iOS using the Safari developer tools](https://reactnative.dev/docs/debugging#safari-developer-tools), which can hook directly into your app's JSContext. Once you've got the debugger running, you should be able to run console commands like you would on a website.
 
 To give yourself access to helpful globals from the console, uncomment the following block in `App.tsx`:
 
@@ -128,6 +126,8 @@ useEffect(() => {
   g.callObject = callObject;
 }, [callObject]);
 ```
+
+Unfortunately there isn't a well-supported solution today for interactive debugging on Android. Hermes is not yet supported in `react-native-daily-js`, but there are plans to add support soon, at which point enabling Hermes will enable a form of Chrome-dev-tools-based debugging.
 
 ### React Native Debugger
 
