@@ -11,6 +11,7 @@ import {
 import { DailyMediaView } from '@daily-co/react-native-daily-js';
 import theme from '../../theme';
 import { useOrientation, Orientation } from '../../useOrientation';
+import api from '../../api';
 
 export enum TileType {
   Thumbnail,
@@ -25,6 +26,7 @@ type Props = {
   type: TileType;
   disableAudioIndicators: boolean;
   onPress?: () => void;
+  robotText?: string;
 };
 
 function getTrackUnavailableMessage(
@@ -204,6 +206,7 @@ export default function Tile(props: Props) {
         styles.containerLoadingOrNotShowingVideo,
         typeSpecificStyle,
       ]}
+      {...api.robotID(props.robotText)}
     >
       {touchableMediaComponent}
       {messageOverlayComponent}

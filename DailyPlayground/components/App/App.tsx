@@ -288,6 +288,7 @@ const App = () => {
                     !!roomUrlFieldValue && styles.shortContainer,
                   ]}
                 >
+
                   <TextInput
                     style={styles.roomUrlField}
                     placeholder="Room URL"
@@ -295,6 +296,7 @@ const App = () => {
                     autoCapitalize="none"
                     autoCorrect={false}
                     keyboardType="url"
+                    {...api.robotID('robots-room-url')}
                     editable={isAppStateIdle}
                     value={roomUrlFieldValue}
                     onChangeText={(text) => {
@@ -326,6 +328,7 @@ const App = () => {
                 ) : (
                   <Button
                     type="secondary"
+                    robotText="robots-create-room"
                     onPress={createRoom}
                     label={
                       appState === AppState.Creating
