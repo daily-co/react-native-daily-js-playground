@@ -55,12 +55,11 @@ export default function Tray({ disabled, onClickLeaveCall }: Props) {
   }, [callObject, isMicMuted]);
 
   const toggleStreaming = useCallback(() => {
-    console.log('start/stop streaming here');
-    console.log('stream url: ', Config.STREAM_URL);
     if (isStreaming === true) {
       callObject?.stopLiveStreaming();
       setStreaming(false);
     } else {
+      console.log('Starting live stream to: ' + Config.STREAM_URL);
       callObject?.startLiveStreaming({
         rtmpUrl: Config.STREAM_URL,
         width: 1280,
@@ -90,20 +89,15 @@ export default function Tray({ disabled, onClickLeaveCall }: Props) {
     };
 
     const handleLiveStreamStarted = (event?: any) => {
-      console.log('inside handleLiveStreamStarted');
       setStreaming(true);
     };
 
     const handleLiveStreamStopped = (event?: any) => {
-      console.log('inside handleLiveStreamStopped');
       setStreaming(false);
     };
 
     const handleLiveStreamError = (event?: any) => {
-      console.log(
-        'inside handleLiveStreamError. Error was theoretically',
-        event
-      );
+      console.log('Live stream error: ', event);
       setStreaming(false);
     };
     // Use initial state
