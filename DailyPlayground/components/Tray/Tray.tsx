@@ -150,13 +150,15 @@ export default function Tray({ disabled, onClickLeaveCall }: Props) {
           text={isCameraMuted ? 'Turn on' : 'Turn off'}
           type="camera"
         />
-        <TrayButton
-          disabled={disabled}
-          onPress={toggleStreaming}
-          muted={!isStreaming}
-          text={isStreaming ? 'Stop stream' : 'Stream'}
-          type="stream"
-        />
+        {!!Config.STREAM_URL && !!Config.DAILY_CALL_TOKEN && (
+          <TrayButton
+            disabled={disabled}
+            onPress={toggleStreaming}
+            muted={!isStreaming}
+            text={isStreaming ? 'Stop stream' : 'Stream'}
+            type="stream"
+          />
+        )}
       </View>
       <TrayButton
         disabled={disabled}
