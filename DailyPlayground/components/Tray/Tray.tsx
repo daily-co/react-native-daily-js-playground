@@ -149,7 +149,7 @@ export default function Tray({ disabled, onClickLeaveCall }: Props) {
             disabled={disabled}
             onPress={toggleStreaming}
             muted={!isStreaming}
-            text={isStreaming ? 'Stop stream' : 'Stream'}
+            text={isStreaming ? 'Stop' : 'Stream'}
             type="stream"
           />
         )}

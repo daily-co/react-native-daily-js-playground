@@ -6,7 +6,7 @@ import {
   StatusBar,
   View,
   TextInput,
-  YellowBox,
+  LogBox,
   Text,
   Image,
   TouchableWithoutFeedback,
@@ -34,7 +34,7 @@ declare const global: { HermesInternal: null | {} };
 // Silence an annoying warning about a harmless require cycle in React Native's
 // fetch library.
 // See https://github.com/facebook/react-native/issues/23130.
-YellowBox.ignoreWarnings(['Require cycle: node_modules']);
+LogBox.ignoreLogs(['Require cycle: node_modules']);
 
 // Uncomment during development to temporarily intentionally ignore errors,
 // preventing the red screen from popping up
@@ -283,65 +283,6 @@ const App = () => {
                 source={require('../../assets/logo.png')}
               />
               <View style={styles.buttonContainer}>
-                <Text style={styles.bodyText}>
-                  To get started, enter an existing room URL or create a
-                  temporary demo room
-                </Text>
-                <View
-                  style={[
-                    styles.demoInputContainer,
-                    !!roomUrlFieldValue && styles.shortContainer,
-                  ]}
-                >
-                  <TextInput
-                    style={styles.roomUrlField}
-                    placeholder="Room URL"
-                    placeholderTextColor={theme.colors.greyDark}
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    keyboardType="url"
-                    editable={isAppStateIdle}
-                    value={roomUrlFieldValue}
-                    onChangeText={(text) => {
-                      setRoomUrlFieldValue(text);
-                      setRoomCreateError(false);
-                    }}
-                  />
-                  {!!roomUrlFieldValue && (
-                    <TouchableWithoutFeedback
-                      onPress={() => setRoomUrlFieldValue(undefined)}
-                    >
-                      <Image
-                        style={styles.closeIcon}
-                        source={require('../../assets/close.png')}
-                      />
-                    </TouchableWithoutFeedback>
-                  )}
-                </View>
-                <View style={styles.textRow}>
-                  <TextInput
-                    style={styles.roomUrlField}
-                    placeholder="Token"
-                    placeholderTextColor={theme.colors.greyDark}
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    keyboardType="url"
-                    editable={isAppStateIdle}
-                    value={roomToken}
-                    onChangeText={(text) => {
-                      setRoomToken(text);
-                      setRoomCreateError(false);
-                    }}
-                  />
-                </View>
-                {roomCreateError && (
-                  <View style={styles.textRow}>
-                    <Image source={require('../../assets/error.png')} />
-                    <Text style={styles.errorText}>
-                      Oops! A room couldn't be created.
-                    </Text>
-                  </View>
-                )}
                 {roomUrlFieldValue ? (
                   <CopyLinkButton roomUrl={roomUrlFieldValue} />
                 ) : (
