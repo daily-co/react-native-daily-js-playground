@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
+import Config from 'react-native-config';
 import { StyleSheet, View } from 'react-native';
 import { logDailyEvent } from '../../utils';
 import { DailyCall } from '@daily-co/react-native-daily-js';
@@ -12,7 +13,7 @@ import { useOrientation, Orientation } from '../../useOrientation';
  * This function is declared outside Tray() so it's not recreated every render
  * (which would require us to declare it as a useEffect dependency).
  */
-function getStreamStates(callObject: DailyCall) {
+function getDeviceStates(callObject: DailyCall) {
   let isCameraMuted = false,
     isMicMuted = false;
   if (
@@ -27,6 +28,10 @@ function getStreamStates(callObject: DailyCall) {
   return [isCameraMuted, isMicMuted];
 }
 
+function getStreamingState(callObject: DailyCall) {
+  // TODO: do we have a getLiveStreaming or something?
+}
+
 type Props = {
   onClickLeaveCall: () => void;
   disabled: boolean;
@@ -38,6 +43,7 @@ export default function Tray({ disabled, onClickLeaveCall }: Props) {
   const callObject = useCallObject();
   const [isCameraMuted, setCameraMuted] = useState(false);
   const [isMicMuted, setMicMuted] = useState(false);
+  const [isStreaming, setStreaming] = useState(false);
   const orientation = useOrientation();
 
   const toggleCamera = useCallback(() => {
@@ -48,6 +54,25 @@ export default function Tray({ disabled, onClickLeaveCall }: Props) {
     callObject?.setLocalAudio(isMicMuted);
   }, [callObject, isMicMuted]);
 
+  const toggleStreaming = useCallback(() => {
+    console.log('start/stop streaming here');
+    console.log('stream url: ', Config.STREAM_URL);
+    if (isStreaming === true) {
+      callObject?.stopLiveStreaming();
+      setStreaming(false);
+    } else {
+      callObject?.startLiveStreaming({
+        rtmpUrl: Config.STREAM_URL,
+        width: 1280,
+        height: 720,
+        layout: {
+          preset: 'default',
+          max_cam_streams: 5,
+        },
+      });
+      setStreaming(true);
+    }
+  }, [callObject, isStreaming]);
   /**
    * Start listening for participant changes when callObject is set (i.e. when the component mounts).
    * This event will capture any changes to your audio/video mute state.
@@ -59,17 +84,36 @@ export default function Tray({ disabled, onClickLeaveCall }: Props) {
 
     const handleNewParticipantsState = (event?: any) => {
       event && logDailyEvent(event);
-      const [cameraMuted, micMuted] = getStreamStates(callObject);
+      const [cameraMuted, micMuted] = getDeviceStates(callObject);
       setCameraMuted(cameraMuted);
       setMicMuted(micMuted);
     };
 
+    const handleLiveStreamStarted = (event?: any) => {
+      console.log('inside handleLiveStreamStarted');
+      setStreaming(true);
+    };
+
+    const handleLiveStreamStopped = (event?: any) => {
+      console.log('inside handleLiveStreamStopped');
+      setStreaming(false);
+    };
+
+    const handleLiveStreamError = (event?: any) => {
+      console.log(
+        'inside handleLiveStreamError. Error was theoretically',
+        event
+      );
+      setStreaming(false);
+    };
     // Use initial state
     handleNewParticipantsState();
 
     // Listen for changes in state
     callObject.on('participant-updated', handleNewParticipantsState);
-
+    callObject.on('live-streaming-started', handleLiveStreamStarted);
+    callObject.on('live-streaming-stopped', handleLiveStreamStopped);
+    callObject.on('live-streaming-error', handleLiveStreamError);
     // Stop listening for changes in state
     return function cleanup() {
       callObject.off('participant-updated', handleNewParticipantsState);
@@ -105,6 +149,13 @@ export default function Tray({ disabled, onClickLeaveCall }: Props) {
           muted={isCameraMuted}
           text={isCameraMuted ? 'Turn on' : 'Turn off'}
           type="camera"
+        />
+        <TrayButton
+          disabled={disabled}
+          onPress={toggleStreaming}
+          muted={!isStreaming}
+          text={isStreaming ? 'Stop stream' : 'Stream'}
+          type="stream"
         />
       </View>
       <TrayButton

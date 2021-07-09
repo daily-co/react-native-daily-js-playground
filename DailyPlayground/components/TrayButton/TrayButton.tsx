@@ -14,7 +14,7 @@ type Props = {
   onPress: () => void;
   muted?: boolean;
   text: string;
-  type: 'mic' | 'camera' | 'leave';
+  type: 'mic' | 'camera' | 'leave' | 'stream';
 };
 export default function TrayButton({
   disabled = false,
@@ -34,10 +34,14 @@ export default function TrayButton({
     source = muted
       ? require('../../assets/mic-off.png')
       : require('../../assets/mic.png');
+  } else if (type === 'stream') {
+    source = muted
+      ? require('../../assets/stream-off.png')
+      : require('../../assets/stream.png');
   }
 
   const isLeaveButton: boolean = type === 'leave';
-
+  const isStreamButton: boolean = type === 'stream';
   return (
     <TouchableWithoutFeedback onPress={onPress} disabled={disabled}>
       <View style={styles.controlContainer}>
@@ -55,7 +59,10 @@ export default function TrayButton({
         <Text
           style={[
             styles.controlText,
-            (muted || isLeaveButton) && styles.offText,
+            ((!isStreamButton && muted) ||
+              isLeaveButton ||
+              (isStreamButton && !muted)) &&
+              styles.offText,
           ]}
         >
           {text}

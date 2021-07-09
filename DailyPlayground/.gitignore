@@ -64,3 +64,4 @@ buck-out/
 
 # dev
 dev_scripts/variables.sh
+.env
