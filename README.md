@@ -27,7 +27,7 @@ npm i
 npx pod-install
 ```
 
-### Configuring
+### Configuring Live Streaming
 
 In order to test live streaming, you'll need to join a predefined room with an owner meeting token. You can create a token from our REST API, or even directly from [our documentation site](https://docs.daily.co/reference#create-meeting-token). Make sure to set the `room_name` property, as well as `is_owner: true` so you can start streaming.
 
