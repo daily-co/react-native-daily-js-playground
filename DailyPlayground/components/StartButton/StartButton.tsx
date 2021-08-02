@@ -6,7 +6,7 @@ type Props = {
   onPress: () => void;
   disabled: boolean;
   starting: boolean;
-  robotText?: string;
+  robotId?: string;
 };
 
 const StartButton = ({ onPress, disabled, starting }: Props) => {
@@ -16,7 +16,7 @@ const StartButton = ({ onPress, disabled, starting }: Props) => {
         onPress={onPress}
         disabled={disabled}
         label={starting ? 'Joining...' : 'Join call'}
-        robotText={'robots-start-call'}
+        robotId={'robots-start-call'}
       />
     </View>
   );

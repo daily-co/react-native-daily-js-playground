@@ -26,7 +26,6 @@ import { useCallObject } from '../../useCallObject';
 import { TRAY_HEIGHT as TRAY_THICKNESS } from '../Tray/Tray';
 import CopyLinkButton from '../CopyLinkButton/CopyLinkButton';
 import { useOrientation, Orientation } from '../../useOrientation';
-import api from '../../api';
 
 type Props = {
   roomUrl: string;
@@ -179,7 +178,7 @@ const CallPanel = (props: Props) => {
           audioTrackState={callItem.audioTrackState}
           mirror={usingFrontCamera && isLocal(id)}
           type={tileType}
-          robotText={isLocal(id) ? `robots-tile-local` : `robots-tile-${id}`}
+          robotId={isLocal(id) ? `robots-tile-local` : `robots-tile-${id}`}
           disableAudioIndicators={isScreenShare(id)}
           onPress={
             isLocal(id)
