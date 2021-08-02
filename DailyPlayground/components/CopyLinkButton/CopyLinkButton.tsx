@@ -20,6 +20,7 @@ const CopyLinkButton = (props: Props) => {
   return (
     <Button
       type="secondary"
+      robotId="robots-copy-room-link"
       onPress={copy}
       disabled={showCopied}
       label={showCopied ? 'Copied!' : 'Copy room link'}
