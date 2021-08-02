@@ -20,7 +20,7 @@ import Daily, {
 import CallPanel from '../CallPanel/CallPanel';
 import Button from '../Button/Button';
 import StartButton from '../StartButton/StartButton';
-import { logDailyEvent } from '../../utils';
+import { logDailyEvent, robotID } from '../../utils';
 import api from '../../api';
 import Tray from '../Tray/Tray';
 import CallObjectContext from '../../CallObjectContext';
@@ -296,7 +296,7 @@ const App = () => {
                     autoCapitalize="none"
                     autoCorrect={false}
                     keyboardType="url"
-                    {...api.robotID('robots-room-url')}
+                    {...robotID('robots-room-url')}
                     editable={isAppStateIdle}
                     value={roomUrlFieldValue}
                     onChangeText={(text) => {
@@ -328,7 +328,7 @@ const App = () => {
                 ) : (
                   <Button
                     type="secondary"
-                    robotText="robots-create-room"
+                    robotId="robots-create-room"
                     onPress={createRoom}
                     label={
                       appState === AppState.Creating

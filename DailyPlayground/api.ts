@@ -1,5 +1,3 @@
-import { Platform } from 'react-native';
-
 const newRoomEndpoint =
   'https://f433xwze36.execute-api.us-west-2.amazonaws.com/default/dailyRnDemoNewCall';
 
@@ -24,13 +22,4 @@ async function createRoom(): Promise<{ url: string }> {
   // return { url: "https://your-domain.daily.co/hello" };
 }
 
-/**
- * For automated testing on browserstack / appium / wd.
- *
- */
-function robotID(id?: string) {
-  if (!id) id = '';
-  return Platform.OS === 'ios' ? { id: id } : { accessibilityLabel: id };
-}
-
-export default { createRoom, robotID };
+export default { createRoom };

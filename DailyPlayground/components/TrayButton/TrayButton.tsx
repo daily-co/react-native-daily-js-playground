@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import theme from '../../theme';
 import { useOrientation, Orientation } from '../../useOrientation';
-import api from '../../api';
+import { robotID } from '../../utils';
 
 type Props = {
   disabled?: boolean;
@@ -43,7 +43,7 @@ export default function TrayButton({
     <TouchableWithoutFeedback
       onPress={onPress}
       disabled={disabled}
-      {...api.robotID(isLeaveButton ? 'robots-leave-button' : '')}
+      {...robotID(isLeaveButton ? 'robots-leave-button' : '')}
     >
       <View style={styles.controlContainer}>
         <Image
