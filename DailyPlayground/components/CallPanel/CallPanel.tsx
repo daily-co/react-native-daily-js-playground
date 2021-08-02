@@ -178,6 +178,7 @@ const CallPanel = (props: Props) => {
           audioTrackState={callItem.audioTrackState}
           mirror={usingFrontCamera && isLocal(id)}
           type={tileType}
+          robotId={isLocal(id) ? `robots-tile-local` : `robots-tile-${id}`}
           disableAudioIndicators={isScreenShare(id)}
           onPress={
             isLocal(id)

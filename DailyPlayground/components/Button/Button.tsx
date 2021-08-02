@@ -6,18 +6,22 @@ import {
   Text,
 } from 'react-native';
 import theme from '../../theme';
+import api from '../../api';
+import { robotID } from '../../utils';
 
 type Props = {
   onPress: () => void;
   disabled?: boolean;
   label: string;
   type?: string;
+  robotId?: string;
 };
 
 const Button = ({
   onPress,
   disabled = false,
   label,
+  robotId,
   type = 'primary',
 }: Props) => {
   const scaleAnimation = useRef(new Animated.Value(0)).current;
@@ -48,6 +52,7 @@ const Button = ({
       onPressOut={onPressOut}
       onPress={onPress}
       disabled={disabled}
+      {...robotID(robotId)}
     >
       <Animated.View
         style={[
