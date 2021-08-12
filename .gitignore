@@ -3,3 +3,7 @@
 
 # OSX
 *.DS_Store
+
+# Browserstack automated testing
+*/bs_app_url.txt
+DailyPlayground/android/browserstackAPKs/*
