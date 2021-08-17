@@ -92,19 +92,7 @@ async function createRoom(): Promise<{ url: string }> {
 }
 ```
 
-**Note:** Your Daily room must be configured in a particular way in order for a `react-native-daily-js` client to be able to connect to it: it must specify the property `signaling_impl: ws`.
-
-To create a room with the `signaling_impl` property set appropriately, run the following (replacing <your-api-key> with your actual API key):
-
-```
-curl --request POST \
-  --url https://api.daily.co/v1/rooms \
-  --header 'authorization: Bearer <your-api-key>' \
-  --header 'content-type: application/json' \
-  --data '{"properties":{"signaling_impl":"ws"}}'
-```
-
-Of course, you may also want to specify a name as well as other properties. See the [Daily REST API docs](https://docs.daily.co/reference#rooms) for general guidance on how to create a new room or update an existing room.
+As a reminder, you can create and configure rooms through your [Daily dashboard](https://dashboard.daily.co/rooms) or through calls to the [Daily REST API](https://docs.daily.co/reference#rooms).
 
 ---
 
