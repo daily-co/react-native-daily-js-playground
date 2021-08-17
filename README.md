@@ -98,9 +98,13 @@ As a reminder, you can create and configure rooms through your [Daily dashboard]
 
 ### Interactive debugging
 
-Since the [introduction of synchronous methods](https://github.com/react-native-webrtc/react-native-webrtc/commit/1fbe7e14bf540e1651c98ee11fc11f690f61f622) to `react-native-webrtc`, the common approach of using the Chrome dev tools for interactive debugging will not work.
+Ever since the [introduction of synchronous methods](https://github.com/react-native-webrtc/react-native-webrtc/commit/1fbe7e14bf540e1651c98ee11fc11f690f61f622) to `react-native-webrtc`, the common approach of using the [Chrome dev tools for interactive debugging](https://reactnative.dev/docs/debugging#chrome-developer-tools) sadly will not work.
 
-Instead, you'll need to debug JavaScript [on iOS using the Safari developer tools](https://reactnative.dev/docs/debugging#safari-developer-tools), which can hook directly into your app's JSContext. Once you've got the debugger running, you should be able to run console commands like you would on a website.
+Fear not! You can still do interactive debugging. How to do so will depend on the device you're debugging on as well as whether or not you're using the [Hermes JavaScript engine](https://reactnative.dev/docs/hermes):
+
+- On Android, you _must_ [enable Hermes](https://reactnative.dev/docs/hermes#android) to debug interactively. Once you've done so, you'll be able to debug using the [Chrome inspector](https://reactnative.dev/docs/hermes#debugging-js-on-hermes-using-google-chromes-devtools).
+
+- On iOS, you can debug with or without Hermes. If you're not using Hermes, you can debug using the [Safari dev tools](https://reactnative.dev/docs/debugging#safari-developer-tools). If you are [using Hermes](https://reactnative.dev/docs/hermes#ios), you can debug using the [Chrome inspector](https://reactnative.dev/docs/hermes#debugging-js-on-hermes-using-google-chromes-devtools).
 
 To give yourself access to helpful globals from the console, uncomment the following block in `App.tsx`:
 
@@ -114,8 +118,6 @@ useEffect(() => {
   g.callObject = callObject;
 }, [callObject]);
 ```
-
-Unfortunately there isn't a well-supported solution today for interactive debugging on Android. Hermes is not yet supported in `react-native-daily-js`, but there are plans to add support soon, at which point enabling Hermes will enable a form of Chrome-dev-tools-based debugging.
 
 ### React Native Debugger
 
