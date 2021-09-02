@@ -26,15 +26,15 @@ export default function TrayButton({
 }: Props) {
   const orientation = useOrientation();
 
-  let source: NodeRequire = require('../../assets/leave.png');
+  let source: NodeRequire = require('../../../assets/leave.png');
   if (type === 'camera') {
     source = muted
-      ? require('../../assets/camera-off.png')
-      : require('../../assets/camera.png');
+      ? require('../../../assets/camera-off.png')
+      : require('../../../assets/camera.png');
   } else if (type === 'mic') {
     source = muted
-      ? require('../../assets/mic-off.png')
-      : require('../../assets/mic.png');
+      ? require('../../../assets/mic-off.png')
+      : require('../../../assets/mic.png');
   }
 
   const isLeaveButton: boolean = type === 'leave';
