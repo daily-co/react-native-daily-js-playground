@@ -219,7 +219,7 @@ export default function Tile(props: Props) {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     overflow: 'hidden',
     aspectRatio: 1
@@ -261,6 +261,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   icon: {
-    marginHorizontal: 4
+    marginHorizontal: 4,
+    marginBottom: 16
   },
 });
