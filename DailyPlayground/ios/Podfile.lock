@@ -271,9 +271,9 @@ PODS:
   - React-jsinspector (0.65.1)
   - react-native-background-timer (2.4.1):
     - React-Core
-  - react-native-daily-js (0.18.0):
+  - react-native-daily-js (0.19.0):
     - React
-  - react-native-webrtc (1.89.2-daily.3):
+  - react-native-webrtc (1.89.2-daily.4):
     - React-Core
   - React-perflogger (0.65.1)
   - React-RCTActionSheet (0.65.1):
@@ -494,7 +494,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
-  DoubleConversion: cde416483dac037923206447da6e1454df403714
+  DoubleConversion: 831926d9b8bf8166fd87886c4abab286c2422662
   FBLazyVector: 33c82491102f20ecddb6c6a2c273696ace3191e0
   FBReactNativeSpec: df8f81d2a7541ee6755a047b398a5cb5a72acd0e
   Flipper: b1fddf9a17c32097b2b4c806ad158b2f36bb2692
@@ -507,7 +507,7 @@ SPEC CHECKSUMS:
   Flipper-RSocket: d9d9ade67cbecf6ac10730304bf5607266dd2541
   FlipperKit: aec2d931adeee48a07bab1ea8bcc8a6bb87dfce4
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
-  glog: 40a13f7840415b9a77023fbcae0f1e6f43192af3
+  glog: 5337263514dd6f09803962437687240c5dc39aa4
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   OpenSSL-Universal: 1aa4f6a6ee7256b83db99ec1ccdaa80d10f9af9b
   RCT-Folly: 0dd9e1eb86348ecab5ba76f910b56f4b5fef3c46
@@ -521,9 +521,9 @@ SPEC CHECKSUMS:
   React-jsi: 12913c841713a15f64eabf5c9ad98592c0ec5940
   React-jsiexecutor: 43f2542aed3c26e42175b339f8d37fe3dd683765
   React-jsinspector: 41e58e5b8e3e0bf061fdf725b03f2144014a8fb0
-  react-native-background-timer: 117fffdc9b0d6f144444bb49029f94275a45fdb5
-  react-native-daily-js: 957fb750f1b79b8b15b970a20ed130e57527b8b6
-  react-native-webrtc: 072874fb7ff5b3a535a51465407dc10aa8691c37
+  react-native-background-timer: 17ea5e06803401a379ebf1f20505b793ac44d0fe
+  react-native-daily-js: b1e15ef27c3432365a4b322b371dfac34a9dc332
+  react-native-webrtc: 0193fbf4d88b7b3f5b61fed7c3aaade73f5a9b12
   React-perflogger: fd28ee1f2b5b150b00043f0301d96bd417fdc339
   React-RCTActionSheet: 7f3fa0855c346aa5d7c60f9ced16e067db6d29fa
   React-RCTAnimation: 2119a18ee26159004b001bc56404ca5dbaae6077
@@ -536,11 +536,11 @@ SPEC CHECKSUMS:
   React-RCTVibration: 92d41c2442e5328cc4d342cd7f78e5876b68bae5
   React-runtimeexecutor: 85187f19dd9c47a7c102f9994f9d14e4dc2110de
   ReactCommon: eafed38eec7b591c31751bfa7494801618460459
-  RNCAsyncStorage: 7f72b8273be1f92076b16f68b333160d562eebad
-  RNCClipboard: 5df122bc31f95f2b37de9bbadc1dbef5a79cb1b0
+  RNCAsyncStorage: 7102fe8985f889579a3ae148d957bbb3f308122b
+  RNCClipboard: ddd4d291537f1667209c9c405aaa4307297e252e
   Yoga: aa0cb45287ebe1004c02a13f279c55a95f1572f4
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
 PODFILE CHECKSUM: b1c99e1bfded21d3828a916afdd356ccfacfdc71
 
-COCOAPODS: 1.10.2
+COCOAPODS: 1.11.2
