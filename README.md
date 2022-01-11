@@ -20,6 +20,10 @@ cd DailyPlayground
 # Use the version of node specified in .nvmrc
 nvm i
 
+# Unfortunate one-time thing, necessary for building from Xcode: make this node
+# version the default, so build phases use the right version
+nvm alias default $(node --version)
+
 npm i
 
 # Generate ios/DailyPlayground.xcworkspace
