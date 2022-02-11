@@ -34,6 +34,11 @@ declare const global: { HermesInternal: null | {} };
 // fetch library.
 // See https://github.com/facebook/react-native/issues/23130.
 LogBox.ignoreLogs(['Require cycle: node_modules']);
+// After upgrading to RN 0.66, app has started to show a warning about the constructor
+// of NativeEventEmitter been called with a non-null argument without the required removeListeners.
+// See https://github.com/ocetnik/react-native-background-timer/issues/366
+// Silencing the warning while It is not fixed by react-native-background-timer
+LogBox.ignoreLogs(['new NativeEventEmitter']);
 
 // Uncomment during development to temporarily intentionally ignore errors,
 // preventing the red screen from popping up
