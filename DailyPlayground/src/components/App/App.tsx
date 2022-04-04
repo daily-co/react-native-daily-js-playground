@@ -27,6 +27,8 @@ import CallObjectContext from '../../CallObjectContext';
 import CopyLinkButton from '../CopyLinkButton/CopyLinkButton';
 import theme from '../../theme';
 import { useOrientation, Orientation } from '../../useOrientation';
+// @ts-ignore
+import packageJson from '../../../package.json';
 
 declare const global: { HermesInternal: null | {} };
 
@@ -253,7 +255,12 @@ const App = () => {
     <CallObjectContext.Provider value={callObject}>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView style={styles.safeArea}>
-        <View style={styles.container}>
+        <View
+          style={styles.container}
+          {...robotID(
+            `robots-deps-${JSON.stringify(packageJson.dependencies)}`
+          )}
+        >
           {showCallPanel ? (
             <View
               style={[

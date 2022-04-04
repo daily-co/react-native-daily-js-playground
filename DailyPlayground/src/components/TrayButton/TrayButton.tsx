@@ -14,6 +14,7 @@ type Props = {
   disabled?: boolean;
   onPress: () => void;
   muted?: boolean;
+  robotId?: string;
   text: string;
   type: 'mic' | 'camera' | 'leave';
 };
@@ -21,29 +22,33 @@ export default function TrayButton({
   disabled = false,
   onPress,
   muted = false,
+  robotId = '',
   text,
   type,
 }: Props) {
   const orientation = useOrientation();
 
   let source: NodeRequire = require('../../../assets/leave.png');
-  if (type === 'camera') {
+  const isLeaveButton: boolean = type === 'leave';
+  if (isLeaveButton) {
+    robotId = 'robots-leave-button';
+  } else if (type === 'camera') {
+    robotId = `robots-btn-cam-${muted ? 'mute' : 'unmute'}`;
     source = muted
       ? require('../../../assets/camera-off.png')
       : require('../../../assets/camera.png');
   } else if (type === 'mic') {
+    robotId = `robots-btn-mic-${muted ? 'mute' : 'unmute'}`;
     source = muted
       ? require('../../../assets/mic-off.png')
       : require('../../../assets/mic.png');
   }
 
-  const isLeaveButton: boolean = type === 'leave';
-
   return (
     <TouchableWithoutFeedback
       onPress={onPress}
       disabled={disabled}
-      {...robotID(isLeaveButton ? 'robots-leave-button' : '')}
+      {...robotID(robotId)}
     >
       <View style={styles.controlContainer}>
         <Image
