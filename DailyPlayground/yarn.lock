@@ -758,10 +758,10 @@
     "exec-sh" "^0.3.2"
     "minimist" "^1.2.0"
 
-"@daily-co/daily-js@^0.25.0":
-  "integrity" "sha512-6kDYavLN7A3YimCGKgAU9qCtJj/Hqha4oSkhID7SJKTMoQRtBbt18f+KEiQc+GFm4r2sFvDtWNjh++u8Dhr1AA=="
-  "resolved" "https://registry.npmjs.org/@daily-co/daily-js/-/daily-js-0.25.0.tgz"
-  "version" "0.25.0"
+"@daily-co/daily-js@^0.26.0":
+  "integrity" "sha512-JLKiTQs4HFKSzR5ES8GANPSbbs8Ri8HbJXSx54bYO6Y9bR5jr46cP0YlOwfxZIrPEXT3g3Jvt/Q1yRWqljZYVQ=="
+  "resolved" "https://registry.npmjs.org/@daily-co/daily-js/-/daily-js-0.26.0.tgz"
+  "version" "0.26.0"
   dependencies:
     "@babel/runtime" "^7.12.5"
     "bowser" "^2.8.1"
@@ -769,19 +769,19 @@
     "fast-equals" "^1.6.3"
     "lodash" "^4.17.15"
 
-"@daily-co/react-native-daily-js@^0.23.0":
-  "integrity" "sha512-ZL1dx/MWkBTnq0bKSfIJXkcxmYvADQJmuJBqFFrPY8K/Crm7BP+W0MqZHTDZQdLQEoocMPZTw1ct+mysDGtPWQ=="
-  "resolved" "https://registry.npmjs.org/@daily-co/react-native-daily-js/-/react-native-daily-js-0.23.0.tgz"
-  "version" "0.23.0"
+"@daily-co/react-native-daily-js@^0.24.0":
+  "integrity" "sha512-G7+W9QU+GjgM7Vp2XzFU8QSz+qTs8p7v8D2hNfCVUs1//QwFuaphTqXLAeUT5hCEYPGsrZznIqT2wMEyaKmpuQ=="
+  "resolved" "https://registry.npmjs.org/@daily-co/react-native-daily-js/-/react-native-daily-js-0.24.0.tgz"
+  "version" "0.24.0"
   dependencies:
-    "@daily-co/daily-js" "^0.25.0"
+    "@daily-co/daily-js" "^0.26.0"
     "@types/react-native-background-timer" "^2.0.0"
     "react-native-url-polyfill" "^1.1.2"
 
-"@daily-co/react-native-webrtc@1.94.1-daily.2":
-  "integrity" "sha512-JQR9Ws6H7TFN2yXus0I6Y/FesZWXpyB7vsAAMg3ZUv2PEXV535RF+uTqzxCBjjT1EH/yK5pq3QUplU5hgyeM6g=="
-  "resolved" "https://registry.npmjs.org/@daily-co/react-native-webrtc/-/react-native-webrtc-1.94.1-daily.2.tgz"
-  "version" "1.94.1-daily.2"
+"@daily-co/react-native-webrtc@1.94.1-daily.4":
+  "integrity" "sha512-DTu821gC6G/ZdklXIQGCyAQbBd7zg5alY/Yc99tIb6RLlHg4vjXc3ZWXUwt6XJNBwBqm2LVG3LCpR86Rh4mmHw=="
+  "resolved" "https://registry.npmjs.org/@daily-co/react-native-webrtc/-/react-native-webrtc-1.94.1-daily.4.tgz"
+  "version" "1.94.1-daily.4"
   dependencies:
     "@types/react" "*"
     "@types/react-native" "*"
