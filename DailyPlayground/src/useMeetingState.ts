@@ -19,7 +19,10 @@ export const useMeetingState = () => {
       return;
     }
     const events: DailyEvent[] = [
+      'loading',
       'loaded',
+      'load-attempt-failed',
+      'joining-meeting',
       'joined-meeting',
       'left-meeting',
       'error',
