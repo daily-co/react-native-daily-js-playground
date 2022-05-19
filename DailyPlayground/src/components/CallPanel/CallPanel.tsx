@@ -5,9 +5,14 @@ import React, {
   useCallback,
   useState,
 } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView, Text } from 'react-native';
+import DropDownPicker from 'react-native-dropdown-picker';
 import { logDailyEvent } from '../../utils';
-import { DailyEvent } from '@daily-co/react-native-daily-js';
+import {
+  DailyEvent,
+  DailyEventObjectAvailableDevicesUpdated,
+  MediaDeviceInfo,
+} from '@daily-co/react-native-daily-js';
 import {
   callReducer,
   initialCallState,
@@ -26,6 +31,7 @@ import { useCallObject } from '../../useCallObject';
 import { TRAY_HEIGHT as TRAY_THICKNESS } from '../Tray/Tray';
 import CopyLinkButton from '../CopyLinkButton/CopyLinkButton';
 import { useOrientation, Orientation } from '../../useOrientation';
+import { useMeetingState } from '../../useMeetingState';
 
 type Props = {
   roomUrl: string;
@@ -35,9 +41,79 @@ const THUMBNAIL_EDGE_LENGTH = 100;
 
 const CallPanel = (props: Props) => {
   const callObject = useCallObject();
+  const meetingState = useMeetingState();
+
   const [callState, dispatch] = useReducer(callReducer, initialCallState);
   const [usingFrontCamera, setUsingFrontCamera] = useState(true); // default
   const orientation = useOrientation();
+
+  const [cameraDevicesOpen, setCameraDevicesOpen] = useState<boolean>(false);
+  const [cameraDeviceValue, setCameraDeviceValue] = useState<string | null>(
+    null
+  );
+  const [cameraDeviceItems, setCameraDevicesItems] = useState<any[]>([]);
+
+  const [audioDevicesOpen, setAudioDevicesOpen] = useState<boolean>(false);
+  const [audioDeviceValue, setAudioDeviceValue] = useState<string | null>(null);
+  const [audioDevicesItems, setAudioDevicesItems] = useState<any[]>([]);
+
+  const refreshSelectedDevice = useCallback(async () => {
+    const devicesInUse = await callObject?.getInputDevices();
+    if (
+      devicesInUse?.camera &&
+      (devicesInUse.camera as MediaDeviceInfo).deviceId
+    ) {
+      setCameraDeviceValue((devicesInUse.camera as MediaDeviceInfo).deviceId);
+    }
+    if (
+      devicesInUse?.speaker &&
+      (devicesInUse.speaker as MediaDeviceInfo).deviceId
+    ) {
+      setAudioDeviceValue((devicesInUse.speaker as MediaDeviceInfo).deviceId);
+    }
+  }, [callObject]);
+
+  const updateAvailableDevices = useCallback(
+    (devices: MediaDeviceInfo[] | undefined) => {
+      const inputDevices = devices
+        ?.filter((device) => device.kind === 'videoinput')
+        .map((device) => {
+          return {
+            value: device.deviceId,
+            label: device.label,
+            originalValue: device,
+          };
+        });
+      setCameraDevicesItems(inputDevices || []);
+      const outputDevices = devices
+        ?.filter((device) => device.kind === 'audio')
+        .map((device) => {
+          return {
+            value: device.deviceId,
+            label: device.label,
+            originalValue: device,
+          };
+        });
+      setAudioDevicesItems(outputDevices || []);
+      refreshSelectedDevice();
+    },
+    [refreshSelectedDevice]
+  );
+
+  /**
+   * Load the devices information and select the device which is currently in use
+   * when we have joined the meeting
+   */
+  useEffect(() => {
+    if (!callObject || meetingState !== 'joined-meeting') {
+      return;
+    }
+    const loadDevicesInfo = async () => {
+      const devicesAvailable = await callObject?.enumerateDevices();
+      updateAvailableDevices(devicesAvailable?.devices);
+    };
+    loadDevicesInfo();
+  }, [callObject, meetingState, updateAvailableDevices]);
 
   /**
    * Start listening for participant changes, when the callObject is set.
@@ -131,6 +207,24 @@ const CallPanel = (props: Props) => {
   }, [callObject]);
 
   /**
+   * Start listening for available devices updated
+   */
+  useEffect(() => {
+    if (!callObject) {
+      return;
+    }
+    const handleDevicesUpdated = (
+      event?: DailyEventObjectAvailableDevicesUpdated
+    ) => {
+      updateAvailableDevices(event?.availableDevices);
+    };
+    callObject.on('available-devices-updated', handleDevicesUpdated);
+    return function cleanup() {
+      callObject.off('available-devices-updated', handleDevicesUpdated);
+    };
+  }, [callObject, updateAvailableDevices]);
+
+  /**
    * Toggle between front and rear cameras.
    */
   const flipCamera = useCallback(async () => {
@@ -178,7 +272,7 @@ const CallPanel = (props: Props) => {
           audioTrackState={callItem.audioTrackState}
           mirror={usingFrontCamera && isLocal(id)}
           type={tileType}
-          robotId={isLocal(id) ? `robots-tile-local` : `robots-tile-${id}`}
+          robotId={isLocal(id) ? 'robots-tile-local' : `robots-tile-${id}`}
           disableAudioIndicators={isScreenShare(id)}
           onPress={
             isLocal(id)
@@ -200,6 +294,29 @@ const CallPanel = (props: Props) => {
 
   const message = getMessage(callState, props.roomUrl);
   const showCopyLinkButton = message && !message.isError;
+
+  /**
+   * Invoke the native API to use the selected audio device,
+   * this will change both audio output and input devices
+   */
+  useEffect(() => {
+    if (!audioDeviceValue) {
+      return;
+    }
+    callObject?.setAudioDevice(audioDeviceValue).then(({ deviceId }) => {
+      console.log('Selected audio device => ', deviceId);
+    });
+  }, [callObject, audioDeviceValue]);
+
+  /**
+   * Invoke the native API to use the selected camera
+   */
+  useEffect(() => {
+    if (!cameraDeviceValue) {
+      return;
+    }
+    callObject?.setCamera(cameraDeviceValue);
+  }, [callObject, cameraDeviceValue]);
 
   return (
     <>
@@ -261,6 +378,30 @@ const CallPanel = (props: Props) => {
           </View>
         </ScrollView>
       </View>
+      <View style={styles.devicesContainer}>
+        <View style={styles.devicesContainerInnerElement}>
+          <Text>Cameras</Text>
+          <DropDownPicker
+            open={cameraDevicesOpen}
+            value={cameraDeviceValue}
+            items={cameraDeviceItems}
+            setOpen={setCameraDevicesOpen}
+            setValue={setCameraDeviceValue}
+            setItems={setCameraDevicesItems}
+          />
+        </View>
+        <View style={styles.devicesContainerInnerElement}>
+          <Text>Speakers</Text>
+          <DropDownPicker
+            open={audioDevicesOpen}
+            value={audioDeviceValue}
+            items={audioDevicesItems}
+            setOpen={setAudioDevicesOpen}
+            setValue={setAudioDeviceValue}
+            setItems={setAudioDevicesItems}
+          />
+        </View>
+      </View>
     </>
   );
 };
@@ -320,6 +461,15 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     marginLeft: THUMBNAIL_EDGE_LENGTH,
     marginRight: TRAY_THICKNESS,
+  },
+  devicesContainer: {
+    position: 'absolute',
+    flexDirection: 'row',
+    bottom: 100,
+  },
+  devicesContainerInnerElement: {
+    flex: 1,
+    paddingHorizontal: 10,
   },
 });
 
