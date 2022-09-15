@@ -16,7 +16,7 @@ type Props = {
   muted?: boolean;
   robotId?: string;
   text: string;
-  type: 'mic' | 'camera' | 'leave';
+  type: 'mic' | 'camera' | 'leave' | 'play';
 };
 export default function TrayButton({
   disabled = false,
@@ -38,6 +38,11 @@ export default function TrayButton({
       ? require('../../../assets/camera-off.png')
       : require('../../../assets/camera.png');
   } else if (type === 'mic') {
+    robotId = `robots-btn-mic-${muted ? 'mute' : 'unmute'}`;
+    source = muted
+      ? require('../../../assets/mic-off.png')
+      : require('../../../assets/mic.png');
+  } else if (type === 'play') {
     robotId = `robots-btn-mic-${muted ? 'mute' : 'unmute'}`;
     source = muted
       ? require('../../../assets/mic-off.png')

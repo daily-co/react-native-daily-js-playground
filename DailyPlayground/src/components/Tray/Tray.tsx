@@ -48,6 +48,19 @@ export default function Tray({ disabled, onClickLeaveCall }: Props) {
     callObject?.setLocalAudio(isMicMuted);
   }, [callObject, isMicMuted]);
 
+  const startPlayback = useCallback(async () => {
+    const res = await callObject?.startRemoteMediaPlayer({
+      url: 'an mp4 url',
+      settings: {
+        state: 'play',
+      },
+    });
+    if (res?.session_id) {
+      callObject?.updateParticipant(res?.session_id, {
+        setSubscribedTracks: {rmpAudio: true, rmpVideo: true}
+      });
+    }
+  }, [callObject]);
   /**
    * Start listening for participant changes when callObject is set (i.e. when the component mounts).
    * This event will capture any changes to your audio/video mute state.
@@ -105,6 +118,11 @@ export default function Tray({ disabled, onClickLeaveCall }: Props) {
           muted={isCameraMuted}
           text={isCameraMuted ? 'Turn on' : 'Turn off'}
           type="camera"
+        />
+        <TrayButton
+          onPress={startPlayback}
+          text='Class'
+          type="play"
         />
       </View>
       <TrayButton

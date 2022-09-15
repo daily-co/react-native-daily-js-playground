@@ -24,6 +24,7 @@ import {
   containsScreenShare,
   participantCount,
   getMessage,
+  isClass,
 } from './callState';
 import Tile, { TileType } from '../Tile/Tile';
 import CallMessage from '../CallMessage/CallMessage';
@@ -256,7 +257,7 @@ const CallPanel = (props: Props) => {
     let thumbnails: JSX.Element[] = [];
     Object.entries(callState.callItems).forEach(([id, callItem]) => {
       let tileType: TileType;
-      if (isScreenShare(id)) {
+      if (isScreenShare(id) || isClass(id)) {
         tileType = TileType.Full;
       } else if (isLocal(id) || containsScreenShare(callState.callItems)) {
         tileType = TileType.Thumbnail;
@@ -265,6 +266,7 @@ const CallPanel = (props: Props) => {
       } else {
         tileType = TileType.Half;
       }
+
       const tile = (
         <Tile
           key={id}
@@ -273,7 +275,7 @@ const CallPanel = (props: Props) => {
           mirror={usingFrontCamera && isLocal(id)}
           type={tileType}
           robotId={isLocal(id) ? 'robots-tile-local' : `robots-tile-${id}`}
-          disableAudioIndicators={isScreenShare(id)}
+          disableAudioIndicators={isScreenShare(id) || isClass(id)}
           onPress={
             isLocal(id)
               ? flipCamera
