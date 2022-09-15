@@ -99,6 +99,17 @@ function callReducer(callState: CallState, action: CallStateAction) {
 function getCallItems(participants: { [id: string]: DailyParticipant }) {
   let callItems = { ...initialCallState.callItems }; // Ensure we *always* have a local participant
   for (const [id, participant] of Object.entries(participants)) {
+    if (
+      // @ts-ignore
+      participant.participantType === 'remote-media-player' &&
+      shouldIncludeClass(participant)
+    ) {
+      callItems.class = {
+        videoTrackState: participant.tracks.rmpVideo,
+        audioTrackState: participant.tracks.rmpAudio,
+      };
+      continue;
+    }
     callItems[id] = {
       videoTrackState: participant.tracks.video,
       audioTrackState: participant.tracks.audio,
@@ -111,6 +122,14 @@ function getCallItems(participants: { [id: string]: DailyParticipant }) {
     }
   }
   return callItems;
+}
+
+function shouldIncludeClass(participant: DailyParticipant): boolean {
+  const trackStatesForInclusion = ['loading', 'playable', 'interrupted'];
+  return (
+    trackStatesForInclusion.includes(participant.tracks?.rmpVideo?.state) ||
+    trackStatesForInclusion.includes(participant.tracks?.rmpAudio?.state)
+  );
 }
 
 function shouldIncludeScreenCallItem(participant: DailyParticipant): boolean {
@@ -130,6 +149,10 @@ function isLocal(id: string) {
 
 function isScreenShare(id: string) {
   return id.endsWith('-screen');
+}
+
+function isClass(id: string) {
+  return id === 'class';
 }
 
 function containsScreenShare(callItems: { [id: string]: CallItem }) {
@@ -167,6 +190,7 @@ export {
   callReducer,
   isLocal,
   isScreenShare,
+  isClass,
   containsScreenShare,
   participantCount,
   getMessage,
