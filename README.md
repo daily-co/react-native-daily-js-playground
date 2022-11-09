@@ -110,6 +110,8 @@ Fear not! You can still do interactive debugging. How to do so will depend on th
 
 - On iOS, you can debug with or without Hermes. If you're not using Hermes, you can debug using the [Safari dev tools](https://reactnative.dev/docs/debugging#safari-developer-tools). If you are [using Hermes](https://reactnative.dev/docs/hermes#ios), you can debug using the [Chrome inspector](https://reactnative.dev/docs/hermes#debugging-js-on-hermes-using-google-chromes-devtools).
 
+- Starting with **React Native 0.70**, Hermes is already enabled by default for both iOS and Android, so unless you have disabled it, you should be good to go.
+
 To give yourself access to helpful globals from the console, uncomment the following block in `App.tsx`:
 
 ```ts
