@@ -304,7 +304,7 @@ PODS:
     - glog
   - react-native-background-timer (2.4.1):
     - React-Core
-  - react-native-daily-js (0.36.0):
+  - react-native-daily-js (0.38.0):
     - React
   - react-native-webrtc (1.94.1-daily.8):
     - React-Core
@@ -583,7 +583,7 @@ SPEC CHECKSUMS:
   React-jsinspector: badd81696361249893a80477983e697aab3c1a34
   React-logger: fdda34dd285bdb0232e059b19d9606fa0ec3bb9c
   react-native-background-timer: 17ea5e06803401a379ebf1f20505b793ac44d0fe
-  react-native-daily-js: b1d93c1fa1f4aa250c23ff4a09d09a81e8700a21
+  react-native-daily-js: eaf679c1158125632a0862ce4a277f8aeb24aa13
   react-native-webrtc: ba5088bd040d835cc5df17bb2245d9d27d5d2d70
   React-perflogger: e68d3795cf5d247a0379735cbac7309adf2fb931
   React-RCTActionSheet: 05452c3b281edb27850253db13ecd4c5a65bc247
