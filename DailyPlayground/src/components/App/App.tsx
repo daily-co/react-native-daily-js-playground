@@ -188,7 +188,13 @@ const App = () => {
     if (!roomUrl) {
       return;
     }
-    const newCallObject = Daily.createCallObject();
+    const newCallObject = Daily.createCallObject({
+      /*dailyConfig: {
+        // Point to a specific version of the call-machine bundle
+        // @ts-ignore
+        callObjectBundleUrlOverride: 'https://b.staging.daily.co/call-ui/0a8807ac0fc0147c996b6db8d8b4c17f640dcd47/static/call-machine-object-bundle.js'
+      }*/
+    });
     setCallObject(newCallObject);
   }, [roomUrl]);
 
