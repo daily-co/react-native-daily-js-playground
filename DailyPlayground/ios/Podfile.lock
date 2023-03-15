@@ -74,6 +74,7 @@ PODS:
   - fmt (6.2.1)
   - glog (0.3.5)
   - hermes-engine (0.70.5)
+  - JitsiWebRTC (106.0.0)
   - libevent (2.1.12)
   - OpenSSL-Universal (1.1.1100)
   - RCT-Folly (2021.07.22.00):
@@ -304,9 +305,10 @@ PODS:
     - glog
   - react-native-background-timer (2.4.1):
     - React-Core
-  - react-native-daily-js (0.38.0):
+  - react-native-daily-js (0.39.0):
     - React
-  - react-native-webrtc (1.94.1-daily.8):
+  - react-native-webrtc (106.0.6-daily.1):
+    - JitsiWebRTC (~> 106.0.0)
     - React-Core
   - React-perflogger (0.70.5)
   - React-RCTActionSheet (0.70.5):
@@ -462,6 +464,7 @@ SPEC REPOS:
     - Flipper-RSocket
     - FlipperKit
     - fmt
+    - JitsiWebRTC
     - libevent
     - OpenSSL-Universal
     - SocketRocket
@@ -565,6 +568,7 @@ SPEC CHECKSUMS:
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 5337263514dd6f09803962437687240c5dc39aa4
   hermes-engine: 7fe5fc6ef707b7fdcb161b63898ec500e285653d
+  JitsiWebRTC: f441eb0e2d67f0588bf24e21c5162e97342714fb
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   RCT-Folly: 0080d0a6ebf2577475bda044aa59e2ca1f909cda
@@ -583,8 +587,8 @@ SPEC CHECKSUMS:
   React-jsinspector: badd81696361249893a80477983e697aab3c1a34
   React-logger: fdda34dd285bdb0232e059b19d9606fa0ec3bb9c
   react-native-background-timer: 17ea5e06803401a379ebf1f20505b793ac44d0fe
-  react-native-daily-js: eaf679c1158125632a0862ce4a277f8aeb24aa13
-  react-native-webrtc: ba5088bd040d835cc5df17bb2245d9d27d5d2d70
+  react-native-daily-js: 71463fdf8ad5471c295f5530bce27ac78f19a6a4
+  react-native-webrtc: 60fc96b3b882250451eee3fef3ddfcef38232b7b
   React-perflogger: e68d3795cf5d247a0379735cbac7309adf2fb931
   React-RCTActionSheet: 05452c3b281edb27850253db13ecd4c5a65bc247
   React-RCTAnimation: 578eebac706428e68466118e84aeacf3a282b4da
