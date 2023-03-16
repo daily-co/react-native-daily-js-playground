@@ -772,10 +772,10 @@
     "exec-sh" "^0.3.2"
     "minimist" "^1.2.0"
 
-"@daily-co/daily-js@^0.40.0":
-  "integrity" "sha512-T4CwcsJP96vYXwaBKuDftAN0S+aUsaYVC9QplKVgl9ftK2ZB5xrZZ2D8zgT1nVGGaCb6WekVg5SogbocJQVFPw=="
-  "resolved" "https://registry.npmjs.org/@daily-co/daily-js/-/daily-js-0.40.0.tgz"
-  "version" "0.40.0"
+"@daily-co/daily-js@^0.41.0":
+  "integrity" "sha512-eDBbJMoWRkweipMnwEJzBPg7GLcCloP2CXmvgFYiSoSp4QcvpSAmvODIIEX3mQHU14AIFsVSZ1lFMiLhbTllyA=="
+  "resolved" "https://registry.npmjs.org/@daily-co/daily-js/-/daily-js-0.41.0.tgz"
+  "version" "0.41.0"
   dependencies:
     "@babel/runtime" "^7.12.5"
     "bowser" "^2.8.1"
@@ -784,26 +784,27 @@
     "fast-equals" "^1.6.3"
     "lodash" "^4.17.15"
 
-"@daily-co/react-native-daily-js@^0.38.0":
-  "integrity" "sha512-PVKUEkYuJxCrbzsnaoCN5Z8oQ4N1bAsNzrENZgHICoN69S1CGxgAKQ1/exblKLe4H73/0ka5KHaj3LQL53UjoQ=="
-  "resolved" "https://registry.npmjs.org/@daily-co/react-native-daily-js/-/react-native-daily-js-0.38.0.tgz"
-  "version" "0.38.0"
+"@daily-co/react-native-daily-js@^0.39.0":
+  "integrity" "sha512-VvYA6mfOEMc0FbonbD1qmkYHS57PdNGcetNLBT2gfAlO9INxG4fthSbMc0wxKPZTZ0t3dMT9eY0isJ+nYvr+Ew=="
+  "resolved" "https://registry.npmjs.org/@daily-co/react-native-daily-js/-/react-native-daily-js-0.39.0.tgz"
+  "version" "0.39.0"
   dependencies:
-    "@daily-co/daily-js" "^0.40.0"
+    "@daily-co/daily-js" "^0.41.0"
     "@types/react-native-background-timer" "^2.0.0"
     "react-native-url-polyfill" "^1.1.2"
 
-"@daily-co/react-native-webrtc@1.94.1-daily.8":
-  "integrity" "sha512-oOYY/amslF5X0ex1nD/sLEyXRsECqhWTlq4vWspld8SuiPtdgNt44x9Q7A1CkOBj22RGQIrzzDKxlCqbjhYbZQ=="
-  "resolved" "https://registry.npmjs.org/@daily-co/react-native-webrtc/-/react-native-webrtc-1.94.1-daily.8.tgz"
-  "version" "1.94.1-daily.8"
+"@daily-co/react-native-webrtc@^106.0.6-daily.1":
+  "integrity" "sha512-CGHm0JVvT+A+mtnqjQWe3n5AKbVzmSlL6A6XMKT/qA/vGsrfXkP/DMswK/a7eABvshUsnpCYa9pjvR5wjD3iAA=="
+  "resolved" "https://registry.npmjs.org/@daily-co/react-native-webrtc/-/react-native-webrtc-106.0.6-daily.1.tgz"
+  "version" "106.0.6-daily.1"
   dependencies:
-    "@types/react" "*"
-    "@types/react-native" "*"
+    "@types/react" "17.0.38"
+    "@types/react-native" "0.66.12"
+    "adm-zip" "0.5.9"
     "base64-js" "1.5.1"
+    "debug" "4.3.4"
     "event-target-shim" "6.0.2"
     "tar" "6.1.11"
-    "uuid" "3.4.0"
 
 "@eslint/eslintrc@^0.4.3":
   "integrity" "sha512-J6KFFz5QCYUJq3pf0mjEcCJVERbzv71PUIDczuh9JkwGEzced6CO5ADLHB1rbf/+oPBtoPfMYNOpGDzCANlbXw=="
@@ -1496,10 +1497,17 @@
   "resolved" "https://registry.npmjs.org/@types/react-native-background-timer/-/react-native-background-timer-2.0.0.tgz"
   "version" "2.0.0"
 
-"@types/react-native@*", "@types/react-native@^0.70.6":
+"@types/react-native@^0.70.6":
   "integrity" "sha512-ynQ2jj0km9d7dbnyKqVdQ6Nti7VQ8SLTA/KKkkS5+FnvGyvij2AOo1/xnkBR/jnSNXuzrvGVzw2n0VWfppmfKw=="
   "resolved" "https://registry.npmjs.org/@types/react-native/-/react-native-0.70.6.tgz"
   "version" "0.70.6"
+  dependencies:
+    "@types/react" "*"
+
+"@types/react-native@0.66.12":
+  "integrity" "sha512-4qQwvfXzVtik/cN/13wwH0cIMHYLzQ40iRazVdEEhjzz8YpNrkESSUUMsSE683YSse4zLShHQYWeI1x2/zB1BA=="
+  "resolved" "https://registry.npmjs.org/@types/react-native/-/react-native-0.66.12.tgz"
+  "version" "0.66.12"
   dependencies:
     "@types/react" "*"
 
@@ -1514,6 +1522,15 @@
   "integrity" "sha512-xD6c0KDT4m7n9uD4ZHi02lzskaiqcBxf4zi+tXZY98a04wvc0hi/TcCPC2FOESZi51Nd7tlUeOJY8RofL799/g=="
   "resolved" "https://registry.npmjs.org/@types/react/-/react-18.0.25.tgz"
   "version" "18.0.25"
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    "csstype" "^3.0.2"
+
+"@types/react@17.0.38":
+  "integrity" "sha512-SI92X1IA+FMnP3qM5m4QReluXzhcmovhZnLNm3pyeQlooi02qI7sLiepEYqT678uNiyc25XfCqxREFpy3W7YhQ=="
+  "resolved" "https://registry.npmjs.org/@types/react/-/react-17.0.38.tgz"
+  "version" "17.0.38"
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -1667,6 +1684,11 @@
   "integrity" "sha512-7zFpHzhnqYKrkYdUjF1HI1bzd0VygEGX8lFk4k5zVMqHEoES+P+7TKI+EvLO9WVMJ8eekdO0aDEK044xTXwPPA=="
   "resolved" "https://registry.npmjs.org/acorn/-/acorn-8.8.1.tgz"
   "version" "8.8.1"
+
+"adm-zip@0.5.9":
+  "integrity" "sha512-s+3fXLkeeLjZ2kLjCBwQufpI5fuN+kIGBxu6530nVQZGVol0d7Y/M88/xw9HGGUcJjKf8LutN3VPRUBq6N7Ajg=="
+  "resolved" "https://registry.npmjs.org/adm-zip/-/adm-zip-0.5.9.tgz"
+  "version" "0.5.9"
 
 "agent-base@6":
   "integrity" "sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ=="
@@ -2493,7 +2515,7 @@
   dependencies:
     "ms" "2.0.0"
 
-"debug@^4.0.1", "debug@^4.1.0", "debug@^4.1.1", "debug@4":
+"debug@^4.0.1", "debug@^4.1.0", "debug@^4.1.1", "debug@4", "debug@4.3.4":
   "integrity" "sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ=="
   "resolved" "https://registry.npmjs.org/debug/-/debug-4.3.4.tgz"
   "version" "4.3.4"
@@ -7014,11 +7036,6 @@
   "integrity" "sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg=="
   "resolved" "https://registry.npmjs.org/uuid/-/uuid-8.3.2.tgz"
   "version" "8.3.2"
-
-"uuid@3.4.0":
-  "integrity" "sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A=="
-  "resolved" "https://registry.npmjs.org/uuid/-/uuid-3.4.0.tgz"
-  "version" "3.4.0"
 
 "v8-compile-cache@^2.0.3":
   "integrity" "sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA=="
