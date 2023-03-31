@@ -772,10 +772,10 @@
     "exec-sh" "^0.3.2"
     "minimist" "^1.2.0"
 
-"@daily-co/daily-js@^0.41.0":
-  "integrity" "sha512-eDBbJMoWRkweipMnwEJzBPg7GLcCloP2CXmvgFYiSoSp4QcvpSAmvODIIEX3mQHU14AIFsVSZ1lFMiLhbTllyA=="
-  "resolved" "https://registry.npmjs.org/@daily-co/daily-js/-/daily-js-0.41.0.tgz"
-  "version" "0.41.0"
+"@daily-co/daily-js@^0.42.2":
+  "integrity" "sha512-mTr2O3KVxOQrCPfbt+9d8nd7BkutfrIMfOMbDxMeWLlCGTOC15CRWskYkVLJPBE2ZwemUqMzVAqpQ00oIc+6xA=="
+  "resolved" "https://registry.npmjs.org/@daily-co/daily-js/-/daily-js-0.42.2.tgz"
+  "version" "0.42.2"
   dependencies:
     "@babel/runtime" "^7.12.5"
     "bowser" "^2.8.1"
@@ -784,12 +784,12 @@
     "fast-equals" "^1.6.3"
     "lodash" "^4.17.15"
 
-"@daily-co/react-native-daily-js@^0.39.0":
-  "integrity" "sha512-VvYA6mfOEMc0FbonbD1qmkYHS57PdNGcetNLBT2gfAlO9INxG4fthSbMc0wxKPZTZ0t3dMT9eY0isJ+nYvr+Ew=="
-  "resolved" "https://registry.npmjs.org/@daily-co/react-native-daily-js/-/react-native-daily-js-0.39.0.tgz"
-  "version" "0.39.0"
+"@daily-co/react-native-daily-js@^0.40.0":
+  "integrity" "sha512-BduEInmauP2/qfPnl2Qj4LkM0ul3EWHAttTXUuJuTBRg7xO7PNYEXTLEjMbNWCNjirTKaviuy0/75vxgtSTK9g=="
+  "resolved" "https://registry.npmjs.org/@daily-co/react-native-daily-js/-/react-native-daily-js-0.40.0.tgz"
+  "version" "0.40.0"
   dependencies:
-    "@daily-co/daily-js" "^0.41.0"
+    "@daily-co/daily-js" "^0.42.2"
     "@types/react-native-background-timer" "^2.0.0"
     "react-native-url-polyfill" "^1.1.2"
 
