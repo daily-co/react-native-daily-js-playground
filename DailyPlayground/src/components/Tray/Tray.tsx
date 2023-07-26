@@ -14,7 +14,8 @@ import { useOrientation, Orientation } from '../../useOrientation';
  */
 function getStreamStates(callObject: DailyCall) {
   let isCameraMuted = false,
-    isMicMuted = false;
+    isMicMuted = false,
+    isShareScreenOff = false;
   if (
     callObject &&
     callObject.participants() &&
@@ -23,8 +24,9 @@ function getStreamStates(callObject: DailyCall) {
     const localParticipant = callObject.participants().local;
     isCameraMuted = !localParticipant.video;
     isMicMuted = !localParticipant.audio;
+    isShareScreenOff = !localParticipant.screen;
   }
-  return [isCameraMuted, isMicMuted];
+  return [isCameraMuted, isMicMuted, isShareScreenOff];
 }
 
 type Props = {
@@ -38,6 +40,7 @@ export default function Tray({ disabled, onClickLeaveCall }: Props) {
   const callObject = useCallObject();
   const [isCameraMuted, setCameraMuted] = useState(false);
   const [isMicMuted, setMicMuted] = useState(false);
+  const [isShareScreenOff, setShareScreenOff] = useState(false);
   const orientation = useOrientation();
 
   const toggleCamera = useCallback(() => {
@@ -47,6 +50,14 @@ export default function Tray({ disabled, onClickLeaveCall }: Props) {
   const toggleMic = useCallback(() => {
     callObject?.setLocalAudio(isMicMuted);
   }, [callObject, isMicMuted]);
+
+  const toggleScreenShare = useCallback(() => {
+    if (isShareScreenOff) {
+      callObject?.startScreenShare();
+    } else {
+      callObject?.stopScreenShare();
+    }
+  }, [callObject, isShareScreenOff]);
 
   /**
    * Start listening for participant changes when callObject is set (i.e. when the component mounts).
@@ -59,9 +70,12 @@ export default function Tray({ disabled, onClickLeaveCall }: Props) {
 
     const handleNewParticipantsState = (event?: any) => {
       event && logDailyEvent(event);
-      const [cameraMuted, micMuted] = getStreamStates(callObject);
+      const [cameraMuted, micMuted, shareScreenOff] = getStreamStates(
+        callObject
+      );
       setCameraMuted(cameraMuted);
       setMicMuted(micMuted);
+      setShareScreenOff(shareScreenOff);
     };
 
     // Use initial state
@@ -106,6 +120,13 @@ export default function Tray({ disabled, onClickLeaveCall }: Props) {
           text={isCameraMuted ? 'Turn on' : 'Turn off'}
           type="camera"
         />
+          <TrayButton
+            disabled={disabled}
+            onPress={toggleScreenShare}
+            muted={isShareScreenOff}
+            text={isShareScreenOff ? 'Start' : 'Stop'}
+            type="screenShare"
+          />
       </View>
       <TrayButton
         disabled={disabled}
