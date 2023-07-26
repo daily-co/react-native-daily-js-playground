@@ -10,14 +10,15 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@daily-co/react-native-daily-js": "^0.41.0",
-    "@daily-co/react-native-webrtc": "^106.0.6-daily.1",
+    "@daily-co/react-native-daily-js": "^0.46.0",
+    "@daily-co/react-native-webrtc": "^111.0.0-daily.1",
     "@react-native-async-storage/async-storage": "^1.15.7",
     "@react-native-clipboard/clipboard": "^1.9.0",
     "react": "18.2.0",
     "react-native": "0.71.6",
     "react-native-background-timer": "^2.3.1",
-    "react-native-dropdown-picker": "^5.3.0"
+    "react-native-dropdown-picker": "^5.3.0",
+    "react-native-svg": "^12.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
