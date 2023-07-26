@@ -6,7 +6,6 @@ import {
   Text,
 } from 'react-native';
 import theme from '../../theme';
-import api from '../../api';
 import { robotID } from '../../utils';
 
 type Props = {

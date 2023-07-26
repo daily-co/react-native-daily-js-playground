@@ -9,6 +9,7 @@ import {
 import theme from '../../theme';
 import { useOrientation, Orientation } from '../../useOrientation';
 import { robotID } from '../../utils';
+import { ScreenShareIcon } from '../Icons';
 
 type Props = {
   disabled?: boolean;
@@ -16,7 +17,7 @@ type Props = {
   muted?: boolean;
   robotId?: string;
   text: string;
-  type: 'mic' | 'camera' | 'leave';
+  type: 'mic' | 'camera' | 'leave' | 'screenShare';
 };
 export default function TrayButton({
   disabled = false,
@@ -27,22 +28,45 @@ export default function TrayButton({
   type,
 }: Props) {
   const orientation = useOrientation();
-
-  let source: NodeRequire = require('../../../assets/leave.png');
   const isLeaveButton: boolean = type === 'leave';
-  if (isLeaveButton) {
-    robotId = 'robots-leave-button';
-  } else if (type === 'camera') {
-    robotId = `robots-btn-cam-${muted ? 'mute' : 'unmute'}`;
-    source = muted
-      ? require('../../../assets/camera-off.png')
-      : require('../../../assets/camera.png');
-  } else if (type === 'mic') {
-    robotId = `robots-btn-mic-${muted ? 'mute' : 'unmute'}`;
-    source = muted
-      ? require('../../../assets/mic-off.png')
-      : require('../../../assets/mic.png');
-  }
+  const isScreenShareButton: boolean = type === 'screenShare';
+  const iconStyle = [
+    styles.iconBase,
+    orientation === Orientation.Portrait
+      ? styles.iconPortrait
+      : styles.iconLandscape,
+    disabled && styles.disabled,
+    isLeaveButton && styles.iconLeave,
+  ];
+
+  const getSource = () => {
+    switch (type) {
+      case 'camera':
+        robotId = `robots-btn-cam-${muted ? 'mute' : 'unmute'}`;
+        return muted
+          ? require('../../../assets/camera-off.png')
+          : require('../../../assets/camera.png');
+      case 'mic':
+        robotId = `robots-btn-mic-${muted ? 'mute' : 'unmute'}`;
+        return muted
+          ? require('../../../assets/mic-off.png')
+          : require('../../../assets/mic.png');
+      case 'leave':
+        robotId = 'robots-leave-button';
+        return require('../../../assets/leave.png');
+    }
+  };
+
+  const getButtonIcon = () => {
+    if (isScreenShareButton) {
+      return (
+        <ScreenShareIcon style={iconStyle} fill={muted ? 'red' : 'black'} />
+      );
+    }
+    const source = getSource(); //TODO convert in the future everything to SVG
+    const imageIcon = <Image style={iconStyle} source={source} />;
+    return imageIcon;
+  };
 
   return (
     <TouchableWithoutFeedback
@@ -51,17 +75,7 @@ export default function TrayButton({
       {...robotID(robotId)}
     >
       <View style={styles.controlContainer}>
-        <Image
-          style={[
-            styles.iconBase,
-            orientation === Orientation.Portrait
-              ? styles.iconPortrait
-              : styles.iconLandscape,
-            disabled && styles.disabled,
-            isLeaveButton && styles.iconLeave,
-          ]}
-          source={source}
-        />
+        {getButtonIcon()}
         <Text
           style={[
             styles.controlText,
