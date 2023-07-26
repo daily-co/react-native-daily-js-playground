@@ -1,7 +1,7 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-platform :ios, min_ios_version_supported
+platform :ios, 12.4
 prepare_react_native_project!
 
 # If you are using a `react-native-flipper` your iOS build will fail when `NO_FLIPPER=1` is set.
@@ -28,6 +28,7 @@ target 'DailyPlayground' do
   # and run another pod install
   # pod 'react-native-daily-js', :path => INSERT_PATH_HERE
   # pod 'react-native-webrtc', :path => INSERT_PATH_HERE
+  # pod 'ReactNativeDailyJSScreenShareExtension', :podspec => INSERT_PATH_HERE
 
   config = use_native_modules!
 
