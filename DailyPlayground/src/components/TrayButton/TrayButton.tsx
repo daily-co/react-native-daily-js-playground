@@ -23,7 +23,7 @@ export default function TrayButton({
   disabled = false,
   onPress,
   muted = false,
-  robotId = '',
+  robotId = 'robots-leave-button',
   text,
   type,
 }: Props) {
@@ -38,21 +38,21 @@ export default function TrayButton({
     disabled && styles.disabled,
     isLeaveButton && styles.iconLeave,
   ];
+  if (!isLeaveButton) {
+    robotId = `robots-btn-${type.slice(0, 3)}-${muted ? 'mute' : 'unmute'}`;
+  }
 
   const getSource = () => {
     switch (type) {
       case 'camera':
-        robotId = `robots-btn-cam-${muted ? 'mute' : 'unmute'}`;
         return muted
           ? require('../../../assets/camera-off.png')
           : require('../../../assets/camera.png');
       case 'mic':
-        robotId = `robots-btn-mic-${muted ? 'mute' : 'unmute'}`;
         return muted
           ? require('../../../assets/mic-off.png')
           : require('../../../assets/mic.png');
       case 'leave':
-        robotId = 'robots-leave-button';
         return require('../../../assets/leave.png');
     }
   };
