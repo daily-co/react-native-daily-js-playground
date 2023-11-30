@@ -335,6 +335,8 @@ PODS:
   - react-native-daily-js (0.52.0):
     - React-Core
     - ReactNativeDailyJSScreenShareExtension (= 0.0.1)
+  - react-native-get-random-values (1.9.0):
+    - React-Core
   - react-native-webrtc (111.0.0-daily.2):
     - JitsiWebRTC (~> 111.0.0)
     - React-Core
@@ -482,6 +484,7 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - react-native-background-timer (from `../node_modules/react-native-background-timer`)
   - "react-native-daily-js (from `../node_modules/@daily-co/react-native-daily-js`)"
+  - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - "react-native-webrtc (from `../node_modules/@daily-co/react-native-webrtc`)"
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -566,6 +569,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-background-timer"
   react-native-daily-js:
     :path: "../node_modules/@daily-co/react-native-daily-js"
+  react-native-get-random-values:
+    :path: "../node_modules/react-native-get-random-values"
   react-native-webrtc:
     :path: "../node_modules/@daily-co/react-native-webrtc"
   React-perflogger:
@@ -640,6 +645,7 @@ SPEC CHECKSUMS:
   React-logger: 9332c3e7b4ef007a0211c0a9868253aac3e1da82
   react-native-background-timer: 17ea5e06803401a379ebf1f20505b793ac44d0fe
   react-native-daily-js: 4d8d1d59a667026a222bf9ea06176f71bd5a9ae7
+  react-native-get-random-values: dee677497c6a740b71e5612e8dbd83e7539ed5bb
   react-native-webrtc: b8f92ed95bff2f8d7189cb544dc647141e6e6dba
   React-perflogger: 43392072a5b867a504e2b4857606f8fc5a403d7f
   React-RCTActionSheet: c7b67c125bebeda9fb19fc7b200d85cb9d6899c4
@@ -664,4 +670,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 567cf64a97af2d505b60087400dfe06dbf04de5d
 
-COCOAPODS: 1.14.2
+COCOAPODS: 1.12.1
