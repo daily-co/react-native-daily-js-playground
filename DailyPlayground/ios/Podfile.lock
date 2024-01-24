@@ -332,7 +332,7 @@ PODS:
     - glog
   - react-native-background-timer (2.4.1):
     - React-Core
-  - react-native-daily-js (0.54.0):
+  - react-native-daily-js (0.55.0):
     - React-Core
     - ReactNativeDailyJSScreenShareExtension (= 0.0.1)
   - react-native-get-random-values (1.10.0):
@@ -644,7 +644,7 @@ SPEC CHECKSUMS:
   React-jsinspector: d5ce2ef3eb8fd30c28389d0bc577918c70821bd6
   React-logger: 9332c3e7b4ef007a0211c0a9868253aac3e1da82
   react-native-background-timer: 17ea5e06803401a379ebf1f20505b793ac44d0fe
-  react-native-daily-js: 6e769f82495d70b7981931953773a4f9c62dda3d
+  react-native-daily-js: 33fcbff6d1ff6dcf6366939ae03a91934211d3de
   react-native-get-random-values: 384787fd76976f5aec9465aff6fa9e9129af1e74
   react-native-webrtc: b8f92ed95bff2f8d7189cb544dc647141e6e6dba
   React-perflogger: 43392072a5b867a504e2b4857606f8fc5a403d7f
@@ -670,4 +670,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 567cf64a97af2d505b60087400dfe06dbf04de5d
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.14.2
