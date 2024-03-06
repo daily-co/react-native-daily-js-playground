@@ -22,9 +22,11 @@ function getStreamStates(callObject: DailyCall) {
     callObject.participants().local
   ) {
     const localParticipant = callObject.participants().local;
-    isCameraMuted = !localParticipant.video;
-    isMicMuted = !localParticipant.audio;
-    isShareScreenOff = !localParticipant.screen;
+    isCameraMuted = !callObject.localVideo();
+    isMicMuted = !callObject.localAudio();
+    isShareScreenOff = ['blocked', 'off'].includes(
+      localParticipant.tracks.screenVideo.state
+    );
   }
   return [isCameraMuted, isMicMuted, isShareScreenOff];
 }
@@ -70,9 +72,8 @@ export default function Tray({ disabled, onClickLeaveCall }: Props) {
 
     const handleNewParticipantsState = (event?: any) => {
       event && logDailyEvent(event);
-      const [cameraMuted, micMuted, shareScreenOff] = getStreamStates(
-        callObject
-      );
+      const [cameraMuted, micMuted, shareScreenOff] =
+        getStreamStates(callObject);
       setCameraMuted(cameraMuted);
       setMicMuted(micMuted);
       setShareScreenOff(shareScreenOff);
@@ -120,13 +121,13 @@ export default function Tray({ disabled, onClickLeaveCall }: Props) {
           text={isCameraMuted ? 'Turn on' : 'Turn off'}
           type="camera"
         />
-          <TrayButton
-            disabled={disabled}
-            onPress={toggleScreenShare}
-            muted={isShareScreenOff}
-            text={isShareScreenOff ? 'Start' : 'Stop'}
-            type="screenShare"
-          />
+        <TrayButton
+          disabled={disabled}
+          onPress={toggleScreenShare}
+          muted={isShareScreenOff}
+          text={isShareScreenOff ? 'Start' : 'Stop'}
+          type="screenShare"
+        />
       </View>
       <TrayButton
         disabled={disabled}
