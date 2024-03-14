@@ -11,11 +11,10 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-    <!--TODO Will be needed when adding support for Android 14-->
-    <!--<uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION"/>
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>-->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
     <application
       android:name=".MainApplication"
@@ -36,11 +35,11 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
-      <!--TODO maybe we will need to split in two different services when adding support for Android 14-->
+      <!--TODO we will need to update react-native-webrtc in order to support screen share for Android 14-->
       <service
               android:name="com.daily.reactlibrary.DailyOngoingMeetingForegroundService"
               android:exported="false"
-              android:foregroundServiceType="camera|microphone|mediaProjection"
+              android:foregroundServiceType="camera|microphone"
       />
     </application>
 </manifest>
