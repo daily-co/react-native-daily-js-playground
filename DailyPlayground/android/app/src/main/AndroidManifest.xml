@@ -35,7 +35,6 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
-      <!--TODO we will need to update react-native-webrtc in order to support screen share for Android 14-->
       <service
               android:name="com.daily.reactlibrary.DailyOngoingMeetingForegroundService"
               android:exported="false"
