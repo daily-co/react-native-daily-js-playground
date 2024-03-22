@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@daily-co/react-native-daily-js": "^0.58.0",
-    "@daily-co/react-native-webrtc": "^111.0.0-daily.2",
+    "@daily-co/react-native-webrtc": "^118.0.3-daily.1",
     "@react-native-async-storage/async-storage": "^1.15.7",
     "@react-native-clipboard/clipboard": "^1.9.0",
     "react": "18.2.0",
