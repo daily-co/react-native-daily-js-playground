@@ -1,4 +1,48 @@
 {
-  "name": "DailyPlayground",
-  "displayName": "DailyPlayground"
+  "expo": {
+    "name": "DailyPlayground",
+    "slug": "DailyPlayground",
+    "version": "1.0.0",
+    "icon": "./assets/icon.png",
+    "ios": {
+      "infoPlist": {
+        "UIBackgroundModes": ["voip", "voip"]
+      },
+      "bitcode": false,
+      "bundleIdentifier": "com.anonymous.DailyPlayground"
+    },
+    "plugins": [
+      "@config-plugins/react-native-webrtc",
+      "@daily-co/config-plugin-rn-daily-js",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "minSdkVersion": 24
+          },
+          "ios": {
+            "deploymentTarget": "15.1"
+          }
+        }
+      ]
+    ],
+    "android": {
+      "permissions": [
+        "android.permission.ACCESS_NETWORK_STATE",
+        "android.permission.CAMERA",
+        "android.permission.INTERNET",
+        "android.permission.MODIFY_AUDIO_SETTINGS",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.SYSTEM_ALERT_WINDOW",
+        "android.permission.WAKE_LOCK",
+        "android.permission.BLUETOOTH",
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.FOREGROUND_SERVICE_CAMERA",
+        "android.permission.FOREGROUND_SERVICE_MICROPHONE",
+        "android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION",
+        "android.permission.POST_NOTIFICATIONS"
+      ],
+      "package": "com.anonymous.DailyPlayground"
+    }
+  }
 }
