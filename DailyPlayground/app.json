@@ -42,7 +42,7 @@
         "android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION",
         "android.permission.POST_NOTIFICATIONS"
       ],
-      "package": "com.anonymous.DailyPlayground"
+      "package": "co.daily.DailyPlayground"
     }
   }
 }
