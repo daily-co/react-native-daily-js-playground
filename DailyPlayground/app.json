@@ -9,7 +9,7 @@
         "UIBackgroundModes": ["voip", "voip"]
       },
       "bitcode": false,
-      "bundleIdentifier": "com.anonymous.DailyPlayground"
+      "bundleIdentifier": "co.daily.DailyPlayground"
     },
     "plugins": [
       "@config-plugins/react-native-webrtc",
