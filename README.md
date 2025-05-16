@@ -1,18 +1,29 @@
 # react-native-daily-js-playground
 
-A simple app showcasing `react-native-daily-js`, the [Daily](https://www.daily.co) library for React Native.
+A simple app showcasing `react-native-daily-js`, the [Daily](https://www.daily.co) library for React Native working together with [Expo](https://docs.expo.dev/introduction/expo/).
 
 ## Usage
 
-### General React Native setup
+### Expo requirements
 
-In [the React Native development environment setup page](https://reactnative.dev/docs/environment-setup), select "React Native CLI Quickstart" and follow the instructions under the heading "Installing dependencies".
+This project cannot be used with an [Expo Go](https://docs.expo.dev/workflow/expo-go/) app because [it requires custom native code](https://docs.expo.io/workflow/customizing/).
 
-The instructions vary depending on your development OS (macOS, Windows, Linux) and target OS (iOS, Android), so be sure to follow the steps for each closely.
+When a project requires custom native code or a config plugin, we need to transition from using [Expo Go](https://docs.expo.dev/workflow/expo-go/)
+to a [development build](https://docs.expo.dev/development/introduction/).
 
-**Note:** You will need Xcode (i.e. a Mac) for iOS development.
+More details about the custom native code used by this demo can be found in [rn-daily-js-expo-config-plugin](https://github.com/daily-co/rn-daily-js-expo-config-plugin).
 
-### Building
+### Building remotely
+
+If you do not have experience with Xcode and Android Studio builds or do not have them installed locally on your computer, you will need to follow [this guide from Expo to use EAS Build](https://docs.expo.dev/development/create-development-builds/#create-and-install-eas-build).
+
+### Building locally
+
+You will need to have installed locally on your computer:
+- [Xcode](https://developer.apple.com/xcode/) to build for iOS;
+- [Android Studio](https://developer.android.com/studio) to build for Android;
+
+#### Install the demo dependencies
 
 ```bash
 cd DailyPlayground
@@ -20,63 +31,63 @@ cd DailyPlayground
 # Use the version of node specified in .nvmrc
 nvm i
 
-# Unfortunate one-time thing, necessary for building from Xcode: make this node
-# version the default, so build phases use the right version
-nvm alias default $(node --version)
-
+# Install dependencies
 npm i
 
-# Generate ios/DailyPlayground.xcworkspace
-# IMPORTANT: make sure you have the right version of Cocoapods installed for this project. See Podfile.lock for version.
-npx pod-install
+# Before a native app can be compiled, the native source code must be generated.
+npx expo prebuild
 ```
 
-### Running the React Native dev server
+#### Running on Android
 
-```bash
-cd DailyPlayground
-
-# Bundle JS, start JS file server, and start watching for file changes in order
-# to re-bundle
-npm start -- --reset-cache
-```
-
-Leave this terminal tab open and running.
-
-### Running on iOS
-
-First, you'll need to do a one-time setup. This is required to build to device.
-
-If you're familiar with Xcode, you'll need to open `DailyPlayground.xcworkspace` and, in the DailyPlayground target settings, provide a development team registered with Apple.
-
-If you're newer to Xcode, here are some more detailed instructions to get you started.
-
-First, open the project in Xcode. Make sure to specifically select `DailyPlayground.xcworkspace` from `/DailyPlayground/ios`. This is also a good time to plug in your device to be sure the following steps are successful.
-
-From the main menu, select `Preferences` and then `Accounts`. Click the `+` sign to add an account (e.g. an Apple ID).
-
-Once an is account added, close `Preferences` and select the folder icon in the top left corner. Then select `DailyPlayground` from the side panel and navigate to `Signing & Capabilities` in the top nav bar. Open the "Team" dropdown and select the account added in the previous step. The "Signing Certificate" section should update accordingly with your account information.
-
-![Xcode menu ](xcode-screenshot.png)
-
-Once your settings have been updated, select your device from the device dropdown. Simply hit Run (or the Play icon) and you're ready to go!
-
-**Note:** The app should work as long as you're on the same WiFi as your dev box running the React Native development server.
-
-**iOS debugging tips:**
-
-- If you see the error `Change your bundle identifier to a unique string to try again` update the "Bundle Identifier" input in `Signing & Capabilities` to make it unique. This should clear the error.
-
-- If you see an error that says `Xcode was unable to launch because it has an invalid code signature, inadequate entitlements or its profile has not been explicitly trusted by the user` you may need to update the settings on your iPhone device to enable the required permissions. Open `Settings` on your iPhone, select `General`, then `Device Management`, and click `Trust` for DailyPlayground.
-
-- You may also be prompted to enter you login keychain password. Be sure to click `Always trust` to avoid the prompt showing multiple times.
-
-### Running on Android
-
-After plugging in an Android device [configured for debugging](https://developer.android.com/studio/debug/dev-options), simply run:
+After plugging in an Android device [configured for debugging](https://developer.android.com/studio/debug/dev-options), run the following command:
 
 ```
 npm run android
+```
+
+#### Running on iOS
+
+First, you'll need to do a one-time setup. This is required to build to a physical device.
+
+If you're familiar with Xcode, open `ios/DailyPlayground.xcworkspace` and, in the target settings, provide a development team registered with Apple.
+
+If you're newer to Xcode, here are some more detailed instructions to get you started.
+
+First, open the project in Xcode. Make sure to specifically select `DailyPlayground.xcworkspace` from `/DailyPlayground/ios`. The `/ios` directory will have been generated by running `npx expo prebuild` as instructed above. This is also a good time to plug in your iOS device to be sure the following steps are successful.
+
+From the main menu, select `Settings` and then `Accounts`. Click the `+` sign to add an account (e.g. an Apple ID).
+
+![xcode-accounts.png](./docsAssets/xcode-accounts.png)
+
+Once an account is added, perform the following steps:
+
+1. Close `Settings`.
+1. Select the folder icon in the top left corner.
+1. Select `DailyPlayground` from the side panel
+1. Navigate to `Signing & Capabilities` in the top nav bar.
+1. Open the "Team" dropdown
+1. Select the account added in the previous step.
+
+The "Signing Certificate" section should update accordingly with your account information.
+
+![xcode-signing.png](./docsAssets/xcode-signing.png)
+
+**Troubleshooting common errors:**
+
+- If you see the error `Change your bundle identifier to a unique string to try again`, update the "Bundle Identifier" input in `Signing & Capabilities` to make it unique. This should resolve the error.
+
+- If you see an error that says `Xcode was unable to launch because it has an invalid code signature, inadequate entitlements or its profile has not been explicitly trusted by the user`, you may need to update the settings on your iPhone to enable the required permissions as follows:
+
+1. Open `Settings` on your iPhone
+1. Select `General`, then `Device Management`
+1. Click `Trust` for DailyPlayground
+
+- You may also be prompted to enter you login keychain password. Be sure to click `Always trust` to avoid the prompt showing multiple times.
+
+After, run the following command:
+```
+npm run ios
 ```
 
 ---
