@@ -6,7 +6,7 @@
     "start": "expo start --dev-client",
     "android": "expo run:android --device",
     "ios": "expo run:ios --device",
-    "web": "expo start --web"
+    "web": "expo start --web",
   },
   "dependencies": {
     "@config-plugins/react-native-webrtc": "^10.0.0",
