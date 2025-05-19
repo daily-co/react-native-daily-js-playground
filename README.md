@@ -63,11 +63,11 @@ From the main menu, select `Settings` and then `Accounts`. Click the `+` sign to
 Once an account is added, perform the following steps:
 
 1. Close `Settings`.
-1. Select the folder icon in the top left corner.
-1. Select `DailyPlayground` from the side panel
-1. Navigate to `Signing & Capabilities` in the top nav bar.
-1. Open the "Team" dropdown
-1. Select the account added in the previous step.
+2. Select the folder icon in the top left corner.
+3. Select `DailyPlayground` from the side panel
+4. Navigate to `Signing & Capabilities` in the top nav bar.
+5. Open the "Team" dropdown
+6. Select the account added in the previous step.
 
 The "Signing Certificate" section should update accordingly with your account information.
 
@@ -80,12 +80,12 @@ The "Signing Certificate" section should update accordingly with your account in
 - If you see an error that says `Xcode was unable to launch because it has an invalid code signature, inadequate entitlements or its profile has not been explicitly trusted by the user`, you may need to update the settings on your iPhone to enable the required permissions as follows:
 
 1. Open `Settings` on your iPhone
-1. Select `General`, then `Device Management`
-1. Click `Trust` for DailyPlayground
+2. Select `General`, then `Device Management`
+3. Click `Trust` for DailyPlayground
 
 - You may also be prompted to enter you login keychain password. Be sure to click `Always trust` to avoid the prompt showing multiple times.
 
-After, run the following command:
+After getting your development team setup, close Xcode. From here on, simply run the following command:
 ```
 npm run ios
 ```
