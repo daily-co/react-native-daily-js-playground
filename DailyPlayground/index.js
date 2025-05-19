@@ -1,6 +1,4 @@
-/**
- * @format
- */
+import {registerRootComponent} from 'expo';
 
 // Enable debug logs
 /*window.localStorage = window.localStorage || {};
@@ -14,8 +12,9 @@ window.localStorage.getItem = (itemName) => {
 /*import debug from 'debug';
 debug.disable('rn-webrtc:*');*/
 
-import {AppRegistry} from 'react-native';
 import App from './src/components/App/App';
-import {name as appName} from './app.json';
 
-AppRegistry.registerComponent(appName, () => App);
+// registerRootComponent calls AppRegistry.registerComponent('main', () => App);
+// It also ensures that whether you load the app in Expo Go or in a native build,
+// the environment is set up appropriately
+registerRootComponent(App);
