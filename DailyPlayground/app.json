@@ -3,16 +3,19 @@
     "name": "DailyPlayground",
     "slug": "DailyPlayground",
     "version": "1.0.0",
+    "newArchEnabled": false,
     "icon": "./assets/icon.png",
     "ios": {
       "infoPlist": {
-        "UIBackgroundModes": ["voip", "voip"]
+        "UIBackgroundModes": [
+          "voip",
+          "voip"
+        ]
       },
       "bitcode": false,
       "bundleIdentifier": "co.daily.DailyPlayground"
     },
     "plugins": [
-      "@config-plugins/react-native-webrtc",
       [
         "@daily-co/config-plugin-rn-daily-js",
         {
