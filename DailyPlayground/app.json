@@ -18,6 +18,8 @@
       [
         "@daily-co/config-plugin-rn-daily-js",
         {
+          "enableCamera": true,
+          "enableMicrophone": true,
           "enableScreenShare": true
         }
       ],
