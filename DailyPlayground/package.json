@@ -9,25 +9,24 @@
     "web": "expo start --web",
   },
   "dependencies": {
-    "@config-plugins/react-native-webrtc": "^10.0.0",
-    "@daily-co/config-plugin-rn-daily-js": "^0.0.8",
+    "@daily-co/config-plugin-rn-daily-js": "0.0.9",
     "@daily-co/react-native-daily-js": "^0.76.0",
     "@daily-co/react-native-webrtc": "118.0.3-daily.3",
     "@react-native-async-storage/async-storage": "^1.24.0",
     "@react-native-clipboard/clipboard": "^1.16.2",
-    "expo": "~52.0.46",
-    "expo-status-bar": "~2.0.1",
-    "react": "18.3.1",
-    "react-native": "^0.76.9",
+    "expo": "~53.0.9",
+    "expo-status-bar": "~2.2.3",
+    "react": "19.0.0",
+    "react-native": "^0.79.2",
     "react-native-background-timer": "^2.4.1",
     "react-native-dropdown-picker": "^5.4.6",
     "react-native-get-random-values": "^1.11.0",
     "react-native-svg": "^15.12.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.27.1",
+    "@babel/core": "^7.27.3",
     "typescript": "^5.8.3",
-    "@types/react": "~18.3.12"
+    "@types/react": "~19.0.14"
   },
   "private": true
 }
