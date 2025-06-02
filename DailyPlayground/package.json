@@ -9,7 +9,7 @@
     "web": "expo start --web",
   },
   "dependencies": {
-    "@daily-co/config-plugin-rn-daily-js": "file:///Users/filipifuchter/workspaces/workspaceDaily/pocs/expo-plugins/rn-daily-js-expo-config-plugin/daily-co-config-plugin-rn-daily-js-0.0.9.tgz",
+    "@daily-co/config-plugin-rn-daily-js": "0.0.9",
     "@daily-co/react-native-daily-js": "^0.76.0",
     "@daily-co/react-native-webrtc": "118.0.3-daily.3",
     "@react-native-async-storage/async-storage": "^1.24.0",
