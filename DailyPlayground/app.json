@@ -3,7 +3,7 @@
     "name": "DailyPlayground",
     "slug": "DailyPlayground",
     "version": "1.0.0",
-    "newArchEnabled": false,
+    "newArchEnabled": true,
     "icon": "./assets/icon.png",
     "ios": {
       "infoPlist": {
