@@ -33,7 +33,8 @@
             "deploymentTarget": "15.1"
           }
         }
-      ]
+      ],
+      "expo-asset"
     ],
     "android": {
       "package": "co.daily.DailyPlayground"
