@@ -10,19 +10,19 @@
   },
   "dependencies": {
     "@daily-co/config-plugin-rn-daily-js": "0.0.10",
-    "@daily-co/react-native-daily-js": "^0.81.0",
+    "@daily-co/react-native-daily-js": "^0.82.0",
     "@daily-co/react-native-webrtc": "124.0.6-daily.1",
     "@react-native-async-storage/async-storage": "^1.24.0",
     "@react-native-clipboard/clipboard": "^1.16.2",
     "expo": "~53.0.9",
+    "expo-asset": "~11.1.7",
     "expo-status-bar": "~2.2.3",
     "react": "19.0.0",
     "react-native": "^0.79.2",
     "react-native-background-timer": "^2.4.1",
     "react-native-dropdown-picker": "^5.4.6",
     "react-native-get-random-values": "^1.11.0",
-    "react-native-svg": "^15.12.0",
-    "expo-asset": "~11.1.7"
+    "react-native-svg": "^15.12.0"
   },
   "devDependencies": {
     "@babel/core": "^7.27.3",
