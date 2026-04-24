@@ -6,7 +6,7 @@
     "start": "expo start --dev-client",
     "android": "expo run:android --device",
     "ios": "expo run:ios --device",
-    "web": "expo start --web",
+    "web": "expo start --web"
   },
   "dependencies": {
     "@daily-co/config-plugin-rn-daily-js": "0.0.12",
