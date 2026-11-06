@@ -11,7 +11,7 @@
   "dependencies": {
     "@daily-co/config-plugin-rn-daily-js": "0.0.13",
     "@daily-co/react-native-daily-js": "^0.89.0",
-    "@daily-co/react-native-webrtc": "124.0.6-daily.2",
+    "@daily-co/react-native-webrtc": "155.0.1-daily.1",
     "@react-native-async-storage/async-storage": "2.2.0",
     "@react-native-clipboard/clipboard": "^1.16.3",
     "expo": "~57.0.30",
